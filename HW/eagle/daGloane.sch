@@ -7862,20 +7862,20 @@ Source: Fairchild .. BAT54.pdf</description>
 <text x="-2.5" y="8.04" size="1.27" layer="25">Bluetooth</text>
 </package>
 <package name="3A_BLDC_CONTROLLER">
-<smd name="1" x="0" y="1.75" dx="2.5" dy="1.25" layer="1"/>
-<smd name="2" x="0" y="0" dx="2.5" dy="1.25" layer="1"/>
-<smd name="3" x="0" y="-1.75" dx="2.5" dy="1.25" layer="1"/>
-<wire x1="1.25" y1="0" x2="1.25" y2="2.75" width="0.127" layer="21"/>
-<wire x1="1.25" y1="2.75" x2="1.25" y2="6.25" width="0.127" layer="21"/>
-<wire x1="1.25" y1="6.25" x2="1.75" y2="6.25" width="0.127" layer="21"/>
-<wire x1="1.75" y1="6.25" x2="1.75" y2="2.75" width="0.127" layer="21"/>
-<wire x1="1.75" y1="2.75" x2="1.75" y2="-2.75" width="0.127" layer="21"/>
-<wire x1="1.75" y1="-2.75" x2="1.75" y2="-6.25" width="0.127" layer="21"/>
-<wire x1="1.75" y1="-6.25" x2="1.25" y2="-6.25" width="0.127" layer="21"/>
-<wire x1="1.25" y1="-6.25" x2="1.25" y2="-2.75" width="0.127" layer="21"/>
-<wire x1="1.25" y1="-2.75" x2="1.25" y2="0" width="0.127" layer="21"/>
-<wire x1="1.25" y1="2.75" x2="1.75" y2="2.75" width="0.127" layer="21"/>
-<wire x1="1.25" y1="-2.75" x2="1.75" y2="-2.75" width="0.127" layer="21"/>
+<smd name="1" x="1.05" y="1.75" dx="2.45" dy="1.25" layer="1"/>
+<smd name="2" x="1.05" y="0" dx="2.45" dy="1.25" layer="1"/>
+<smd name="3" x="1.05" y="-1.75" dx="2.45" dy="1.25" layer="1"/>
+<wire x1="2.5" y1="0" x2="2.5" y2="2.75" width="0.127" layer="21"/>
+<wire x1="2.5" y1="2.75" x2="2.5" y2="6.25" width="0.127" layer="21"/>
+<wire x1="2.5" y1="6.25" x2="3" y2="6.25" width="0.127" layer="21"/>
+<wire x1="3" y1="6.25" x2="3" y2="2.75" width="0.127" layer="21"/>
+<wire x1="3" y1="2.75" x2="3" y2="-2.75" width="0.127" layer="21"/>
+<wire x1="3" y1="-2.75" x2="3" y2="-6.25" width="0.127" layer="21"/>
+<wire x1="3" y1="-6.25" x2="2.5" y2="-6.25" width="0.127" layer="21"/>
+<wire x1="2.5" y1="-6.25" x2="2.5" y2="-2.75" width="0.127" layer="21"/>
+<wire x1="2.5" y1="-2.75" x2="2.5" y2="0" width="0.127" layer="21"/>
+<wire x1="2.5" y1="2.75" x2="3" y2="2.75" width="0.127" layer="21"/>
+<wire x1="2.5" y1="-2.75" x2="3" y2="-2.75" width="0.127" layer="21"/>
 </package>
 </packages>
 <symbols>
