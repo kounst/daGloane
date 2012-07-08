@@ -7827,16 +7827,6 @@ Source: Fairchild .. BAT54.pdf</description>
 <text x="-0.908" y="1.27" size="0.4064" layer="25">&gt;NAME</text>
 <text x="-0.908" y="-1.651" size="0.4064" layer="27">&gt;VALUE</text>
 </package>
-<package name="SMD1,27-2,54">
-<description>&lt;b&gt;SMD PAD&lt;/b&gt;</description>
-<smd name="1" x="0" y="0" dx="1.27" dy="2.54" layer="1"/>
-<text x="0" y="0" size="0.0254" layer="27">&gt;VALUE</text>
-<text x="-0.8" y="-2.4" size="1.27" layer="25" rot="R90">&gt;NAME</text>
-</package>
-<package name="SMD1,0-2,0">
-<smd name="1" x="0" y="0" dx="2" dy="1" layer="1" rot="R90" cream="no"/>
-<text x="-0.7" y="-1.97" size="0.8128" layer="25" rot="R90">&gt;NAME</text>
-</package>
 <package name="BLUETOOTH_REDUCED">
 <wire x1="-6.35" y1="13.97" x2="6.65" y2="13.97" width="0" layer="21"/>
 <wire x1="6.65" y1="13.97" x2="6.65" y2="-13.03" width="0" layer="21"/>
@@ -7870,6 +7860,22 @@ Source: Fairchild .. BAT54.pdf</description>
 <wire x1="-2" y1="10.04" x2="-2" y2="13.54" width="0.4064" layer="23"/>
 <wire x1="-2" y1="13.54" x2="-2.5" y2="13.54" width="0.4064" layer="23"/>
 <text x="-2.5" y="8.04" size="1.27" layer="25">Bluetooth</text>
+</package>
+<package name="3A_BLDC_CONTROLLER">
+<smd name="1" x="1.05" y="1.75" dx="2.45" dy="1.25" layer="1"/>
+<smd name="2" x="1.05" y="0" dx="2.45" dy="1.25" layer="1"/>
+<smd name="3" x="1.05" y="-1.75" dx="2.45" dy="1.25" layer="1"/>
+<wire x1="2.5" y1="0" x2="2.5" y2="2.75" width="0.127" layer="21"/>
+<wire x1="2.5" y1="2.75" x2="2.5" y2="6.25" width="0.127" layer="21"/>
+<wire x1="2.5" y1="6.25" x2="3" y2="6.25" width="0.127" layer="21"/>
+<wire x1="3" y1="6.25" x2="3" y2="2.75" width="0.127" layer="21"/>
+<wire x1="3" y1="2.75" x2="3" y2="-2.75" width="0.127" layer="21"/>
+<wire x1="3" y1="-2.75" x2="3" y2="-6.25" width="0.127" layer="21"/>
+<wire x1="3" y1="-6.25" x2="2.5" y2="-6.25" width="0.127" layer="21"/>
+<wire x1="2.5" y1="-6.25" x2="2.5" y2="-2.75" width="0.127" layer="21"/>
+<wire x1="2.5" y1="-2.75" x2="2.5" y2="0" width="0.127" layer="21"/>
+<wire x1="2.5" y1="2.75" x2="3" y2="2.75" width="0.127" layer="21"/>
+<wire x1="2.5" y1="-2.75" x2="3" y2="-2.75" width="0.127" layer="21"/>
 </package>
 </packages>
 <symbols>
@@ -8182,12 +8188,6 @@ Source: Fairchild .. BAT54.pdf</description>
 <wire x1="-10.16" y1="-2.54" x2="-10.16" y2="0" width="0.254" layer="94"/>
 <wire x1="-10.16" y1="0" x2="-10.16" y2="2.54" width="0.254" layer="94"/>
 <wire x1="-10.16" y1="2.54" x2="-10.16" y2="5.08" width="0.254" layer="94"/>
-<wire x1="-10.16" y1="2.54" x2="-15.24" y2="2.54" width="0.254" layer="94"/>
-<wire x1="-10.16" y1="0" x2="-15.24" y2="0" width="0.254" layer="94"/>
-<wire x1="-10.16" y1="-2.54" x2="-15.24" y2="-2.54" width="0.254" layer="94"/>
-<text x="-8.128" y="1.778" size="1.4224" layer="97">ACCU+</text>
-<text x="-8.128" y="-0.762" size="1.4224" layer="97">ACCU-</text>
-<text x="-8.128" y="-3.302" size="1.4224" layer="97">PPM</text>
 <wire x1="10.16" y1="7.62" x2="15.24" y2="7.62" width="0.254" layer="94"/>
 <text x="2.286" y="6.858" size="1.4224" layer="97">PH_A</text>
 <wire x1="10.16" y1="0" x2="15.24" y2="0" width="0.254" layer="94"/>
@@ -8201,13 +8201,9 @@ Source: Fairchild .. BAT54.pdf</description>
 <wire x1="16.51" y1="1.27" x2="13.97" y2="-1.27" width="0.254" layer="94"/>
 <wire x1="13.97" y1="-6.35" x2="16.51" y2="-8.89" width="0.254" layer="94"/>
 <wire x1="16.51" y1="-6.35" x2="13.97" y2="-8.89" width="0.254" layer="94"/>
-</symbol>
-<symbol name="PAD">
-<wire x1="-1.016" y1="1.016" x2="1.016" y2="-1.016" width="0.254" layer="94"/>
-<wire x1="-1.016" y1="-1.016" x2="1.016" y2="1.016" width="0.254" layer="94"/>
-<text x="-1.143" y="1.8542" size="1.778" layer="95">&gt;NAME</text>
-<text x="-1.143" y="-3.302" size="1.778" layer="96">&gt;VALUE</text>
-<pin name="P" x="2.54" y="0" visible="off" length="short" direction="pas" rot="R180"/>
+<pin name="ACCU+" x="-15.24" y="2.54" length="middle" direction="pwr"/>
+<pin name="ACCU-" x="-15.24" y="-2.54" length="middle" direction="pwr"/>
+<pin name="PPM" x="-15.24" y="0" length="middle" direction="in"/>
 </symbol>
 <symbol name="BLUETOOTH_REDUCED">
 <pin name="UART-TX" x="-17.78" y="22.86" visible="pin" length="middle" direction="out"/>
@@ -9123,30 +9119,11 @@ Basic 0.1" spaced jumper. Use with breakaway headers.</description>
 <gate name="G$1" symbol="3A_BLDC_CONTROLLER" x="0" y="0"/>
 </gates>
 <devices>
-<device name="">
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-<deviceset name="SMD2" prefix="PAD" uservalue="yes">
-<description>&lt;b&gt;SMD PAD&lt;/b&gt;</description>
-<gates>
-<gate name="1" symbol="PAD" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="SMD1,27-2,54">
+<device name="" package="3A_BLDC_CONTROLLER">
 <connects>
-<connect gate="1" pin="P" pad="1"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-<device name="1" package="SMD1,0-2,0">
-<connects>
-<connect gate="1" pin="P" pad="1"/>
+<connect gate="G$1" pin="ACCU+" pad="2"/>
+<connect gate="G$1" pin="ACCU-" pad="1"/>
+<connect gate="G$1" pin="PPM" pad="3"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -9328,18 +9305,6 @@ Basic 0.1" spaced jumper. Use with breakaway headers.</description>
 <part name="U$7" library="daGloane" deviceset="3A_BLDC_CONTROLLER" device=""/>
 <part name="U$8" library="daGloane" deviceset="3A_BLDC_CONTROLLER" device=""/>
 <part name="U$9" library="daGloane" deviceset="3A_BLDC_CONTROLLER" device=""/>
-<part name="PAD1" library="daGloane" deviceset="SMD2" device=""/>
-<part name="PAD2" library="daGloane" deviceset="SMD2" device=""/>
-<part name="PAD3" library="daGloane" deviceset="SMD2" device=""/>
-<part name="PAD4" library="daGloane" deviceset="SMD2" device=""/>
-<part name="PAD5" library="daGloane" deviceset="SMD2" device=""/>
-<part name="PAD6" library="daGloane" deviceset="SMD2" device=""/>
-<part name="PAD7" library="daGloane" deviceset="SMD2" device=""/>
-<part name="PAD8" library="daGloane" deviceset="SMD2" device=""/>
-<part name="PAD9" library="daGloane" deviceset="SMD2" device=""/>
-<part name="PAD10" library="daGloane" deviceset="SMD2" device=""/>
-<part name="PAD11" library="daGloane" deviceset="SMD2" device=""/>
-<part name="PAD12" library="daGloane" deviceset="SMD2" device=""/>
 <part name="R28" library="rcl" deviceset="R-EU_" device="R0603" value="10k"/>
 <part name="3.3V7" library="supply1" deviceset="VCC" device="" value="3.3V"/>
 <part name="U$5" library="daGloane" deviceset="BLUETOOTH_REDUCED" device=""/>
@@ -11119,7 +11084,7 @@ Basic 0.1" spaced jumper. Use with breakaway headers.</description>
 <wire x1="215.9" y1="111.76" x2="342.9" y2="111.76" width="0.1524" layer="97"/>
 <text x="88.9" y="-236.22" size="5.08" layer="91">Todo:</text>
 <text x="109.22" y="-233.68" size="2.54" layer="91">easiest way to configure Module?</text>
-<text x="444.5" y="-175.26" size="5.08" layer="94">BLDC Version</text>
+<text x="444.5" y="-175.26" size="5.08" layer="94">BLDC Controllers</text>
 </plain>
 <instances>
 <instance part="R16" gate="G$1" x="185.42" y="48.26" rot="R90"/>
@@ -11281,46 +11246,10 @@ Basic 0.1" spaced jumper. Use with breakaway headers.</description>
 <instance part="R25" gate="G$1" x="373.38" y="-121.92"/>
 <instance part="R26" gate="G$1" x="472.44" y="-121.92"/>
 <instance part="R27" gate="G$1" x="472.44" y="-53.34"/>
-<instance part="U$6" gate="G$1" x="401.32" y="-53.34"/>
-<instance part="U$7" gate="G$1" x="500.38" y="-53.34"/>
-<instance part="U$8" gate="G$1" x="401.32" y="-121.92"/>
-<instance part="U$9" gate="G$1" x="500.38" y="-121.92"/>
-<instance part="PAD1" gate="1" x="386.08" y="-50.8" smashed="yes" rot="R180">
-<attribute name="VALUE" x="387.223" y="-47.498" size="1.778" layer="96" rot="R180"/>
-</instance>
-<instance part="PAD2" gate="1" x="386.08" y="-53.34" smashed="yes" rot="R180">
-<attribute name="VALUE" x="387.223" y="-50.038" size="1.778" layer="96" rot="R180"/>
-</instance>
-<instance part="PAD3" gate="1" x="386.08" y="-55.88" smashed="yes" rot="R180">
-<attribute name="VALUE" x="387.223" y="-52.578" size="1.778" layer="96" rot="R180"/>
-</instance>
-<instance part="PAD4" gate="1" x="386.08" y="-119.38" smashed="yes" rot="R180">
-<attribute name="VALUE" x="387.223" y="-116.078" size="1.778" layer="96" rot="R180"/>
-</instance>
-<instance part="PAD5" gate="1" x="386.08" y="-121.92" smashed="yes" rot="R180">
-<attribute name="VALUE" x="387.223" y="-118.618" size="1.778" layer="96" rot="R180"/>
-</instance>
-<instance part="PAD6" gate="1" x="386.08" y="-124.46" smashed="yes" rot="R180">
-<attribute name="VALUE" x="387.223" y="-121.158" size="1.778" layer="96" rot="R180"/>
-</instance>
-<instance part="PAD7" gate="1" x="485.14" y="-119.38" smashed="yes" rot="R180">
-<attribute name="VALUE" x="486.283" y="-116.078" size="1.778" layer="96" rot="R180"/>
-</instance>
-<instance part="PAD8" gate="1" x="485.14" y="-121.92" smashed="yes" rot="R180">
-<attribute name="VALUE" x="486.283" y="-118.618" size="1.778" layer="96" rot="R180"/>
-</instance>
-<instance part="PAD9" gate="1" x="485.14" y="-124.46" smashed="yes" rot="R180">
-<attribute name="VALUE" x="486.283" y="-121.158" size="1.778" layer="96" rot="R180"/>
-</instance>
-<instance part="PAD10" gate="1" x="485.14" y="-50.8" smashed="yes" rot="R180">
-<attribute name="VALUE" x="486.283" y="-47.498" size="1.778" layer="96" rot="R180"/>
-</instance>
-<instance part="PAD11" gate="1" x="485.14" y="-53.34" smashed="yes" rot="R180">
-<attribute name="VALUE" x="486.283" y="-50.038" size="1.778" layer="96" rot="R180"/>
-</instance>
-<instance part="PAD12" gate="1" x="485.14" y="-55.88" smashed="yes" rot="R180">
-<attribute name="VALUE" x="486.283" y="-52.578" size="1.778" layer="96" rot="R180"/>
-</instance>
+<instance part="U$6" gate="G$1" x="398.78" y="-53.34"/>
+<instance part="U$7" gate="G$1" x="497.84" y="-53.34"/>
+<instance part="U$8" gate="G$1" x="398.78" y="-121.92"/>
+<instance part="U$9" gate="G$1" x="497.84" y="-121.92"/>
 <instance part="R28" gate="G$1" x="137.16" y="81.28" rot="R90"/>
 <instance part="3.3V7" gate="VCC" x="246.38" y="-233.68" rot="MR0"/>
 <instance part="U$5" gate="G$1" x="223.52" y="-276.86"/>
@@ -11716,15 +11645,15 @@ Basic 0.1" spaced jumper. Use with breakaway headers.</description>
 <wire x1="381" y1="-50.8" x2="381" y2="-43.18" width="0.1524" layer="91"/>
 <wire x1="381" y1="-43.18" x2="381" y2="-40.64" width="0.1524" layer="91"/>
 <wire x1="381" y1="-40.64" x2="365.76" y2="-40.64" width="0.1524" layer="91"/>
-<pinref part="PAD1" gate="1" pin="P"/>
+<pinref part="U$6" gate="G$1" pin="ACCU+"/>
 </segment>
 <segment>
 <label x="464.82" y="-40.64" size="1.778" layer="95" rot="R180" xref="yes"/>
 <wire x1="464.82" y1="-40.64" x2="472.44" y2="-40.64" width="0.1524" layer="91"/>
 <wire x1="482.6" y1="-50.8" x2="480.06" y2="-50.8" width="0.1524" layer="91"/>
 <wire x1="480.06" y1="-50.8" x2="480.06" y2="-40.64" width="0.1524" layer="91"/>
-<pinref part="PAD10" gate="1" pin="P"/>
 <wire x1="472.44" y1="-40.64" x2="480.06" y2="-40.64" width="0.1524" layer="91"/>
+<pinref part="U$7" gate="G$1" pin="ACCU+"/>
 </segment>
 <segment>
 <label x="365.76" y="-109.22" size="1.778" layer="95" rot="R180" xref="yes"/>
@@ -11732,8 +11661,8 @@ Basic 0.1" spaced jumper. Use with breakaway headers.</description>
 <wire x1="370.84" y1="-109.22" x2="373.38" y2="-109.22" width="0.1524" layer="91"/>
 <wire x1="383.54" y1="-119.38" x2="381" y2="-119.38" width="0.1524" layer="91"/>
 <wire x1="381" y1="-119.38" x2="381" y2="-109.22" width="0.1524" layer="91"/>
-<pinref part="PAD4" gate="1" pin="P"/>
 <wire x1="373.38" y1="-109.22" x2="381" y2="-109.22" width="0.1524" layer="91"/>
+<pinref part="U$8" gate="G$1" pin="ACCU+"/>
 </segment>
 <segment>
 <label x="464.82" y="-109.22" size="1.778" layer="95" rot="R180" xref="yes"/>
@@ -11741,8 +11670,8 @@ Basic 0.1" spaced jumper. Use with breakaway headers.</description>
 <wire x1="474.98" y1="-109.22" x2="477.52" y2="-109.22" width="0.1524" layer="91"/>
 <wire x1="482.6" y1="-119.38" x2="480.06" y2="-119.38" width="0.1524" layer="91"/>
 <wire x1="480.06" y1="-119.38" x2="480.06" y2="-109.22" width="0.1524" layer="91"/>
-<pinref part="PAD7" gate="1" pin="P"/>
 <wire x1="477.52" y1="-109.22" x2="480.06" y2="-109.22" width="0.1524" layer="91"/>
+<pinref part="U$9" gate="G$1" pin="ACCU+"/>
 </segment>
 </net>
 <net name="VOLTAGE" class="0">
@@ -12404,7 +12333,7 @@ Basic 0.1" spaced jumper. Use with breakaway headers.</description>
 <wire x1="381" y1="-66.04" x2="381" y2="-55.88" width="0.1524" layer="91"/>
 <label x="365.76" y="-66.04" size="1.778" layer="95" rot="R180" xref="yes"/>
 <wire x1="381" y1="-55.88" x2="383.54" y2="-55.88" width="0.1524" layer="91"/>
-<pinref part="PAD3" gate="1" pin="P"/>
+<pinref part="U$6" gate="G$1" pin="ACCU-"/>
 </segment>
 <segment>
 <wire x1="472.44" y1="-66.04" x2="469.9" y2="-66.04" width="0.1524" layer="91"/>
@@ -12413,8 +12342,8 @@ Basic 0.1" spaced jumper. Use with breakaway headers.</description>
 <wire x1="472.44" y1="-66.04" x2="474.98" y2="-66.04" width="0.1524" layer="91"/>
 <wire x1="480.06" y1="-66.04" x2="480.06" y2="-55.88" width="0.1524" layer="91"/>
 <wire x1="480.06" y1="-55.88" x2="482.6" y2="-55.88" width="0.1524" layer="91"/>
-<pinref part="PAD12" gate="1" pin="P"/>
 <wire x1="474.98" y1="-66.04" x2="480.06" y2="-66.04" width="0.1524" layer="91"/>
+<pinref part="U$7" gate="G$1" pin="ACCU-"/>
 </segment>
 <segment>
 <wire x1="370.84" y1="-134.62" x2="368.3" y2="-134.62" width="0.1524" layer="91"/>
@@ -12423,8 +12352,8 @@ Basic 0.1" spaced jumper. Use with breakaway headers.</description>
 <wire x1="370.84" y1="-134.62" x2="375.92" y2="-134.62" width="0.1524" layer="91"/>
 <wire x1="381" y1="-134.62" x2="381" y2="-124.46" width="0.1524" layer="91"/>
 <wire x1="381" y1="-124.46" x2="383.54" y2="-124.46" width="0.1524" layer="91"/>
-<pinref part="PAD6" gate="1" pin="P"/>
 <wire x1="375.92" y1="-134.62" x2="381" y2="-134.62" width="0.1524" layer="91"/>
+<pinref part="U$8" gate="G$1" pin="ACCU-"/>
 </segment>
 <segment>
 <wire x1="472.44" y1="-134.62" x2="469.9" y2="-134.62" width="0.1524" layer="91"/>
@@ -12433,8 +12362,8 @@ Basic 0.1" spaced jumper. Use with breakaway headers.</description>
 <wire x1="472.44" y1="-134.62" x2="474.98" y2="-134.62" width="0.1524" layer="91"/>
 <wire x1="480.06" y1="-134.62" x2="480.06" y2="-124.46" width="0.1524" layer="91"/>
 <wire x1="480.06" y1="-124.46" x2="482.6" y2="-124.46" width="0.1524" layer="91"/>
-<pinref part="PAD9" gate="1" pin="P"/>
 <wire x1="474.98" y1="-134.62" x2="480.06" y2="-134.62" width="0.1524" layer="91"/>
+<pinref part="U$9" gate="G$1" pin="ACCU-"/>
 </segment>
 <segment>
 <pinref part="U$10" gate="G$1" pin="D"/>
@@ -12483,28 +12412,28 @@ Basic 0.1" spaced jumper. Use with breakaway headers.</description>
 <segment>
 <wire x1="383.54" y1="-53.34" x2="378.46" y2="-53.34" width="0.1524" layer="91"/>
 <pinref part="R18" gate="G$1" pin="2"/>
-<pinref part="PAD2" gate="1" pin="P"/>
+<pinref part="U$6" gate="G$1" pin="PPM"/>
 </segment>
 </net>
 <net name="N$39" class="0">
 <segment>
 <wire x1="482.6" y1="-53.34" x2="477.52" y2="-53.34" width="0.1524" layer="91"/>
 <pinref part="R27" gate="G$1" pin="2"/>
-<pinref part="PAD11" gate="1" pin="P"/>
+<pinref part="U$7" gate="G$1" pin="PPM"/>
 </segment>
 </net>
 <net name="N$40" class="0">
 <segment>
 <pinref part="R25" gate="G$1" pin="2"/>
 <wire x1="378.46" y1="-121.92" x2="383.54" y2="-121.92" width="0.1524" layer="91"/>
-<pinref part="PAD5" gate="1" pin="P"/>
+<pinref part="U$8" gate="G$1" pin="PPM"/>
 </segment>
 </net>
 <net name="N$41" class="0">
 <segment>
 <pinref part="R26" gate="G$1" pin="2"/>
 <wire x1="477.52" y1="-121.92" x2="482.6" y2="-121.92" width="0.1524" layer="91"/>
-<pinref part="PAD8" gate="1" pin="P"/>
+<pinref part="U$9" gate="G$1" pin="PPM"/>
 </segment>
 </net>
 <net name="N$26" class="0">
