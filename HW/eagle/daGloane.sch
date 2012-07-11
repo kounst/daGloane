@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="6.1">
+<eagle version="6.2">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -11349,10 +11349,11 @@ Basic 0.1" spaced jumper. Use with breakaway headers.</description>
 <wire x1="276.86" y1="180.34" x2="276.86" y2="177.8" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="U$3" gate="G$1" pin="INT"/>
 <pinref part="GND16" gate="1" pin="GND"/>
-<wire x1="284.48" y1="154.94" x2="276.86" y2="154.94" width="0.1524" layer="91"/>
 <wire x1="276.86" y1="154.94" x2="276.86" y2="152.4" width="0.1524" layer="91"/>
+<pinref part="U$3" gate="G$1" pin="FSYNC"/>
+<wire x1="284.48" y1="160.02" x2="276.86" y2="160.02" width="0.1524" layer="91"/>
+<wire x1="276.86" y1="160.02" x2="276.86" y2="154.94" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="C6" gate="G$1" pin="1"/>
