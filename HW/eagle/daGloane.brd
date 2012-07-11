@@ -1010,13 +1010,13 @@ design rules under a new name.</description>
 <attribute name="VALUE" x="39.23" y="58.725" size="1.27" layer="27"/>
 </element>
 <element name="SWDIO" library="daGloane" package="TESTPAD_B1,27" value="TESTPAD_TPB1,27" x="46" y="56" smashed="yes" rot="MR0">
-<attribute name="NAME" x="46.635" y="57.016" size="0.4064" layer="26" ratio="10" rot="MR0"/>
+<attribute name="NAME" x="45.516" y="56.765" size="0.4064" layer="26" ratio="10" rot="MR90"/>
 </element>
 <element name="SWCLK" library="daGloane" package="TESTPAD_B1,27" value="TESTPAD_TPB1,27" x="44.4" y="56" smashed="yes" rot="MR0">
-<attribute name="NAME" x="45.035" y="57.016" size="0.4064" layer="26" ratio="10" rot="MR0"/>
+<attribute name="NAME" x="43.916" y="56.765" size="0.4064" layer="26" ratio="10" rot="MR90"/>
 </element>
 <element name="GND" library="daGloane" package="TESTPAD_B1,27" value="TESTPAD_TPB1,27" x="47.6" y="56" smashed="yes" rot="MR0">
-<attribute name="NAME" x="48.235" y="57.016" size="0.4064" layer="26" ratio="10" rot="MR0"/>
+<attribute name="NAME" x="47.116" y="56.765" size="0.4064" layer="26" ratio="10" rot="MR90"/>
 </element>
 <element name="U$3" library="daGloane" package="MPU6000" value="MPU6000" x="40.5" y="40.5" smashed="yes" rot="R270"/>
 <element name="U$4" library="daGloane" package="SERIAL_QFN4X4-16" value="SERIAL_FT230XQ" x="50.1" y="46.4" smashed="yes"/>
@@ -1201,11 +1201,11 @@ design rules under a new name.</description>
 <attribute name="VALUE" x="62.275" y="38.595" size="0.4064" layer="27" rot="R90"/>
 </element>
 <element name="C21" library="rcl" package="C0805" value="10µF/6.3V" x="50.1" y="49.1" smashed="yes" rot="MR90">
-<attribute name="NAME" x="50.87" y="48.630003125" size="0.4064" layer="26" rot="MR90"/>
+<attribute name="NAME" x="50.97" y="48.630003125" size="0.4064" layer="26" rot="MR90"/>
 <attribute name="VALUE" x="47.56" y="47.830003125" size="0.4064" layer="28" rot="MR90"/>
 </element>
 <element name="R22" library="rcl" package="R0603" value="1k" x="35.1" y="51" smashed="yes" rot="MR0">
-<attribute name="NAME" x="35.589" y="51.589" size="0.4064" layer="26" rot="MR0"/>
+<attribute name="NAME" x="35.589" y="51.689" size="0.4064" layer="26" rot="MR0"/>
 <attribute name="VALUE" x="35.989" y="48.967996875" size="0.4064" layer="28" rot="MR0"/>
 </element>
 <element name="R23" library="rcl" package="R0603" value="1k" x="35" y="48.9" smashed="yes" rot="MR0">
@@ -1256,7 +1256,7 @@ design rules under a new name.</description>
 <attribute name="VALUE" x="31.105" y="27.665" size="0.4064" layer="27" rot="R90"/>
 </element>
 <element name="R18" library="rcl" package="R0603" value="10k" x="24" y="24" smashed="yes" rot="R225">
-<attribute name="NAME" x="24.857234375" y="23.9" size="0.4064" layer="25" rot="R225"/>
+<attribute name="NAME" x="23.657234375" y="25.1" size="0.4064" layer="25" rot="R225"/>
 <attribute name="VALUE" x="23.191775" y="26.065459375" size="0.4064" layer="27" rot="R225"/>
 </element>
 <element name="R25" library="rcl" package="R0603" value="10k" x="58" y="58" smashed="yes" rot="R45">
@@ -1264,7 +1264,7 @@ design rules under a new name.</description>
 <attribute name="VALUE" x="58.808221875" y="55.934540625" size="0.4064" layer="27" rot="R45"/>
 </element>
 <element name="R26" library="rcl" package="R0603" value="10k" x="24" y="57" smashed="yes" rot="R135">
-<attribute name="NAME" x="23.8" y="56.1427625" size="0.4064" layer="25" rot="R135"/>
+<attribute name="NAME" x="25.1" y="57.3427625" size="0.4064" layer="25" rot="R135"/>
 <attribute name="VALUE" x="26.065459375" y="57.808221875" size="0.4064" layer="27" rot="R135"/>
 </element>
 <element name="R27" library="rcl" package="R0603" value="10k" x="57" y="24" smashed="yes" rot="R315">
