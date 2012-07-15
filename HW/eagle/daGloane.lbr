@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.1" unitdist="mm" unit="mm" style="lines" multiple="1" display="yes" altdistance="0.1" altunitdist="mm" altunit="mm"/>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="yes"/>
@@ -1959,6 +1959,19 @@ Manufacturer: Hirose&lt;br&gt;&lt;br&gt;
 <wire x1="-10.16" y1="25.4" x2="-12.7" y2="22.86" width="0.254" layer="94"/>
 <text x="-2.54" y="27.94" size="1.27" layer="95">Bluetooth</text>
 </symbol>
+<symbol name="USB-MICRO_B_MT_PAD">
+<wire x1="2.54" y1="7.62" x2="-5.08" y2="7.62" width="0.254" layer="94"/>
+<wire x1="-5.08" y1="7.62" x2="-5.08" y2="-7.62" width="0.254" layer="94"/>
+<wire x1="-5.08" y1="-7.62" x2="2.54" y2="-7.62" width="0.254" layer="94"/>
+<text x="0.254" y="-3.302" size="2.54" layer="94" rot="R90">USB</text>
+<pin name="D+" x="-7.62" y="0" visible="pad" length="short"/>
+<pin name="D-" x="-7.62" y="2.54" visible="pad" length="short"/>
+<pin name="VBUS" x="-7.62" y="5.08" visible="pad" length="short"/>
+<pin name="GND" x="-7.62" y="-5.08" visible="pad" length="short"/>
+<pin name="ID" x="-7.62" y="-2.54" visible="pad" length="short"/>
+<pin name="MTN2" x="0" y="-10.16" visible="pad" length="short" direction="nc" rot="R90"/>
+<pin name="MTN1" x="-2.54" y="-10.16" visible="pad" length="short" direction="nc" rot="R90"/>
+</symbol>
 </symbols>
 <devicesets>
 <deviceset name="STM32F10XTXU6" prefix="U">
@@ -3131,6 +3144,27 @@ Basic 0.1" spaced jumper. Use with breakaway headers.</description>
 <connect gate="G$1" pin="RESET" pad="P$11"/>
 <connect gate="G$1" pin="UART-RX" pad="P$2"/>
 <connect gate="G$1" pin="UART-TX" pad="P$1"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="USB_MICROB_PLUG_MT">
+<gates>
+<gate name="G$1" symbol="USB-MICRO_B_MT_PAD" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="SPARKFUN-CONNECTORS_USB-MICROB">
+<connects>
+<connect gate="G$1" pin="D+" pad="D+"/>
+<connect gate="G$1" pin="D-" pad="D-"/>
+<connect gate="G$1" pin="GND" pad="GND"/>
+<connect gate="G$1" pin="ID" pad="ID"/>
+<connect gate="G$1" pin="MTN1" pad="MT1"/>
+<connect gate="G$1" pin="MTN2" pad="MT2"/>
+<connect gate="G$1" pin="VBUS" pad="VBUS"/>
 </connects>
 <technologies>
 <technology name=""/>
