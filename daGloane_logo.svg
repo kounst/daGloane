@@ -13,8 +13,8 @@
    height="297mm"
    id="svg2"
    version="1.1"
-   inkscape:version="0.48.1 r9760"
-   sodipodi:docname="Neues Dokument 1">
+   inkscape:version="0.48.3.1 r9886"
+   sodipodi:docname="daGloane_logo.svg">
   <defs
      id="defs4" />
   <sodipodi:namedview
@@ -24,15 +24,15 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.979899"
-     inkscape:cx="241.8439"
-     inkscape:cy="526.13792"
+     inkscape:zoom="1.4"
+     inkscape:cx="265.11911"
+     inkscape:cy="474.52246"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1680"
-     inkscape:window-height="973"
-     inkscape:window-x="0"
+     inkscape:window-width="1227"
+     inkscape:window-height="776"
+     inkscape:window-x="53"
      inkscape:window-y="24"
      inkscape:window-maximized="1" />
   <metadata
@@ -43,7 +43,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -51,57 +51,58 @@
      inkscape:label="Ebene 1"
      inkscape:groupmode="layer"
      id="layer1">
-    <flowRoot
-       xml:space="preserve"
-       id="flowRoot2985"
-       style="font-size:16.07299995px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
-       transform="matrix(1,0,-0.61241831,1,319.66805,-3.0304576)"><flowRegion
-         id="flowRegion2987"><rect
-           id="rect2989"
-           width="434.28571"
-           height="178.57143"
-           x="141.42857"
-           y="446.64789" /></flowRegion><flowPara
-         id="flowPara2991"
-         style="font-size:64px;font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:224.0000248%;letter-spacing:0.87999994px;word-spacing:0px;font-family:Comic Sans MS;-inkscape-font-specification:Comic Sans MS Italic">daGloane</flowPara></flowRoot>    <path
+    <path
        sodipodi:type="arc"
-       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="fill:none;stroke:#000000;stroke-width:3.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        id="path2995"
        sodipodi:cx="321.22852"
        sodipodi:cy="481.37344"
        sodipodi:rx="64.144684"
        sodipodi:ry="18.435284"
        d="m 385.3732,481.37344 a 64.144684,18.435284 0 1 1 -128.28937,0 64.144684,18.435284 0 1 1 128.28937,0 z"
-       transform="translate(2.5050763,-8.4847712)" />
+       transform="translate(-9.4949237,-2.484771)" />
     <path
        sodipodi:type="arc"
-       style="fill:none;stroke:#000000;stroke-width:0.68527395px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="fill:none;stroke:#000000;stroke-width:2.39845896;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        id="path2995-6"
        sodipodi:cx="321.22852"
        sodipodi:cy="481.37344"
        sodipodi:rx="64.144684"
        sodipodi:ry="18.435284"
        d="m 385.3732,481.37344 a 64.144684,18.435284 0 1 1 -128.28937,0 64.144684,18.435284 0 1 1 128.28937,0 z"
-       transform="matrix(1.4549148,0,0,1.463639,-278.02997,-90.236373)" />
+       transform="matrix(1.4549148,0,0,1.463639,-258.74426,-102.23637)" />
     <path
        sodipodi:type="arc"
-       style="fill:#ffffff;stroke:#000000;stroke-width:0.86755561999999986px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="fill:#ffffff;stroke:#000000;stroke-width:3.03644466;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        id="path2995-6-0"
        sodipodi:cx="321.22852"
        sodipodi:cy="481.37344"
        sodipodi:rx="64.144684"
        sodipodi:ry="18.435284"
        d="m 385.3732,481.37344 a 64.144684,18.435284 0 1 1 -128.28937,0 64.144684,18.435284 0 1 1 128.28937,0 z"
-       transform="matrix(1.1512148,0,0,1.1541147,45.575479,6.4850937)" />
+       transform="matrix(1.1512148,0,0,1.1541147,21.575479,-1.5149063)" />
     <path
        sodipodi:type="arc"
-       style="fill:#ffffff;stroke:#000000;stroke-width:0.82845217000000004px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="fill:#ffffff;stroke:#000000;stroke-width:3.06966662;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        id="path2995-6-0-4"
        sodipodi:cx="321.22852"
        sodipodi:cy="481.37344"
        sodipodi:rx="64.144684"
        sodipodi:ry="18.435284"
        d="m 385.3732,481.37344 a 64.144684,18.435284 0 1 1 -128.28937,0 64.144684,18.435284 0 1 1 128.28937,0 z"
-       transform="matrix(1.2051052,0,0,1.2090386,-266.82724,-77.647019)" />
-  </g>
+       transform="matrix(1.1383328,0,0,1.1420482,-225.06723,-36.136938)" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot2985"
+       style="font-size:16.07299994999999981px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:#ffffff;font-family:Sans;-inkscape-font-specification:Comic Sans MS Bold Italic;stroke-opacity:1;stroke-width:2.5;stroke-miterlimit:5;stroke-dasharray:none;stroke-linejoin:miter"
+       transform="matrix(1,0,-0.61241831,1,319.66805,-3.0304576)"><flowRegion
+         id="flowRegion2987"><rect
+           id="rect2989"
+           width="434.28571"
+           height="178.57143"
+           x="141.42857"
+           y="446.64789"
+           style="stroke:#ffffff;stroke-opacity:1;stroke-width:2.5;stroke-miterlimit:5;stroke-dasharray:none;stroke-linejoin:miter;font-weight:bold;-inkscape-font-specification:Comic Sans MS Bold Italic" /></flowRegion><flowPara
+         id="flowPara2991"
+         style="font-size:64px;font-style:italic;font-variant:normal;font-weight:bold;font-stretch:normal;line-height:224.00002480000000560%;letter-spacing:0.87999994000000004px;word-spacing:0px;font-family:Comic Sans MS;-inkscape-font-specification:Comic Sans MS Bold Italic;stroke:#ffffff;stroke-opacity:1;stroke-width:2.5;stroke-miterlimit:5;stroke-dasharray:none;stroke-linejoin:miter">daGloane</flowPara></flowRoot>  </g>
 </svg>
