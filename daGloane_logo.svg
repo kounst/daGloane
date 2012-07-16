@@ -2,24 +2,81 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
+   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="210mm"
-   height="297mm"
+   width="406.03622"
+   height="172.59979"
    id="svg2"
    version="1.1"
    inkscape:version="0.48.3.1 r9886"
    sodipodi:docname="daGloane_logo.svg"
    inkscape:export-filename="/home/konstantin/daGloane/daGloane_logo.png"
-   inkscape:export-xdpi="90"
-   inkscape:export-ydpi="90">
+   inkscape:export-xdpi="249.76331"
+   inkscape:export-ydpi="249.76331">
   <defs
-     id="defs4" />
+     id="defs4">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient5284">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop5286" />
+      <stop
+         style="stop-color:#ffffff;stop-opacity:0;"
+         offset="1"
+         id="stop5288" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient3818"
+       osb:paint="solid">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop3820" />
+    </linearGradient>
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       id="perspective3004" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient5284"
+       id="linearGradient5290"
+       x1="143"
+       y1="536.05945"
+       x2="423.66"
+       y2="536.05945"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient5284"
+       id="linearGradient5296"
+       gradientUnits="userSpaceOnUse"
+       x1="143"
+       y1="536.05945"
+       x2="423.66"
+       y2="536.05945" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient5284"
+       id="linearGradient5298"
+       gradientUnits="userSpaceOnUse"
+       x1="143"
+       y1="536.05945"
+       x2="423.66"
+       y2="536.05945" />
+  </defs>
   <sodipodi:namedview
      id="base"
      pagecolor="#ffffff"
@@ -28,8 +85,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.4"
-     inkscape:cx="265.11911"
-     inkscape:cy="474.52246"
+     inkscape:cx="215.8171"
+     inkscape:cy="156.17921"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -37,7 +94,11 @@
      inkscape:window-height="776"
      inkscape:window-x="53"
      inkscape:window-y="24"
-     inkscape:window-maximized="1" />
+     inkscape:window-maximized="1"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -53,59 +114,61 @@
   <g
      inkscape:label="Ebene 1"
      inkscape:groupmode="layer"
-     id="layer1">
+     id="layer1"
+     transform="translate(-64.221106,-457.95339)">
     <path
        sodipodi:type="arc"
-       style="fill:none;stroke:#000000;stroke-width:3.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       style="fill:none;stroke:#000000;stroke-width:5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        id="path2995"
        sodipodi:cx="321.22852"
        sodipodi:cy="481.37344"
        sodipodi:rx="64.144684"
        sodipodi:ry="18.435284"
-       d="m 385.3732,481.37344 a 64.144684,18.435284 0 1 1 -128.28937,0 64.144684,18.435284 0 1 1 128.28937,0 z"
-       transform="translate(-9.4949237,-2.484771)" />
+       d="m 385.3732,481.37344 c 0,10.18153 -28.71855,18.43529 -64.14468,18.43529 -35.42614,0 -64.14469,-8.25376 -64.14469,-18.43529 0,-10.18152 28.71855,-18.43528 64.14469,-18.43528 35.42613,0 64.14468,8.25376 64.14468,18.43528 z"
+       transform="matrix(1,0,0.49541043,1,-249.97235,-2.484771)" />
     <path
        sodipodi:type="arc"
-       style="fill:none;stroke:#000000;stroke-width:2.39845896;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       style="fill:none;stroke:#000000;stroke-width:4.45428085;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        id="path2995-6"
        sodipodi:cx="321.22852"
        sodipodi:cy="481.37344"
        sodipodi:rx="64.144684"
        sodipodi:ry="18.435284"
-       d="m 385.3732,481.37344 a 64.144684,18.435284 0 1 1 -128.28937,0 64.144684,18.435284 0 1 1 128.28937,0 z"
-       transform="matrix(1.4549148,0,0,1.463639,-258.74426,-102.23637)" />
+       d="m 385.3732,481.37344 c 0,10.18153 -28.71855,18.43529 -64.14468,18.43529 -35.42614,0 -64.14469,-8.25376 -64.14469,-18.43529 0,-10.18152 28.71855,-18.43528 64.14469,-18.43528 35.42613,0 64.14468,8.25376 64.14468,18.43528 z"
+       transform="matrix(1.4549148,0,0.83145576,1.463639,-656.98498,-104.23637)" />
     <path
        sodipodi:type="arc"
-       style="fill:none;stroke:#000000;stroke-width:3.03644465999999991;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       style="fill:none;stroke:#000000;stroke-width:5.29208946;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        id="path2995-6-0"
        sodipodi:cx="321.22852"
        sodipodi:cy="481.37344"
        sodipodi:rx="64.144684"
        sodipodi:ry="18.435284"
-       d="m 385.3732,481.37344 a 64.144684,18.435284 0 1 1 -128.28937,0 64.144684,18.435284 0 1 1 128.28937,0 z"
-       transform="matrix(1.1512148,0,0,1.1541147,21.575479,-1.5149063)" />
+       d="m 385.3732,481.37344 c 0,10.18153 -28.71855,18.43529 -64.14468,18.43529 -35.42614,0 -64.14469,-8.25376 -64.14469,-18.43529 0,-10.18152 28.71855,-18.43528 64.14469,-18.43528 35.42613,0 64.14468,8.25376 64.14468,18.43528 z"
+       transform="matrix(1.1512148,0,0.93082414,1.1541147,-426.49854,-1.5149063)" />
     <path
        sodipodi:type="arc"
-       style="fill:none;stroke:#000000;stroke-width:3.06966662000000001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       style="fill:none;stroke:#000000;stroke-width:4.99917126;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        id="path2995-6-0-4"
        sodipodi:cx="321.22852"
        sodipodi:cy="481.37344"
        sodipodi:rx="64.144684"
        sodipodi:ry="18.435284"
-       d="m 385.3732,481.37344 a 64.144684,18.435284 0 1 1 -128.28937,0 64.144684,18.435284 0 1 1 128.28937,0 z"
-       transform="matrix(1.1383328,0,0,1.1420482,-225.06723,-36.136938)" />
+       d="m 385.3732,481.37344 c 0,10.18153 -28.71855,18.43529 -64.14468,18.43529 -35.42614,0 -64.14469,-8.25376 -64.14469,-18.43529 0,-10.18152 28.71855,-18.43528 64.14469,-18.43528 35.42613,0 64.14468,8.25376 64.14468,18.43528 z"
+       transform="matrix(1.1383328,0,0.46503865,1.1420482,-448.92449,-36.136938)" />
     <flowRoot
        xml:space="preserve"
        id="flowRoot2985"
-       style="font-size:16.07299994999999981px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:#ffffff;font-family:Sans;-inkscape-font-specification:Comic Sans MS Bold Italic;stroke-opacity:1;stroke-width:2.5;stroke-miterlimit:5;stroke-dasharray:none;stroke-linejoin:miter"
-       transform="matrix(1,0,-0.61241831,1,319.66805,-3.0304576)"><flowRegion
-         id="flowRegion2987"><rect
+       style="font-size:16.07299995px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:url(#linearGradient5290);stroke-width:3;stroke-linejoin:round;stroke-miterlimit:5;stroke-opacity:1;stroke-dasharray:none;font-family:Sans;-inkscape-font-specification:Comic Sans MS Bold Italic"
+       transform="matrix(1,0,-0.61241831,1,307.66805,-13.030458)"><flowRegion
+         id="flowRegion2987"
+         style="stroke:url(#linearGradient5298)"><rect
            id="rect2989"
            width="434.28571"
            height="178.57143"
            x="141.42857"
            y="446.64789"
-           style="stroke:#ffffff;stroke-opacity:1;stroke-width:2.5;stroke-miterlimit:5;stroke-dasharray:none;stroke-linejoin:miter;font-weight:bold;-inkscape-font-specification:Comic Sans MS Bold Italic" /></flowRegion><flowPara
+           style="font-weight:bold;fill:#000000;fill-opacity:1;stroke:url(#linearGradient5296);stroke-width:3;stroke-linejoin:round;stroke-miterlimit:5;stroke-opacity:1;stroke-dasharray:none;-inkscape-font-specification:Comic Sans MS Bold Italic" /></flowRegion><flowPara
          id="flowPara2991"
-         style="font-size:64px;font-style:italic;font-variant:normal;font-weight:bold;font-stretch:normal;line-height:224.00002480000000560%;letter-spacing:0.87999994000000004px;word-spacing:0px;font-family:Comic Sans MS;-inkscape-font-specification:Comic Sans MS Bold Italic;stroke:#ffffff;stroke-opacity:1;stroke-width:2.5;stroke-miterlimit:5;stroke-dasharray:none;stroke-linejoin:miter">daGloane</flowPara></flowRoot>  </g>
+         style="font-size:72px;font-style:italic;font-variant:normal;font-weight:bold;font-stretch:normal;line-height:224.0000248%;letter-spacing:0.87999994px;word-spacing:0px;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:#ffffff;stroke-width:3;stroke-linejoin:round;stroke-miterlimit:5;stroke-opacity:1;stroke-dasharray:none;font-family:Comic Sans MS;-inkscape-font-specification:Comic Sans MS Bold Italic">daGloane</flowPara></flowRoot>  </g>
 </svg>
