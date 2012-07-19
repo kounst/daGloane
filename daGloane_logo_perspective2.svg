@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   inkscape:version="0.48.3.1 r9886"
+   version="1.1"
+   id="svg3768"
+   height="297mm"
+   width="210mm"
+   sodipodi:docname="daGloane_logo_perspective2.svg"
+   inkscape:export-filename="/home/konstantin/daGloane/daGloane_logo_perspective2.png"
+   inkscape:export-xdpi="249"
+   inkscape:export-ydpi="249">
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.7"
+     inkscape:cx="1701.3666"
+     inkscape:cy="585.56054"
+     inkscape:document-units="px"
+     inkscape:current-layer="svg3768"
+     showgrid="false"
+     inkscape:window-width="1227"
+     inkscape:window-height="776"
+     inkscape:window-x="53"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1" />
+  <defs
+     id="defs3770">
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient5284"
+       id="linearGradient5290"
+       x1="143"
+       y1="536.05945"
+       x2="423.66"
+       y2="536.05945"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient5284">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop5286" />
+      <stop
+         style="stop-color:#ffffff;stop-opacity:0;"
+         offset="1"
+         id="stop5288" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient5284"
+       id="linearGradient5298"
+       gradientUnits="userSpaceOnUse"
+       x1="143"
+       y1="536.05945"
+       x2="423.66"
+       y2="536.05945" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient5284"
+       id="linearGradient5296"
+       gradientUnits="userSpaceOnUse"
+       x1="143"
+       y1="536.05945"
+       x2="423.66"
+       y2="536.05945" />
+    <linearGradient
+       y2="536.05945"
+       x2="423.66"
+       y1="536.05945"
+       x1="143"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient4656"
+       xlink:href="#linearGradient5284"
+       inkscape:collect="always" />
+  </defs>
+  <metadata
+     id="metadata3773">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:groupmode="layer"
+     inkscape:label="Ebene 1">
+    <path
+       d="m 1849.9475,472.27498 c -17.5945,-0.58232 -35.418,0.69297 -52.5853,4.08402 -69.577,13.74347 -104.4555,58.08736 -75.1799,100.16222 30.6256,44.01538 118.2868,67.57048 192.3987,50.93222 72.4496,-16.26508 100.5093,-64.07823 65.3872,-105.14967 -25.3587,-29.65427 -77.3036,-48.28408 -130.0207,-50.02879 0,0 0,0 0,0 m 0.819,14.95391 c 42.4021,1.34846 83.8355,16.38127 103.9669,40.37174 27.6748,32.97999 4.838,70.55581 -52.9545,83.3574 -58.843,13.03432 -127.6896,-5.30396 -152.504,-40.14969 -23.9379,-33.61468 3.1651,-68.99989 59.1286,-80.19438 13.8435,-2.76912 28.2141,-3.83503 42.363,-3.38507 0,0 0,0 0,0 m -387.6457,61.83015 c -18.7674,-0.59116 -38.2289,0.87452 -57.499,4.68093 -78.1612,15.4391 -126.5966,64.78092 -105.385,111.53978 22.2535,49.05552 111.2561,75.11911 195.3557,56.23855 82.0926,-18.42997 123.5625,-71.85123 95.405,-117.4041 -20.2832,-32.8137 -71.6494,-53.28411 -127.8767,-55.05516 0,0 0,0 0,0 m -2.7014,16.55719 c 45.2624,1.36373 86.1951,17.89667 102.1761,44.46034 22.0104,36.5857 -11.4564,78.5812 -76.8806,93.07357 -66.6908,14.77295 -136.5869,-5.52451 -154.8442,-44.32908 -17.5724,-37.34872 20.2625,-76.73745 83.1822,-89.32342 15.5542,-3.11134 31.2621,-4.3365 46.3665,-3.88141 0,0 0,0 0,0 m 235.717,-284.00805 c -15.7782,-0.57464 -31.9455,0.32337 -47.6435,2.90782 -63.5331,10.45977 -97.9571,45.28682 -74.8054,78.55962 24.0974,34.63227 100.3079,53.57645 167.6495,41.1195 66.0012,-12.20903 95.2789,-49.5045 67.3982,-82.10836 -20.2133,-23.63762 -65.317,-38.75669 -112.5988,-40.47858 0,0 0,0 0,0 m -0.5033,11.87616 c 37.9989,1.34114 73.9721,13.52165 89.9998,32.62208 21.9605,26.17058 -1.6554,55.50369 -54.3159,65.12747 -53.5087,9.77881 -113.4641,-5.00357 -133.0173,-32.46075 -18.9381,-26.59354 7.9569,-54.36486 59.0459,-62.87356 12.6518,-2.10713 25.609,-2.86269 38.2875,-2.41524 0,0 0,0 0,0 m -351.4411,46.31821 c -16.7146,-0.5876 -34.1629,0.43716 -51.5635,3.30193 -70.4692,11.60171 -115.9548,49.8381 -99.4115,86.30688 17.2576,38.04397 94.4178,58.71113 169.7055,44.78429 73.7048,-13.63406 113.9676,-54.71564 91.9116,-90.39656 -15.9611,-25.82116 -60.5576,-42.23583 -110.6421,-43.99654 0,0 0,0 0,0 m -3.3728,12.98605 c 40.2788,1.36842 75.7932,14.60068 88.3524,35.47609 17.2334,28.64489 -15.0936,60.96769 -73.8583,71.7072 -59.7652,10.92238 -120.4745,-5.2135 -134.6564,-35.35664 -13.7114,-29.14309 21.9539,-59.6422 78.657,-69.08594 14.0351,-2.33751 28.0659,-3.19733 41.5053,-2.74071 0,0 0,0 0,0"
+       style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#000000;fill-opacity:1;stroke:none;stroke-width:20;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans"
+       id="path3778-2"
+       inkscape:connector-curvature="0" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot2985"
+       style="font-size:16.07299995px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:url(#linearGradient4656);stroke-width:3;stroke-linejoin:round;stroke-miterlimit:5;stroke-opacity:1;stroke-dasharray:none;font-family:Sans;-inkscape-font-specification:Comic Sans MS Bold Italic"
+       transform="matrix(2.6149781,0,-1.6014606,2.425879,1688.0171,-849.44911)"><flowRegion
+         id="flowRegion2987"
+         style="stroke:url(#linearGradient5298)"><rect
+           id="rect2989"
+           width="434.28571"
+           height="178.57143"
+           x="141.42857"
+           y="446.64789"
+           style="font-weight:bold;fill:#000000;fill-opacity:1;stroke:url(#linearGradient5296);stroke-width:3;stroke-linejoin:round;stroke-miterlimit:5;stroke-opacity:1;stroke-dasharray:none;-inkscape-font-specification:Comic Sans MS Bold Italic" /></flowRegion><flowPara
+         id="flowPara2991"
+         style="font-size:72px;font-style:italic;font-variant:normal;font-weight:bold;font-stretch:normal;line-height:224.0000248%;letter-spacing:0.87999994px;word-spacing:0px;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:#ffffff;stroke-width:3;stroke-linejoin:round;stroke-miterlimit:5;stroke-opacity:1;stroke-dasharray:none;font-family:Comic Sans MS;-inkscape-font-specification:Comic Sans MS Bold Italic">daGloane</flowPara></flowRoot>  </g>
+</svg>
