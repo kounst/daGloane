@@ -8832,7 +8832,6 @@ Basic 0.1" spaced jumper. Use with breakaway headers.</description>
 <part name="U$8" library="daGloane" deviceset="3A_BLDC_CONTROLLER" device=""/>
 <part name="U$9" library="daGloane" deviceset="3A_BLDC_CONTROLLER" device=""/>
 <part name="R28" library="rcl" deviceset="R-EU_" device="R0603" value="10k"/>
-<part name="3.3V7" library="supply1" deviceset="VCC" device="" value="3.3V"/>
 <part name="U$5" library="daGloane" deviceset="BLUETOOTH_REDUCED" device=""/>
 <part name="R30" library="rcl" deviceset="R-EU_" device="R0603" value="1k"/>
 </parts>
@@ -10607,9 +10606,10 @@ Basic 0.1" spaced jumper. Use with breakaway headers.</description>
 <text x="287.02" y="241.3" size="3.81" layer="97">Motion Tracking</text>
 <wire x1="215.9" y1="243.84" x2="215.9" y2="111.76" width="0.1524" layer="97"/>
 <wire x1="215.9" y1="111.76" x2="342.9" y2="111.76" width="0.1524" layer="97"/>
-<text x="88.9" y="-236.22" size="5.08" layer="91">Todo:</text>
-<text x="109.22" y="-233.68" size="2.54" layer="91">easiest way to configure Module?</text>
 <text x="444.5" y="-175.26" size="5.08" layer="94">BLDC Controllers</text>
+<text x="193.04" y="-317.5" size="1.778" layer="91">Bluetooth module is set in AT mode at startup</text>
+<text x="193.04" y="-320.04" size="1.778" layer="91">for bluetooth communction it has to be reset </text>
+<text x="193.04" y="-322.58" size="1.778" layer="91">by the µC using the "AT+RESET" command</text>
 </plain>
 <instances>
 <instance part="R16" gate="G$1" x="185.42" y="48.26" rot="R90"/>
@@ -10776,9 +10776,8 @@ Basic 0.1" spaced jumper. Use with breakaway headers.</description>
 <instance part="U$8" gate="G$1" x="398.78" y="-121.92"/>
 <instance part="U$9" gate="G$1" x="497.84" y="-121.92"/>
 <instance part="R28" gate="G$1" x="137.16" y="81.28" rot="R90"/>
-<instance part="3.3V7" gate="VCC" x="246.38" y="-233.68" rot="MR0"/>
 <instance part="U$5" gate="G$1" x="223.52" y="-276.86"/>
-<instance part="R30" gate="G$1" x="246.38" y="-243.84" rot="R90"/>
+<instance part="R30" gate="G$1" x="243.84" y="-246.38" rot="R90"/>
 </instances>
 <busses>
 </busses>
@@ -11417,11 +11416,6 @@ Basic 0.1" spaced jumper. Use with breakaway headers.</description>
 <junction x="309.88" y="-93.98"/>
 <pinref part="3.3V5" gate="VCC" pin="VCC"/>
 </segment>
-<segment>
-<pinref part="3.3V7" gate="VCC" pin="VCC"/>
-<wire x1="246.38" y1="-236.22" x2="246.38" y2="-238.76" width="0.1524" layer="91"/>
-<pinref part="R30" gate="G$1" pin="2"/>
-</segment>
 </net>
 <net name="USART_RX1" class="0">
 <segment>
@@ -11676,6 +11670,13 @@ Basic 0.1" spaced jumper. Use with breakaway headers.</description>
 <wire x1="106.68" y1="152.4" x2="106.68" y2="165.1" width="0.1524" layer="91"/>
 <wire x1="106.68" y1="165.1" x2="119.38" y2="165.1" width="0.1524" layer="91"/>
 <label x="119.38" y="165.1" size="1.778" layer="95" xref="yes"/>
+</segment>
+<segment>
+<wire x1="246.38" y1="-236.22" x2="243.84" y2="-236.22" width="0.1524" layer="91"/>
+<wire x1="243.84" y1="-236.22" x2="243.84" y2="-238.76" width="0.1524" layer="91"/>
+<wire x1="243.84" y1="-238.76" x2="243.84" y2="-241.3" width="0.1524" layer="91"/>
+<pinref part="R30" gate="G$1" pin="2"/>
+<label x="246.38" y="-236.22" size="1.778" layer="95" xref="yes"/>
 </segment>
 </net>
 <net name="N$23" class="0">
@@ -11965,8 +11966,8 @@ Basic 0.1" spaced jumper. Use with breakaway headers.</description>
 </net>
 <net name="N$26" class="0">
 <segment>
-<wire x1="246.38" y1="-248.92" x2="246.38" y2="-254" width="0.1524" layer="91"/>
-<wire x1="246.38" y1="-254" x2="241.3" y2="-254" width="0.1524" layer="91"/>
+<wire x1="243.84" y1="-251.46" x2="243.84" y2="-254" width="0.1524" layer="91"/>
+<wire x1="243.84" y1="-254" x2="241.3" y2="-254" width="0.1524" layer="91"/>
 <pinref part="U$5" gate="G$1" pin="PIO(11)"/>
 <pinref part="R30" gate="G$1" pin="1"/>
 </segment>
