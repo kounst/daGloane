@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="6.2">
+<eagle version="6.1">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.011667" unitdist="mm" unit="mm" style="lines" multiple="1" display="yes" altdistance="0.635" altunitdist="mm" altunit="mm"/>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="yes"/>
@@ -4715,6 +4715,9 @@ Manufacturer: Hirose&lt;br&gt;&lt;br&gt;
 <rectangle x1="1.254165625" y1="3.505834375" x2="2.035834375" y2="3.517496875" layer="200"/>
 <rectangle x1="1.394165625" y1="3.5175" x2="1.895834375" y2="3.5291625" layer="200"/>
 </package>
+<package name="SPRING_HEADER">
+<smd name="P$1" x="0" y="0" dx="5" dy="1" layer="1" cream="no"/>
+</package>
 </packages>
 <symbols>
 <symbol name="PORT_A_L">
@@ -6382,6 +6385,21 @@ Basic 0.1" spaced jumper. Use with breakaway headers.</description>
 <connect gate="G$1" pin="MTN1" pad="MT1"/>
 <connect gate="G$1" pin="MTN2" pad="MT2"/>
 <connect gate="G$1" pin="VBUS" pad="VBUS"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="SPRING_HEADER">
+<gates>
+<gate name="G$1" symbol="TESTPAD_TP" x="0" y="2.54"/>
+</gates>
+<devices>
+<device name="" package="SPRING_HEADER">
+<connects>
+<connect gate="G$1" pin="TP" pad="P$1"/>
 </connects>
 <technologies>
 <technology name=""/>
