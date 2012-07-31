@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="6.1">
+<eagle version="6.2">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -7068,6 +7068,12 @@ Basic 0.1" spaced jumper. Use with breakaway headers.</description>
 <part name="U$7" library="daGloane" deviceset="SPRING_HEADER" device=""/>
 <part name="U$8" library="daGloane" deviceset="SPRING_HEADER" device=""/>
 <part name="U$9" library="daGloane" deviceset="SPRING_HEADER" device=""/>
+<part name="R14" library="rcl" deviceset="R-EU_" device="R0805" value="470R"/>
+<part name="R15" library="rcl" deviceset="R-EU_" device="R0805" value="470R"/>
+<part name="LED3" library="led" deviceset="LED" device="CHIPLED_0603"/>
+<part name="LED4" library="led" deviceset="LED" device="CHIPLED_0603"/>
+<part name="U$12" library="daGloane" deviceset="SPRING_HEADER" device=""/>
+<part name="U$13" library="daGloane" deviceset="SPRING_HEADER" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -7109,10 +7115,10 @@ Basic 0.1" spaced jumper. Use with breakaway headers.</description>
 <instance part="GND2" gate="1" x="215.9" y="53.34"/>
 <instance part="C2" gate="G$1" x="208.28" y="66.04"/>
 <instance part="GND3" gate="1" x="208.28" y="53.34"/>
-<instance part="!AT" gate="A" x="279.4" y="104.14" rot="R270"/>
+<instance part="!AT" gate="A" x="279.4" y="111.76"/>
 <instance part="R1" gate="G$1" x="264.16" y="109.22"/>
 <instance part="R2" gate="G$1" x="274.32" y="116.84" rot="R90"/>
-<instance part="GND4" gate="1" x="274.32" y="93.98"/>
+<instance part="GND4" gate="1" x="287.02" y="106.68"/>
 <instance part="+3V3" gate="G$1" x="274.32" y="127"/>
 <instance part="R3" gate="G$1" x="302.26" y="119.38" rot="R90"/>
 <instance part="R4" gate="G$1" x="302.26" y="104.14" rot="R90"/>
@@ -7140,6 +7146,12 @@ Basic 0.1" spaced jumper. Use with breakaway headers.</description>
 <instance part="U$7" gate="G$1" x="264.16" y="73.66" smashed="yes"/>
 <instance part="U$8" gate="G$1" x="259.08" y="73.66" smashed="yes"/>
 <instance part="U$9" gate="G$1" x="256.54" y="114.3" smashed="yes"/>
+<instance part="R14" gate="G$1" x="269.24" y="93.98" rot="R180"/>
+<instance part="R15" gate="G$1" x="269.24" y="101.6" rot="R180"/>
+<instance part="LED3" gate="G$1" x="279.4" y="93.98" rot="R90"/>
+<instance part="LED4" gate="G$1" x="279.4" y="101.6" rot="R90"/>
+<instance part="U$12" gate="G$1" x="256.54" y="106.68" smashed="yes"/>
+<instance part="U$13" gate="G$1" x="264.16" y="96.52" smashed="yes"/>
 </instances>
 <busses>
 </busses>
@@ -7238,9 +7250,15 @@ Basic 0.1" spaced jumper. Use with breakaway headers.</description>
 </segment>
 <segment>
 <pinref part="GND4" gate="1" pin="GND"/>
-<wire x1="274.32" y1="96.52" x2="274.32" y2="101.6" width="0.1524" layer="91"/>
 <pinref part="!AT" gate="A" pin="2"/>
-<wire x1="274.32" y1="101.6" x2="276.86" y2="101.6" width="0.1524" layer="91"/>
+<wire x1="287.02" y1="109.22" x2="284.48" y2="109.22" width="0.1524" layer="91"/>
+<pinref part="LED3" gate="G$1" pin="C"/>
+<pinref part="LED4" gate="G$1" pin="C"/>
+<wire x1="284.48" y1="109.22" x2="281.94" y2="109.22" width="0.1524" layer="91"/>
+<wire x1="284.48" y1="93.98" x2="284.48" y2="101.6" width="0.1524" layer="91"/>
+<wire x1="284.48" y1="101.6" x2="284.48" y2="109.22" width="0.1524" layer="91"/>
+<junction x="284.48" y="101.6"/>
+<junction x="284.48" y="109.22"/>
 </segment>
 <segment>
 <pinref part="R6" gate="G$1" pin="1"/>
@@ -7469,8 +7487,7 @@ Basic 0.1" spaced jumper. Use with breakaway headers.</description>
 <wire x1="269.24" y1="109.22" x2="274.32" y2="109.22" width="0.1524" layer="91"/>
 <wire x1="274.32" y1="109.22" x2="274.32" y2="111.76" width="0.1524" layer="91"/>
 <pinref part="!AT" gate="A" pin="1"/>
-<wire x1="276.86" y1="104.14" x2="274.32" y2="104.14" width="0.1524" layer="91"/>
-<wire x1="274.32" y1="104.14" x2="274.32" y2="109.22" width="0.1524" layer="91"/>
+<wire x1="279.4" y1="109.22" x2="274.32" y2="109.22" width="0.1524" layer="91"/>
 <junction x="274.32" y="109.22"/>
 </segment>
 </net>
@@ -7620,6 +7637,42 @@ Basic 0.1" spaced jumper. Use with breakaway headers.</description>
 <wire x1="215.9" y1="106.68" x2="210.82" y2="106.68" width="0.1524" layer="91"/>
 <wire x1="215.9" y1="104.14" x2="215.9" y2="106.68" width="0.1524" layer="91"/>
 <junction x="215.9" y="106.68"/>
+</segment>
+</net>
+<net name="N$12" class="0">
+<segment>
+<wire x1="274.32" y1="93.98" x2="276.86" y2="93.98" width="0.1524" layer="91"/>
+<pinref part="R14" gate="G$1" pin="1"/>
+<pinref part="LED3" gate="G$1" pin="A"/>
+</segment>
+</net>
+<net name="N$13" class="0">
+<segment>
+<wire x1="274.32" y1="101.6" x2="276.86" y2="101.6" width="0.1524" layer="91"/>
+<pinref part="R15" gate="G$1" pin="1"/>
+<pinref part="LED4" gate="G$1" pin="A"/>
+</segment>
+</net>
+<net name="N$14" class="0">
+<segment>
+<pinref part="U$1" gate="G$1" pin="PIO(8)"/>
+<wire x1="254" y1="101.6" x2="261.62" y2="101.6" width="0.1524" layer="91"/>
+<wire x1="261.62" y1="101.6" x2="261.62" y2="93.98" width="0.1524" layer="91"/>
+<pinref part="R14" gate="G$1" pin="2"/>
+<wire x1="261.62" y1="93.98" x2="264.16" y2="93.98" width="0.1524" layer="91"/>
+<pinref part="U$13" gate="G$1" pin="TP"/>
+<junction x="264.16" y="93.98"/>
+</segment>
+</net>
+<net name="N$16" class="0">
+<segment>
+<pinref part="U$1" gate="G$1" pin="PIO(9)"/>
+<pinref part="R15" gate="G$1" pin="2"/>
+<wire x1="254" y1="104.14" x2="256.54" y2="104.14" width="0.1524" layer="91"/>
+<wire x1="256.54" y1="104.14" x2="264.16" y2="104.14" width="0.1524" layer="91"/>
+<wire x1="264.16" y1="104.14" x2="264.16" y2="101.6" width="0.1524" layer="91"/>
+<pinref part="U$12" gate="G$1" pin="TP"/>
+<junction x="256.54" y="104.14"/>
 </segment>
 </net>
 </nets>
