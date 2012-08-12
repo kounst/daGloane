@@ -6415,65 +6415,6 @@ Source: http://focus.ti.com/lit/ds/symlink/ua78m33.pdf</description>
 </library>
 <library name="daGloane">
 <packages>
-<package name="BLUETOOTH">
-<wire x1="-6.35" y1="11.43" x2="6.65" y2="11.43" width="0" layer="21"/>
-<wire x1="6.65" y1="11.43" x2="6.65" y2="-15.57" width="0" layer="21"/>
-<wire x1="6.65" y1="-15.57" x2="-6.35" y2="-15.57" width="0" layer="21"/>
-<wire x1="-6.35" y1="-15.57" x2="-6.35" y2="11.43" width="0" layer="21"/>
-<smd name="P$1" x="-5.75" y="4.33" dx="1.3" dy="1.1" layer="1"/>
-<smd name="P$2" x="-5.75" y="2.83" dx="1.3" dy="1.1" layer="1"/>
-<smd name="P$3" x="-5.75" y="1.33" dx="1.3" dy="1.1" layer="1"/>
-<smd name="P$4" x="-5.75" y="-0.17" dx="1.3" dy="1.1" layer="1"/>
-<smd name="P$5" x="-5.75" y="-1.67" dx="1.3" dy="1.1" layer="1"/>
-<smd name="P$6" x="-5.75" y="-3.17" dx="1.3" dy="1.1" layer="1"/>
-<smd name="P$7" x="-5.75" y="-4.67" dx="1.3" dy="1.1" layer="1"/>
-<smd name="P$8" x="-5.75" y="-6.17" dx="1.3" dy="1.1" layer="1"/>
-<smd name="P$9" x="-5.75" y="-7.67" dx="1.3" dy="1.1" layer="1"/>
-<smd name="P$10" x="-5.75" y="-9.17" dx="1.3" dy="1.1" layer="1"/>
-<smd name="P$11" x="-5.75" y="-10.67" dx="1.3" dy="1.1" layer="1"/>
-<smd name="P$12" x="-5.75" y="-12.17" dx="1.3" dy="1.1" layer="1"/>
-<smd name="P$13" x="-5.75" y="-13.67" dx="1.3" dy="1.1" layer="1"/>
-<smd name="P$14" x="-5.05" y="-14.97" dx="1.3" dy="1.1" layer="1" rot="R90"/>
-<smd name="P$15" x="-3.55" y="-14.97" dx="1.3" dy="1.1" layer="1" rot="R90"/>
-<smd name="P$16" x="-2.05" y="-14.97" dx="1.3" dy="1.1" layer="1" rot="R90"/>
-<smd name="P$17" x="-0.55" y="-14.97" dx="1.3" dy="1.1" layer="1" rot="R90"/>
-<smd name="P$18" x="0.95" y="-14.97" dx="1.3" dy="1.1" layer="1" rot="R90"/>
-<smd name="P$19" x="2.45" y="-14.97" dx="1.3" dy="1.1" layer="1" rot="R90"/>
-<smd name="P$20" x="3.95" y="-14.97" dx="1.3" dy="1.1" layer="1" rot="R90"/>
-<smd name="P$21" x="5.45" y="-14.97" dx="1.3" dy="1.1" layer="1" rot="R90"/>
-<smd name="P$22" x="6.05" y="-13.67" dx="1.3" dy="1.1" layer="1" rot="R180"/>
-<smd name="P$23" x="6.05" y="-12.17" dx="1.3" dy="1.1" layer="1" rot="R180"/>
-<smd name="P$24" x="6.05" y="-10.67" dx="1.3" dy="1.1" layer="1" rot="R180"/>
-<smd name="P$25" x="6.05" y="-9.17" dx="1.3" dy="1.1" layer="1" rot="R180"/>
-<smd name="P$26" x="6.05" y="-7.67" dx="1.3" dy="1.1" layer="1" rot="R180"/>
-<smd name="P$27" x="6.05" y="-6.17" dx="1.3" dy="1.1" layer="1" rot="R180"/>
-<smd name="P$28" x="6.05" y="-4.67" dx="1.3" dy="1.1" layer="1" rot="R180"/>
-<smd name="P$29" x="6.05" y="-3.17" dx="1.3" dy="1.1" layer="1" rot="R180"/>
-<smd name="P$30" x="6.05" y="-1.67" dx="1.3" dy="1.1" layer="1" rot="R180"/>
-<smd name="P$31" x="6.05" y="-0.17" dx="1.3" dy="1.1" layer="1" rot="R180"/>
-<smd name="P$32" x="6.05" y="1.33" dx="1.3" dy="1.1" layer="1" rot="R180"/>
-<smd name="P$33" x="6.05" y="2.83" dx="1.3" dy="1.1" layer="1" rot="R180"/>
-<smd name="P$34" x="6.05" y="4.33" dx="1.3" dy="1.1" layer="1" rot="R180"/>
-<wire x1="6" y1="6.5" x2="6" y2="11" width="0.4064" layer="23"/>
-<wire x1="6" y1="11" x2="5" y2="11" width="0.4064" layer="23"/>
-<wire x1="5" y1="11" x2="5" y2="7.5" width="0.4064" layer="23"/>
-<wire x1="5" y1="7.5" x2="4" y2="7.5" width="0.4064" layer="23"/>
-<wire x1="4" y1="7.5" x2="4" y2="11" width="0.4064" layer="23"/>
-<wire x1="4" y1="11" x2="3" y2="11" width="0.4064" layer="23"/>
-<wire x1="3" y1="11" x2="3" y2="7.5" width="0.4064" layer="23"/>
-<wire x1="3" y1="7.5" x2="2" y2="7.5" width="0.4064" layer="23"/>
-<wire x1="2" y1="7.5" x2="2" y2="11" width="0.4064" layer="23"/>
-<wire x1="2" y1="11" x2="1" y2="11" width="0.4064" layer="23"/>
-<wire x1="1" y1="11" x2="1" y2="7.5" width="0.4064" layer="23"/>
-<wire x1="1" y1="7.5" x2="0" y2="7.5" width="0.4064" layer="23"/>
-<wire x1="0" y1="7.5" x2="0" y2="11" width="0.4064" layer="23"/>
-<wire x1="0" y1="11" x2="-1" y2="11" width="0.4064" layer="23"/>
-<wire x1="-1" y1="11" x2="-1" y2="7.5" width="0.4064" layer="23"/>
-<wire x1="-1" y1="7.5" x2="-2" y2="7.5" width="0.4064" layer="23"/>
-<wire x1="-2" y1="7.5" x2="-2" y2="11" width="0.4064" layer="23"/>
-<wire x1="-2" y1="11" x2="-2.5" y2="11" width="0.4064" layer="23"/>
-<text x="-2.5" y="5.5" size="1.27" layer="25">Bluetooth</text>
-</package>
 <package name="1X02">
 <wire x1="-0.635" y1="1.27" x2="0.635" y2="1.27" width="0.2032" layer="21"/>
 <wire x1="0.635" y1="1.27" x2="1.27" y2="0.635" width="0.2032" layer="21"/>
@@ -6561,51 +6502,6 @@ Source: http://focus.ti.com/lit/ds/symlink/ua78m33.pdf</description>
 </package>
 </packages>
 <symbols>
-<symbol name="BLUETOOTH">
-<pin name="UART-TX" x="-25.4" y="15.24" visible="pin" length="middle" direction="out"/>
-<pin name="UART-RX" x="-25.4" y="12.7" visible="pin" length="middle" direction="in"/>
-<pin name="UART-CTS" x="-25.4" y="10.16" visible="pin" length="middle" direction="in"/>
-<pin name="UART-RTS" x="-25.4" y="7.62" visible="pin" length="middle" direction="out"/>
-<pin name="PCM-CLK" x="-25.4" y="2.54" visible="pin" length="middle"/>
-<pin name="PCM-OUT" x="-25.4" y="0" visible="pin" length="middle" direction="out"/>
-<pin name="PCM-IN" x="-25.4" y="-2.54" visible="pin" length="middle" direction="in"/>
-<pin name="PCM-SYNC" x="-25.4" y="-5.08" visible="pin" length="middle"/>
-<pin name="AIO(0)" x="-25.4" y="-10.16" visible="pin" length="middle"/>
-<pin name="AIO(1)" x="-25.4" y="-12.7" visible="pin" length="middle"/>
-<pin name="RESET" x="-25.4" y="-17.78" visible="pin" length="middle" direction="in"/>
-<pin name="3.3V" x="-25.4" y="-20.32" visible="pin" length="middle" direction="pwr"/>
-<pin name="GND" x="-25.4" y="-22.86" visible="pin" length="middle" direction="pwr"/>
-<pin name="GND1" x="-25.4" y="-25.4" visible="pin" length="middle" direction="pwr"/>
-<pin name="USB-D-" x="10.16" y="-17.78" visible="pin" length="middle" rot="R180"/>
-<pin name="SPI-CSB" x="10.16" y="-33.02" visible="pin" length="middle" direction="in" rot="R180"/>
-<pin name="SPI-MOSI" x="10.16" y="-27.94" visible="pin" length="middle" direction="in" rot="R180"/>
-<pin name="SPI-MISO" x="10.16" y="-30.48" visible="pin" length="middle" direction="out" rot="R180"/>
-<pin name="SPI-CLK" x="10.16" y="-25.4" visible="pin" length="middle" direction="in" rot="R180"/>
-<pin name="USB-D+" x="10.16" y="-20.32" visible="pin" length="middle" rot="R180"/>
-<pin name="GND2" x="-25.4" y="-27.94" visible="pin" length="middle" direction="pwr"/>
-<pin name="GND3" x="-25.4" y="-30.48" visible="pin" length="middle" direction="pwr"/>
-<pin name="PIO(0)" x="10.16" y="-12.7" visible="pin" length="middle" rot="R180"/>
-<pin name="PIO(2)" x="10.16" y="-7.62" visible="pin" length="middle" rot="R180"/>
-<pin name="PIO(3)" x="10.16" y="-5.08" visible="pin" length="middle" rot="R180"/>
-<pin name="PIO(4)" x="10.16" y="-2.54" visible="pin" length="middle" rot="R180"/>
-<pin name="PIO(5)" x="10.16" y="0" visible="pin" length="middle" rot="R180"/>
-<pin name="PIO(6)" x="10.16" y="2.54" visible="pin" length="middle" rot="R180"/>
-<pin name="PIO(7)" x="10.16" y="5.08" visible="pin" length="middle" rot="R180"/>
-<pin name="PIO(8)" x="10.16" y="7.62" visible="pin" length="middle" rot="R180"/>
-<pin name="PIO(9)" x="10.16" y="10.16" visible="pin" length="middle" rot="R180"/>
-<pin name="PIO(10)" x="10.16" y="12.7" visible="pin" length="middle" rot="R180"/>
-<pin name="PIO(11)" x="10.16" y="15.24" visible="pin" length="middle" rot="R180"/>
-<pin name="PIO(1)" x="10.16" y="-10.16" visible="pin" length="middle" rot="R180"/>
-<wire x1="-20.32" y1="15.24" x2="-20.32" y2="-34.29" width="0.254" layer="94"/>
-<wire x1="-20.32" y1="-34.29" x2="-19.05" y2="-35.56" width="0.254" layer="94"/>
-<wire x1="-19.05" y1="-35.56" x2="3.81" y2="-35.56" width="0.254" layer="94"/>
-<wire x1="3.81" y1="-35.56" x2="5.08" y2="-34.29" width="0.254" layer="94"/>
-<wire x1="5.08" y1="-34.29" x2="5.08" y2="15.24" width="0.254" layer="94"/>
-<wire x1="5.08" y1="15.24" x2="2.54" y2="17.78" width="0.254" layer="94"/>
-<wire x1="2.54" y1="17.78" x2="-17.78" y2="17.78" width="0.254" layer="94"/>
-<wire x1="-17.78" y1="17.78" x2="-20.32" y2="15.24" width="0.254" layer="94"/>
-<text x="-10.16" y="20.32" size="1.27" layer="95">Bluetooth</text>
-</symbol>
 <symbol name="JUMPER-2">
 <wire x1="0" y1="0" x2="0" y2="1.27" width="0.1524" layer="94"/>
 <wire x1="0" y1="2.54" x2="0" y2="1.27" width="0.4064" layer="94"/>
@@ -6630,54 +6526,6 @@ Source: http://focus.ti.com/lit/ds/symlink/ua78m33.pdf</description>
 </symbol>
 </symbols>
 <devicesets>
-<deviceset name="BLUETOOTH">
-<gates>
-<gate name="G$1" symbol="BLUETOOTH" x="7.62" y="5.08"/>
-</gates>
-<devices>
-<device name="" package="BLUETOOTH">
-<connects>
-<connect gate="G$1" pin="3.3V" pad="P$12"/>
-<connect gate="G$1" pin="AIO(0)" pad="P$9"/>
-<connect gate="G$1" pin="AIO(1)" pad="P$10"/>
-<connect gate="G$1" pin="GND" pad="P$13"/>
-<connect gate="G$1" pin="GND1" pad="P$14"/>
-<connect gate="G$1" pin="GND2" pad="P$21"/>
-<connect gate="G$1" pin="GND3" pad="P$22"/>
-<connect gate="G$1" pin="PCM-CLK" pad="P$5"/>
-<connect gate="G$1" pin="PCM-IN" pad="P$7"/>
-<connect gate="G$1" pin="PCM-OUT" pad="P$6"/>
-<connect gate="G$1" pin="PCM-SYNC" pad="P$8"/>
-<connect gate="G$1" pin="PIO(0)" pad="P$23"/>
-<connect gate="G$1" pin="PIO(1)" pad="P$24"/>
-<connect gate="G$1" pin="PIO(10)" pad="P$33"/>
-<connect gate="G$1" pin="PIO(11)" pad="P$34"/>
-<connect gate="G$1" pin="PIO(2)" pad="P$25"/>
-<connect gate="G$1" pin="PIO(3)" pad="P$26"/>
-<connect gate="G$1" pin="PIO(4)" pad="P$27"/>
-<connect gate="G$1" pin="PIO(5)" pad="P$28"/>
-<connect gate="G$1" pin="PIO(6)" pad="P$29"/>
-<connect gate="G$1" pin="PIO(7)" pad="P$30"/>
-<connect gate="G$1" pin="PIO(8)" pad="P$31"/>
-<connect gate="G$1" pin="PIO(9)" pad="P$32"/>
-<connect gate="G$1" pin="RESET" pad="P$11"/>
-<connect gate="G$1" pin="SPI-CLK" pad="P$19"/>
-<connect gate="G$1" pin="SPI-CSB" pad="P$16"/>
-<connect gate="G$1" pin="SPI-MISO" pad="P$18"/>
-<connect gate="G$1" pin="SPI-MOSI" pad="P$17"/>
-<connect gate="G$1" pin="UART-CTS" pad="P$3"/>
-<connect gate="G$1" pin="UART-RTS" pad="P$4"/>
-<connect gate="G$1" pin="UART-RX" pad="P$2"/>
-<connect gate="G$1" pin="UART-TX" pad="P$1"/>
-<connect gate="G$1" pin="USB-D+" pad="P$20"/>
-<connect gate="G$1" pin="USB-D-" pad="P$15"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
 <deviceset name="JUMPER-2" prefix="JP" uservalue="yes">
 <description>&lt;b&gt;Jumper&lt;/b&gt;
 Basic 0.1" spaced jumper. Use with breakaway headers.</description>
@@ -7031,7 +6879,6 @@ Basic 0.1" spaced jumper. Use with breakaway headers.</description>
 <part name="GND29" library="supply1" deviceset="GND" device=""/>
 <part name="+3V1" library="supply1" deviceset="+3V3" device=""/>
 <part name="GND1" library="supply1" deviceset="GND" device=""/>
-<part name="U$1" library="daGloane" deviceset="BLUETOOTH" device=""/>
 <part name="C1" library="rcl" deviceset="C-EU" device="C0805" value="10µ"/>
 <part name="+3V2" library="supply1" deviceset="+3V3" device=""/>
 <part name="GND2" library="supply1" deviceset="GND" device=""/>
@@ -7080,6 +6927,20 @@ Basic 0.1" spaced jumper. Use with breakaway headers.</description>
 <plain>
 <text x="96.56" y="71.16" size="1.778" layer="94">FT232RL</text>
 <text x="12.74" y="53.38" size="1.778" layer="94" rot="R90">Mini-USB-B</text>
+<text x="225.806" y="108.458" size="1.4224" layer="95">UART-TX</text>
+<text x="225.806" y="105.918" size="1.4224" layer="95">UART-RX</text>
+<text x="225.806" y="75.438" size="1.4224" layer="95">RESET</text>
+<text x="225.806" y="72.898" size="1.4224" layer="95">3.3V</text>
+<text x="225.806" y="70.358" size="1.4224" layer="95">GND</text>
+<text x="225.806" y="67.818" size="1.4224" layer="95">GND1</text>
+<text x="225.806" y="65.278" size="1.4224" layer="95">GND2</text>
+<text x="225.806" y="62.738" size="1.4224" layer="95">GND3</text>
+<text x="246.38" y="61.722" size="1.4224" layer="95" rot="R180">SPI-CSB</text>
+<text x="246.38" y="64.262" size="1.4224" layer="95" rot="R180">SPI-MISO</text>
+<text x="246.38" y="66.802" size="1.4224" layer="95" rot="R180">SPI-MOSI</text>
+<text x="246.38" y="69.342" size="1.4224" layer="95" rot="R180">SPI-CLK</text>
+<text x="246.634" y="109.982" size="1.4224" layer="95" rot="R180">PIO(11)</text>
+<text x="246.634" y="107.442" size="1.4224" layer="95" rot="R180">PIO(10)</text>
 </plain>
 <instances>
 <instance part="IC3" gate="G$1" x="101.6" y="63.5"/>
@@ -7109,7 +6970,6 @@ Basic 0.1" spaced jumper. Use with breakaway headers.</description>
 <instance part="GND29" gate="1" x="220.98" y="17.78"/>
 <instance part="+3V1" gate="G$1" x="243.84" y="40.64"/>
 <instance part="GND1" gate="1" x="203.2" y="17.78"/>
-<instance part="U$1" gate="G$1" x="243.84" y="93.98"/>
 <instance part="C1" gate="G$1" x="203.2" y="27.94"/>
 <instance part="+3V2" gate="G$1" x="205.74" y="81.28"/>
 <instance part="GND2" gate="1" x="213.36" y="53.34"/>
@@ -7670,6 +7530,83 @@ Basic 0.1" spaced jumper. Use with breakaway headers.</description>
 <pinref part="U$12" gate="G$1" pin="TP"/>
 <wire x1="256.54" y1="106.68" x2="261.62" y2="106.68" width="0.1524" layer="91"/>
 <junction x="261.62" y="106.68"/>
+</segment>
+</net>
+<net name="N$17" class="0">
+<segment>
+<wire x1="223.52" y1="109.22" x2="226.06" y2="111.76" width="0.1524" layer="91"/>
+<wire x1="226.06" y1="111.76" x2="246.38" y2="111.76" width="0.1524" layer="91"/>
+<wire x1="246.38" y1="111.76" x2="248.92" y2="109.22" width="0.1524" layer="91"/>
+<wire x1="248.92" y1="109.22" x2="248.92" y2="106.68" width="0.1524" layer="91"/>
+<wire x1="248.92" y1="106.68" x2="248.92" y2="104.14" width="0.1524" layer="91"/>
+<wire x1="248.92" y1="104.14" x2="248.92" y2="101.6" width="0.1524" layer="91"/>
+<wire x1="248.92" y1="101.6" x2="248.92" y2="99.06" width="0.1524" layer="91"/>
+<wire x1="248.92" y1="99.06" x2="248.92" y2="96.52" width="0.1524" layer="91"/>
+<wire x1="248.92" y1="96.52" x2="248.92" y2="93.98" width="0.1524" layer="91"/>
+<wire x1="248.92" y1="93.98" x2="248.92" y2="91.44" width="0.1524" layer="91"/>
+<wire x1="248.92" y1="91.44" x2="248.92" y2="88.9" width="0.1524" layer="91"/>
+<wire x1="248.92" y1="88.9" x2="248.92" y2="86.36" width="0.1524" layer="91"/>
+<wire x1="248.92" y1="86.36" x2="248.92" y2="83.82" width="0.1524" layer="91"/>
+<wire x1="248.92" y1="83.82" x2="248.92" y2="81.28" width="0.1524" layer="91"/>
+<wire x1="248.92" y1="81.28" x2="248.92" y2="76.2" width="0.1524" layer="91"/>
+<wire x1="248.92" y1="76.2" x2="248.92" y2="73.66" width="0.1524" layer="91"/>
+<wire x1="248.92" y1="73.66" x2="248.92" y2="68.58" width="0.1524" layer="91"/>
+<wire x1="248.92" y1="68.58" x2="248.92" y2="66.04" width="0.1524" layer="91"/>
+<wire x1="248.92" y1="66.04" x2="248.92" y2="63.5" width="0.1524" layer="91"/>
+<wire x1="248.92" y1="63.5" x2="248.92" y2="60.96" width="0.1524" layer="91"/>
+<wire x1="248.92" y1="60.96" x2="246.38" y2="58.42" width="0.1524" layer="91"/>
+<wire x1="246.38" y1="58.42" x2="226.06" y2="58.42" width="0.1524" layer="91"/>
+<wire x1="226.06" y1="58.42" x2="223.52" y2="60.96" width="0.1524" layer="91"/>
+<wire x1="223.52" y1="60.96" x2="223.52" y2="63.5" width="0.1524" layer="91"/>
+<wire x1="223.52" y1="63.5" x2="223.52" y2="66.04" width="0.1524" layer="91"/>
+<wire x1="223.52" y1="66.04" x2="223.52" y2="68.58" width="0.1524" layer="91"/>
+<wire x1="223.52" y1="68.58" x2="223.52" y2="71.12" width="0.1524" layer="91"/>
+<wire x1="223.52" y1="71.12" x2="223.52" y2="73.66" width="0.1524" layer="91"/>
+<wire x1="223.52" y1="73.66" x2="223.52" y2="76.2" width="0.1524" layer="91"/>
+<wire x1="223.52" y1="76.2" x2="223.52" y2="81.28" width="0.1524" layer="91"/>
+<wire x1="223.52" y1="81.28" x2="223.52" y2="83.82" width="0.1524" layer="91"/>
+<wire x1="223.52" y1="83.82" x2="223.52" y2="88.9" width="0.1524" layer="91"/>
+<wire x1="223.52" y1="88.9" x2="223.52" y2="91.44" width="0.1524" layer="91"/>
+<wire x1="223.52" y1="91.44" x2="223.52" y2="93.98" width="0.1524" layer="91"/>
+<wire x1="223.52" y1="93.98" x2="223.52" y2="96.52" width="0.1524" layer="91"/>
+<wire x1="223.52" y1="96.52" x2="223.52" y2="101.6" width="0.1524" layer="91"/>
+<wire x1="223.52" y1="101.6" x2="223.52" y2="104.14" width="0.1524" layer="91"/>
+<wire x1="223.52" y1="104.14" x2="223.52" y2="106.68" width="0.1524" layer="91"/>
+<wire x1="223.52" y1="106.68" x2="223.52" y2="109.22" width="0.1524" layer="91"/>
+<wire x1="223.52" y1="109.22" x2="218.44" y2="109.22" width="0.1524" layer="91"/>
+<wire x1="218.44" y1="106.68" x2="223.52" y2="106.68" width="0.1524" layer="91"/>
+<wire x1="218.44" y1="104.14" x2="223.52" y2="104.14" width="0.1524" layer="91"/>
+<wire x1="218.44" y1="101.6" x2="223.52" y2="101.6" width="0.1524" layer="91"/>
+<wire x1="218.44" y1="96.52" x2="223.52" y2="96.52" width="0.1524" layer="91"/>
+<wire x1="218.44" y1="93.98" x2="223.52" y2="93.98" width="0.1524" layer="91"/>
+<wire x1="218.44" y1="91.44" x2="223.52" y2="91.44" width="0.1524" layer="91"/>
+<wire x1="218.44" y1="88.9" x2="223.52" y2="88.9" width="0.1524" layer="91"/>
+<wire x1="218.44" y1="83.82" x2="223.52" y2="83.82" width="0.1524" layer="91"/>
+<wire x1="218.44" y1="81.28" x2="223.52" y2="81.28" width="0.1524" layer="91"/>
+<wire x1="218.44" y1="76.2" x2="223.52" y2="76.2" width="0.1524" layer="91"/>
+<wire x1="218.44" y1="73.66" x2="223.52" y2="73.66" width="0.1524" layer="91"/>
+<wire x1="218.44" y1="71.12" x2="223.52" y2="71.12" width="0.1524" layer="91"/>
+<wire x1="218.44" y1="68.58" x2="223.52" y2="68.58" width="0.1524" layer="91"/>
+<wire x1="218.44" y1="66.04" x2="223.52" y2="66.04" width="0.1524" layer="91"/>
+<wire x1="218.44" y1="63.5" x2="223.52" y2="63.5" width="0.1524" layer="91"/>
+<wire x1="248.92" y1="60.96" x2="254" y2="60.96" width="0.1524" layer="91"/>
+<wire x1="248.92" y1="63.5" x2="254" y2="63.5" width="0.1524" layer="91"/>
+<wire x1="248.92" y1="66.04" x2="254" y2="66.04" width="0.1524" layer="91"/>
+<wire x1="248.92" y1="68.58" x2="254" y2="68.58" width="0.1524" layer="91"/>
+<wire x1="248.92" y1="73.66" x2="254" y2="73.66" width="0.1524" layer="91"/>
+<wire x1="248.92" y1="76.2" x2="254" y2="76.2" width="0.1524" layer="91"/>
+<wire x1="248.92" y1="81.28" x2="254" y2="81.28" width="0.1524" layer="91"/>
+<wire x1="248.92" y1="83.82" x2="254" y2="83.82" width="0.1524" layer="91"/>
+<wire x1="248.92" y1="86.36" x2="254" y2="86.36" width="0.1524" layer="91"/>
+<wire x1="248.92" y1="88.9" x2="254" y2="88.9" width="0.1524" layer="91"/>
+<wire x1="248.92" y1="91.44" x2="254" y2="91.44" width="0.1524" layer="91"/>
+<wire x1="248.92" y1="93.98" x2="254" y2="93.98" width="0.1524" layer="91"/>
+<wire x1="248.92" y1="96.52" x2="254" y2="96.52" width="0.1524" layer="91"/>
+<wire x1="248.92" y1="99.06" x2="254" y2="99.06" width="0.1524" layer="91"/>
+<wire x1="248.92" y1="101.6" x2="254" y2="101.6" width="0.1524" layer="91"/>
+<wire x1="248.92" y1="104.14" x2="254" y2="104.14" width="0.1524" layer="91"/>
+<wire x1="248.92" y1="106.68" x2="254" y2="106.68" width="0.1524" layer="91"/>
+<wire x1="248.92" y1="109.22" x2="254" y2="109.22" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>
