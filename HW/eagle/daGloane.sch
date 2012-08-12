@@ -6920,7 +6920,11 @@ Source: Fairchild .. BAT54.pdf</description>
 <smd name="36" x="-2" y="2.775" dx="0.75" dy="0.3" layer="1" rot="R270"/>
 <text x="-3" y="3" size="0.8128" layer="25">&gt;NAME</text>
 <text x="-3" y="-4" size="0.8128" layer="27">&gt;VALUE</text>
-<rectangle x1="-2.05" y1="-2.05" x2="2.05" y2="2.05" layer="1" rot="R90"/>
+<smd name="TP" x="0" y="0" dx="4.1" dy="4.1" layer="1" cream="no"/>
+<rectangle x1="-1.65" y1="0.3" x2="-0.3" y2="1.65" layer="31"/>
+<rectangle x1="0.3" y1="0.3" x2="1.65" y2="1.65" layer="31"/>
+<rectangle x1="0.3" y1="-1.65" x2="1.65" y2="-0.3" layer="31"/>
+<rectangle x1="-1.65" y1="-1.65" x2="-0.3" y2="-0.3" layer="31"/>
 </package>
 <package name="TESTPAD_B1,27">
 <description>&lt;b&gt;TEST PAD&lt;/b&gt;</description>
@@ -7547,17 +7551,17 @@ Source: Fairchild .. BAT54.pdf</description>
 <smd name="1" x="1.05" y="1.75" dx="2.45" dy="1.25" layer="1"/>
 <smd name="2" x="1.05" y="0" dx="2.45" dy="1.25" layer="1"/>
 <smd name="3" x="1.05" y="-1.75" dx="2.45" dy="1.25" layer="1"/>
-<wire x1="2.5" y1="0" x2="2.5" y2="2.75" width="0.127" layer="21"/>
-<wire x1="2.5" y1="2.75" x2="2.5" y2="6.25" width="0.127" layer="21"/>
-<wire x1="2.5" y1="6.25" x2="3" y2="6.25" width="0.127" layer="21"/>
-<wire x1="3" y1="6.25" x2="3" y2="2.75" width="0.127" layer="21"/>
-<wire x1="3" y1="2.75" x2="3" y2="-2.75" width="0.127" layer="21"/>
-<wire x1="3" y1="-2.75" x2="3" y2="-6.25" width="0.127" layer="21"/>
-<wire x1="3" y1="-6.25" x2="2.5" y2="-6.25" width="0.127" layer="21"/>
-<wire x1="2.5" y1="-6.25" x2="2.5" y2="-2.75" width="0.127" layer="21"/>
-<wire x1="2.5" y1="-2.75" x2="2.5" y2="0" width="0.127" layer="21"/>
-<wire x1="2.5" y1="2.75" x2="3" y2="2.75" width="0.127" layer="21"/>
-<wire x1="2.5" y1="-2.75" x2="3" y2="-2.75" width="0.127" layer="21"/>
+<wire x1="2.5" y1="0" x2="2.5" y2="2.75" width="0.127" layer="48"/>
+<wire x1="2.5" y1="2.75" x2="2.5" y2="6.25" width="0.127" layer="48"/>
+<wire x1="2.5" y1="6.25" x2="3" y2="6.25" width="0.127" layer="48"/>
+<wire x1="3" y1="6.25" x2="3" y2="2.75" width="0.127" layer="48"/>
+<wire x1="3" y1="2.75" x2="3" y2="-2.75" width="0.127" layer="48"/>
+<wire x1="3" y1="-2.75" x2="3" y2="-6.25" width="0.127" layer="48"/>
+<wire x1="3" y1="-6.25" x2="2.5" y2="-6.25" width="0.127" layer="48"/>
+<wire x1="2.5" y1="-6.25" x2="2.5" y2="-2.75" width="0.127" layer="48"/>
+<wire x1="2.5" y1="-2.75" x2="2.5" y2="0" width="0.127" layer="48"/>
+<wire x1="2.5" y1="2.75" x2="3" y2="2.75" width="0.127" layer="48"/>
+<wire x1="2.5" y1="-2.75" x2="3" y2="-2.75" width="0.127" layer="48"/>
 </package>
 </packages>
 <symbols>
@@ -8749,10 +8753,10 @@ Basic 0.1" spaced jumper. Use with breakaway headers.</description>
 <part name="LED1" library="led" deviceset="LED" device="CHIPLED_0603"/>
 <part name="LED2" library="led" deviceset="LED" device="CHIPLED_0603"/>
 <part name="U$2" library="daGloane" deviceset="SPARKFUN_MCP73831" device=""/>
-<part name="C6" library="rcl" deviceset="C-EU" device="C0603" value="1µF"/>
+<part name="C6" library="rcl" deviceset="C-EU" device="C0603" value="4.7µF"/>
 <part name="GND28" library="supply1" deviceset="GND" device=""/>
 <part name="GND29" library="supply1" deviceset="GND" device=""/>
-<part name="C4" library="rcl" deviceset="C-EU" device="C0603" value="1µF"/>
+<part name="C4" library="rcl" deviceset="C-EU" device="C0603" value="4.7"/>
 <part name="GND30" library="supply1" deviceset="GND" device=""/>
 <part name="LIPO+" library="testpad" deviceset="TPS" device="PAD1-13"/>
 <part name="LIPO-" library="testpad" deviceset="TPS" device="PAD1-13"/>
@@ -10627,16 +10631,16 @@ Basic 0.1" spaced jumper. Use with breakaway headers.</description>
 <instance part="GND43" gate="1" x="172.72" y="17.78" rot="MR0"/>
 <instance part="FRAME2" gate="G$1" x="0" y="0"/>
 <instance part="3.3V" gate="VCC" x="33.02" y="-274.32"/>
-<instance part="SWDIO" gate="G$1" x="20.32" y="30.48" smashed="yes" rot="R90">
-<attribute name="NAME" x="11.176" y="30.988" size="1.778" layer="95"/>
+<instance part="SWDIO" gate="G$1" x="106.68" y="-292.1" smashed="yes" rot="R90">
+<attribute name="NAME" x="97.536" y="-291.592" size="1.778" layer="95"/>
 </instance>
-<instance part="SWCLK" gate="G$1" x="20.32" y="25.4" smashed="yes" rot="R90">
-<attribute name="NAME" x="11.176" y="25.908" size="1.778" layer="95"/>
+<instance part="SWCLK" gate="G$1" x="106.68" y="-297.18" smashed="yes" rot="R90">
+<attribute name="NAME" x="97.536" y="-296.672" size="1.778" layer="95"/>
 </instance>
-<instance part="GND" gate="G$1" x="20.32" y="20.32" smashed="yes" rot="R90">
-<attribute name="NAME" x="11.176" y="20.828" size="1.778" layer="95"/>
+<instance part="GND" gate="G$1" x="106.68" y="-302.26" smashed="yes" rot="R90">
+<attribute name="NAME" x="97.536" y="-301.752" size="1.778" layer="95"/>
 </instance>
-<instance part="GND2" gate="1" x="27.94" y="15.24"/>
+<instance part="GND2" gate="1" x="114.3" y="-307.34"/>
 <instance part="U$3" gate="G$1" x="307.34" y="177.8"/>
 <instance part="U$4" gate="G$1" x="104.14" y="-350.52"/>
 <instance part="R14" gate="G$1" x="132.08" y="-355.6"/>
@@ -10811,8 +10815,8 @@ Basic 0.1" spaced jumper. Use with breakaway headers.</description>
 </segment>
 <segment>
 <pinref part="GND" gate="G$1" pin="TP"/>
-<wire x1="22.86" y1="20.32" x2="27.94" y2="20.32" width="0.1524" layer="91"/>
-<wire x1="27.94" y1="20.32" x2="27.94" y2="17.78" width="0.1524" layer="91"/>
+<wire x1="109.22" y1="-302.26" x2="114.3" y2="-302.26" width="0.1524" layer="91"/>
+<wire x1="114.3" y1="-302.26" x2="114.3" y2="-304.8" width="0.1524" layer="91"/>
 <pinref part="GND2" gate="1" pin="GND"/>
 </segment>
 <segment>
@@ -11199,6 +11203,12 @@ Basic 0.1" spaced jumper. Use with breakaway headers.</description>
 <wire x1="477.52" y1="-109.22" x2="480.06" y2="-109.22" width="0.1524" layer="91"/>
 <pinref part="U$9" gate="G$1" pin="ACCU+"/>
 </segment>
+<segment>
+<pinref part="IC1" gate="G$1" pin="SELECT"/>
+<wire x1="210.82" y1="-81.28" x2="213.36" y2="-81.28" width="0.1524" layer="91"/>
+<wire x1="213.36" y1="-81.28" x2="213.36" y2="-68.58" width="0.1524" layer="91"/>
+<label x="213.36" y="-68.58" size="1.778" layer="95" rot="R90" xref="yes"/>
+</segment>
 </net>
 <net name="VOLTAGE" class="0">
 <segment>
@@ -11279,8 +11289,8 @@ Basic 0.1" spaced jumper. Use with breakaway headers.</description>
 <net name="SWDIO" class="0">
 <segment>
 <pinref part="SWDIO" gate="G$1" pin="TP"/>
-<wire x1="22.86" y1="30.48" x2="27.94" y2="30.48" width="0.1524" layer="91"/>
-<label x="27.94" y="30.48" size="1.778" layer="95" xref="yes"/>
+<wire x1="109.22" y1="-292.1" x2="114.3" y2="-292.1" width="0.1524" layer="91"/>
+<label x="114.3" y="-292.1" size="1.778" layer="95" xref="yes"/>
 </segment>
 <segment>
 <wire x1="119.38" y1="111.76" x2="114.3" y2="111.76" width="0.1524" layer="91"/>
@@ -11292,8 +11302,8 @@ Basic 0.1" spaced jumper. Use with breakaway headers.</description>
 <net name="SWCLK" class="0">
 <segment>
 <pinref part="SWCLK" gate="G$1" pin="TP"/>
-<wire x1="22.86" y1="25.4" x2="27.94" y2="25.4" width="0.1524" layer="91"/>
-<label x="27.94" y="25.4" size="1.778" layer="95" xref="yes"/>
+<wire x1="109.22" y1="-297.18" x2="114.3" y2="-297.18" width="0.1524" layer="91"/>
+<label x="114.3" y="-297.18" size="1.778" layer="95" xref="yes"/>
 </segment>
 <segment>
 <wire x1="119.38" y1="106.68" x2="111.76" y2="106.68" width="0.1524" layer="91"/>
