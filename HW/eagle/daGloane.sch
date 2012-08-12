@@ -7510,19 +7510,19 @@ Source: Fairchild .. BAT54.pdf</description>
 <text x="-0.908" y="-1.651" size="0.4064" layer="27">&gt;VALUE</text>
 </package>
 <package name="BLUETOOTH_REDUCED">
-<wire x1="-6.35" y1="13.97" x2="6.65" y2="13.97" width="0" layer="21"/>
-<wire x1="6.65" y1="13.97" x2="6.65" y2="-13.03" width="0" layer="21"/>
-<wire x1="6.65" y1="-13.03" x2="-6.35" y2="-13.03" width="0" layer="21"/>
-<wire x1="-6.35" y1="-13.03" x2="-6.35" y2="13.97" width="0" layer="21"/>
-<smd name="P$1" x="-5.75" y="6.87" dx="1.3" dy="1.1" layer="1"/>
-<smd name="P$2" x="-5.75" y="5.37" dx="1.3" dy="1.1" layer="1"/>
-<smd name="P$11" x="-5.75" y="-8.13" dx="1.3" dy="1.1" layer="1"/>
-<smd name="P$12" x="-5.75" y="-9.63" dx="1.3" dy="1.1" layer="1"/>
-<smd name="P$13" x="-5.75" y="-11.13" dx="1.3" dy="1.1" layer="1"/>
-<smd name="P$14" x="-5.05" y="-12.43" dx="1.3" dy="1.1" layer="1" rot="R90"/>
-<smd name="P$21" x="5.45" y="-12.43" dx="1.3" dy="1.1" layer="1" rot="R90"/>
-<smd name="P$22" x="6.05" y="-11.13" dx="1.3" dy="1.1" layer="1" rot="R180"/>
-<smd name="P$34" x="6.05" y="6.87" dx="1.3" dy="1.1" layer="1" rot="R180"/>
+<wire x1="-6.65" y1="13.75" x2="6.65" y2="13.75" width="0" layer="21"/>
+<wire x1="6.65" y1="13.75" x2="6.65" y2="-13.75" width="0" layer="21"/>
+<wire x1="6.65" y1="-13.75" x2="-6.65" y2="-13.75" width="0" layer="21"/>
+<wire x1="-6.65" y1="-13.75" x2="-6.65" y2="13.75" width="0" layer="21"/>
+<smd name="P$1" x="-6.65" y="6.04" dx="1.3" dy="1.05" layer="1"/>
+<smd name="P$2" x="-6.65" y="4.54" dx="1.3" dy="1.05" layer="1"/>
+<smd name="P$11" x="-6.65" y="-8.96" dx="1.3" dy="1.05" layer="1"/>
+<smd name="P$12" x="-6.65" y="-10.46" dx="1.3" dy="1.05" layer="1"/>
+<smd name="P$13" x="-6.65" y="-11.96" dx="1.3" dy="1.05" layer="1"/>
+<smd name="P$14" x="-5.05" y="-13.75" dx="1.3" dy="1.05" layer="1" rot="R90"/>
+<smd name="P$21" x="5.45" y="-13.75" dx="1.3" dy="1.05" layer="1" rot="R90"/>
+<smd name="P$22" x="6.65" y="-11.96" dx="1.3" dy="1.05" layer="1" rot="R180"/>
+<smd name="P$34" x="6.65" y="6.04" dx="1.3" dy="1.05" layer="1" rot="R180"/>
 <wire x1="6" y1="9.04" x2="6" y2="13.54" width="0.4064" layer="23"/>
 <wire x1="6" y1="13.54" x2="5" y2="13.54" width="0.4064" layer="23"/>
 <wire x1="5" y1="13.54" x2="5" y2="10.04" width="0.4064" layer="23"/>
