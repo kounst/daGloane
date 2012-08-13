@@ -8717,8 +8717,8 @@ Basic 0.1" spaced jumper. Use with breakaway headers.</description>
 <part name="GND2" library="supply1" deviceset="GND" device=""/>
 <part name="U$3" library="daGloane" deviceset="MPU6000" device=""/>
 <part name="U$4" library="daGloane" deviceset="SERIAL_FT230XQ" device=""/>
-<part name="R14" library="rcl" deviceset="R-EU_" device="R0603" value="270R"/>
-<part name="R19" library="rcl" deviceset="R-EU_" device="R0603" value="270R"/>
+<part name="R14" library="rcl" deviceset="R-EU_" device="R0603" value="150R"/>
+<part name="R19" library="rcl" deviceset="R-EU_" device="R0603" value="150R"/>
 <part name="R11" library="rcl" deviceset="R-EU_" device="R0603" value="27R"/>
 <part name="R13" library="rcl" deviceset="R-EU_" device="R0603" value="27R"/>
 <part name="C18" library="rcl" deviceset="C-EU" device="C0603" value="47pF"/>
@@ -8756,7 +8756,7 @@ Basic 0.1" spaced jumper. Use with breakaway headers.</description>
 <part name="C6" library="rcl" deviceset="C-EU" device="C0603" value="4.7µF"/>
 <part name="GND28" library="supply1" deviceset="GND" device=""/>
 <part name="GND29" library="supply1" deviceset="GND" device=""/>
-<part name="C4" library="rcl" deviceset="C-EU" device="C0603" value="4.7u"/>
+<part name="C4" library="rcl" deviceset="C-EU" device="C0603" value="4.7µF"/>
 <part name="GND30" library="supply1" deviceset="GND" device=""/>
 <part name="LIPO+" library="testpad" deviceset="TPS" device="PAD1-13"/>
 <part name="LIPO-" library="testpad" deviceset="TPS" device="PAD1-13"/>
@@ -8816,7 +8816,7 @@ Basic 0.1" spaced jumper. Use with breakaway headers.</description>
 <part name="GND20" library="supply1" deviceset="GND" device=""/>
 <part name="3.3V5" library="supply1" deviceset="VCC" device="" value="3.3V"/>
 <part name="LED5" library="led" deviceset="LED" device="CHIPLED_0603"/>
-<part name="R29" library="rcl" deviceset="R-EU_" device="R0603" value="470R"/>
+<part name="R29" library="rcl" deviceset="R-EU_" device="R0603" value="330R"/>
 <part name="C30" library="rcl" deviceset="C-EU" device="C0805" value="10µF/6.3V"/>
 <part name="C31" library="rcl" deviceset="C-EU" device="C0805" value="10µF/6.3V"/>
 <part name="GND19" library="supply1" deviceset="GND" device=""/>
@@ -10614,8 +10614,6 @@ Basic 0.1" spaced jumper. Use with breakaway headers.</description>
 <text x="193.04" y="-317.5" size="1.778" layer="91">Bluetooth module is set in AT mode at startup</text>
 <text x="193.04" y="-320.04" size="1.778" layer="91">for bluetooth communction it has to be reset </text>
 <text x="193.04" y="-322.58" size="1.778" layer="91">by the µC using the "AT+RESET" command</text>
-<text x="60.96" y="-175.26" size="1.778" layer="91" rot="R270">Value changed</text>
-<text x="132.08" y="-373.38" size="1.778" layer="91" rot="R270">Value changed</text>
 </plain>
 <instances>
 <instance part="R16" gate="G$1" x="185.42" y="48.26" rot="R90"/>
