@@ -6791,10 +6791,9 @@ Source: Fairchild .. BAT54.pdf</description>
 <circle x="-1" y="1" radius="0.2" width="0.127" layer="21"/>
 </package>
 <package name="SERIAL_QFN4X4-16">
-<wire x1="-2" y1="2" x2="2" y2="2" width="0.127" layer="48"/>
-<wire x1="2" y1="2" x2="2" y2="-2" width="0.127" layer="48"/>
-<wire x1="2" y1="-2" x2="-2" y2="-2" width="0.127" layer="48"/>
-<wire x1="-2" y1="-2" x2="-2" y2="2" width="0.127" layer="48"/>
+<wire x1="2" y1="2" x2="2" y2="-2" width="0.127" layer="21"/>
+<wire x1="2" y1="-2" x2="-2" y2="-2" width="0.127" layer="21"/>
+<wire x1="-2" y1="-2" x2="-2" y2="1.4" width="0.127" layer="21"/>
 <smd name="1" x="-1.95" y="0.975" dx="1.1" dy="0.35" layer="1" rot="R180"/>
 <smd name="2" x="-1.95" y="0.325" dx="1.1" dy="0.35" layer="1" rot="R180"/>
 <smd name="3" x="-1.95" y="-0.325" dx="1.1" dy="0.35" layer="1" rot="R180"/>
@@ -6811,7 +6810,10 @@ Source: Fairchild .. BAT54.pdf</description>
 <smd name="14" x="0.325" y="1.95" dx="1.1" dy="0.35" layer="1" rot="R90"/>
 <smd name="15" x="-0.325" y="1.95" dx="1.1" dy="0.35" layer="1" rot="R90"/>
 <smd name="16" x="-0.975" y="1.95" dx="1.1" dy="0.35" layer="1" rot="R90"/>
-<smd name="C" x="0" y="0" dx="2.1" dy="2.1" layer="1"/>
+<smd name="C" x="0" y="0" dx="2.1" dy="2.1" layer="1" cream="no"/>
+<wire x1="-1.4" y1="2" x2="-2" y2="1.4" width="0.127" layer="21"/>
+<wire x1="2" y1="2" x2="-1.4" y2="2" width="0.127" layer="21"/>
+<rectangle x1="-0.8" y1="-0.8" x2="0.8" y2="0.8" layer="31"/>
 </package>
 <package name="MSOP8">
 <description>&lt;b&gt;Micro Small Outline Package&lt;/b&gt;
@@ -6877,11 +6879,13 @@ Source: Fairchild .. BAT54.pdf</description>
 <text x="-2.54" y="-2.394" size="1.27" layer="27">&gt;VALUE</text>
 </package>
 <package name="VFQFPN36">
-<wire x1="-3" y1="-3" x2="-3" y2="3" width="0.127" layer="21"/>
-<wire x1="-3" y1="3" x2="3" y2="3" width="0.127" layer="21"/>
+<wire x1="-3" y1="-3" x2="-3" y2="2.3" width="0.127" layer="21"/>
+<wire x1="-3" y1="2.3" x2="-3" y2="2.4" width="0.127" layer="21"/>
+<wire x1="-3" y1="2.4" x2="-2.4" y2="3" width="0.127" layer="21"/>
+<wire x1="-2.4" y1="3" x2="3" y2="3" width="0.127" layer="21"/>
 <wire x1="3" y1="3" x2="3" y2="-3" width="0.127" layer="21"/>
 <wire x1="3" y1="-3" x2="-3" y2="-3" width="0.127" layer="21"/>
-<circle x="-2" y="2" radius="0.2828" width="0.127" layer="21"/>
+<circle x="-3.27" y="3.27" radius="0.2828" width="0.127" layer="21"/>
 <smd name="1" x="-2.775" y="2" dx="0.75" dy="0.3" layer="1"/>
 <smd name="2" x="-2.775" y="1.5" dx="0.75" dy="0.3" layer="1"/>
 <smd name="3" x="-2.775" y="1" dx="0.75" dy="0.3" layer="1"/>
