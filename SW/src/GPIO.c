@@ -36,13 +36,27 @@ void GPIO_Configuration(void)
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
   GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0;
   GPIO_Init(GPIOB, &GPIO_InitStructure);
-  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+  //GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
   GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1;
   GPIO_Init(GPIOB, &GPIO_InitStructure);
+
+  GPIO_PinRemapConfig(GPIO_PartialRemap_TIM3, ENABLE);
+
   GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4;
   GPIO_Init(GPIOB, &GPIO_InitStructure);
   GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5;
   GPIO_Init(GPIOB, &GPIO_InitStructure);
+
+  /* SPI Pin Configuration */
+  /* SPI_CLK, SPI_MOSI and SPI_CS */
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_7;
+  GPIO_Init(GPIOA, &GPIO_InitStructure);
+  /* SPI_MISO */
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6;
+  GPIO_Init(GPIOA, &GPIO_InitStructure);
+
 
   /* Voltage pin PA0 */
   GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0;

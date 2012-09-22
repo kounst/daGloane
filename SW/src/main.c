@@ -47,6 +47,7 @@ static __IO uint32_t TimingDelay;
 /* Global variables */
 volatile char uart_buffer[500];
 extern uint16_t lipo_voltage;
+extern char rx_command[50];
 
 /* Private function prototypes */
 void RCC_Configuration(void);
@@ -105,7 +106,7 @@ int main(void)
   /* Infinite loop */
   while (1)
   {
-	Delay(10);
+	  Delay(10);
 
 	//GPIOB->ODR ^= GPIO_Pin_0;
 
@@ -132,7 +133,7 @@ void RCC_Configuration(void)
   RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1, ENABLE);
 
   /* TIM3 clock enable */
-  RCC_APB2PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE);
+  RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE);
 }
 
 /**

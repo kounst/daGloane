@@ -7,6 +7,8 @@
 #include "stm32f10x.h"
 #include "UART.h"
 
+volatile char rx_command[50];
+
 /*******************************************************************************
 * Function Name  : USART1_Configuration
 * Description    : Configures the USART1 peripheral.
@@ -39,6 +41,22 @@ void UART1_Configuration()
 
   /* Enable USART1 */
   USART_Cmd(USART1, ENABLE);
+}
+
+
+void uart_parser(uint8_t rx_byte)
+{
+	//static char rx_command[50];
+	static byte_count = 0;
+
+	TIM3_Update(0,rx_byte*8);
+
+//	rx_command[byte_count] = rx_byte;
+//	byte_count++;
+//	if(byte_count >= 50 || rx_byte == '\0')
+//		byte_count = 0;
+
+
 }
 
 

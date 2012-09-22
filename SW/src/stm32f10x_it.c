@@ -25,6 +25,7 @@
 #include "stm32f10x_it.h"
 #include "GPIO.h"
 #include "ADC.h"
+#include "UART.h"
 
 /** @addtogroup STM32F10x_StdPeriph_Template
   * @{
@@ -150,14 +151,14 @@ void SysTick_Handler(void)
 	if(debounce(GPIOA->IDR & 2))		//tactile switch input
 	{
 		//LEDOn(LED1);
-		GPIOB->BSRR = GPIO_Pin_0;		//set Mot1
+		//GPIOB->BSRR = GPIO_Pin_0;		//set Mot1
 		if(TurnOff_count)
 			TurnOff_count--;
 	}
 	else
 	{
 		//LEDOff(LED1);
-		GPIOB->BRR = GPIO_Pin_0;		//reset Mot1
+		//GPIOB->BRR = GPIO_Pin_0;		//reset Mot1
 		if(!TurnOff_count)
 			GPIOB->BRR = GPIO_Pin_2;	//turn off DCDC
 		else
@@ -189,12 +190,6 @@ void USART1_IRQHandler(void)
 {
 	static uint16_t TxCounter = 0;
 
-	if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET)	// if this is a receive interrupt..
-	{
-		USART_ReceiveData(USART2);
-
-	}
-
 	if(USART_GetITStatus(USART1, USART_IT_TXE) != RESET)	// if this is a transmit interrupt..
 	{
 		/* Write one byte to the transmit data register */
@@ -207,6 +202,15 @@ void USART1_IRQHandler(void)
 			TxCounter = 0;
 		}
 	}
+
+	if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET)	// if this is a receive interrupt..
+	{
+		uart_parser(USART_ReceiveData(USART2));
+
+
+	}
+	USART_ClearITPendingBit(USART1, USART_IT_TXE);
+	USART_ClearITPendingBit(USART1, USART_IT_RXNE);
 }
 
 
