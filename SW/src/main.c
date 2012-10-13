@@ -1,29 +1,29 @@
 /**
-*****************************************************************************
-**
-**  File        : main.c
-**
-**  Abstract    : main function.
-**
-**  Functions   : main
-**
-**  Environment : Atollic TrueSTUDIO/STM32
-**                STMicroelectronics STM32F10x Standard Peripherals Library
-**
-**  Distribution: The file is distributed “as is,” without any warranty
-**                of any kind.
-**
-**  (c)Copyright Atollic AB.
-**  You may use this file as-is or modify it according to the needs of your
-**  project. Distribution of this file (unmodified or modified) is not
-**  permitted. Atollic AB permit registered Atollic TrueSTUDIO(R) users the
-**  rights to distribute the assembled, compiled & linked contents of this
-**  file as part of an application binary file, provided that it is built
-**  using the Atollic TrueSTUDIO(R) toolchain.
-**
-**
-*****************************************************************************
-*/
+ *****************************************************************************
+ **
+ **  File        : main.c
+ **
+ **  Abstract    : main function.
+ **
+ **  Functions   : main
+ **
+ **  Environment : Atollic TrueSTUDIO/STM32
+ **                STMicroelectronics STM32F10x Standard Peripherals Library
+ **
+ **  Distribution: The file is distributed “as is,” without any warranty
+ **                of any kind.
+ **
+ **  (c)Copyright Atollic AB.
+ **  You may use this file as-is or modify it according to the needs of your
+ **  project. Distribution of this file (unmodified or modified) is not
+ **  permitted. Atollic AB permit registered Atollic TrueSTUDIO(R) users the
+ **  rights to distribute the assembled, compiled & linked contents of this
+ **  file as part of an application binary file, provided that it is built
+ **  using the Atollic TrueSTUDIO(R) toolchain.
+ **
+ **
+ *****************************************************************************
+ */
 
 /* Includes */
 #include <stddef.h>
@@ -32,6 +32,8 @@
 #include "UART.h"
 #include "ADC.h"
 #include "TIM.h"
+#include "SPI.h"
+#include "uAC.h"
 
 
 
@@ -49,169 +51,269 @@ volatile char uart_buffer[500];
 extern uint16_t lipo_voltage;
 extern char rx_command[50];
 
+
+//int16_t gyrodata;
+int16_t acc_x, acc_y, acc_z;
+int16_t temp;
+
 /* Private function prototypes */
 void RCC_Configuration(void);
 void NVIC_Configuration(void);
 void SysTick_Configuration(void);
 void Delay(__IO uint32_t nTime);
 void TimingDelay_Decrement(void);
+void Test_CMD (int argc, char *argv[]);
+void Hello_CMD (int argc, char *argv[]);
+void get_MPU6000_data(int argc, char *argv[]);
+void get_LipoVoltage(int argc, char *argv[]);
 
 /* Private functions */
 
 /**
-**===========================================================================
-**
-**  Abstract: main program
-**
-**===========================================================================
-*/
+ **===========================================================================
+ **
+ **  Abstract: main program
+ **
+ **===========================================================================
+ */
 int main(void)
 {
-	uint16_t lipo_voltage_v, lipo_voltage_mv;
+	uint16_t lipo_voltage_mv;
 
-    /* System Clocks Configuration */
-    RCC_Configuration();
 
-    /* NVIC Configuration */
-    NVIC_Configuration();
 
-    /* Systick Configuration */
-    SysTick_Configuration();
+	union gyrodata
+	{
+		uint8_t bytes[14];
+		uint16_t words[7];
+	}gyro;
 
-    /* GPIO Configuration */
-    GPIO_Configuration();
+	/* System Clocks Configuration */
+	RCC_Configuration();
 
-    /* ADC Configuration */
-    ADC1_Configuration();
+	/* NVIC Configuration */
+	NVIC_Configuration();
 
-    /* UART1 Configuration */
-    UART1_Configuration();
+	/* Systick Configuration */
+	SysTick_Configuration();
 
-    /* TIM3 Configuration */
-    TIM3_Configuration();
+	/* GPIO Configuration */
+	GPIO_Configuration();
 
-    /* keep DCDC form turning off again (set Power_ON_µC)*/
-    GPIOB->BSRR = GPIO_Pin_2;
+	/* keep DCDC form turning off again (set Power_ON_µC)*/
+	GPIOB->BSRR = GPIO_Pin_2;
 
-    //LEDOn(LED2);
+	/* ADC Configuration */
+	ADC1_Configuration();
 
-    /* convert lipo voltage to V and mV as tiny printf does not support floating point numbers */
-    lipo_voltage_v = (int)((float)lipo_voltage/952 + 0.5);
-    lipo_voltage_mv = (int)((((float)lipo_voltage/952) - (float)lipo_voltage_v)*1000);
+	/* UART1 Configuration */
+	UART1_Configuration();
 
-    sprintf(uart_buffer,"Hello, my name is daGloane! Servus! \r\n"
-    					"LiPo_Voltage = %d.%dV\r\n\0", lipo_voltage_v, lipo_voltage_mv);
-    USART_ITConfig(USART1, USART_IT_TXE, ENABLE);
+	/* Init the uAC */
+	uac_init();
 
-  /* Infinite loop */
-  while (1)
-  {
-	  Delay(10);
+	/* TIM3 Configuration */
+	TIM3_Configuration();
 
-	//GPIOB->ODR ^= GPIO_Pin_0;
+	/* SPI1 Configuration */
+	SPI1_Configuration();
 
-  }
+
+	//Attach uac commands
+	uac_attach("Hello",Hello_CMD);
+	uac_attach("getmpu",get_MPU6000_data);
+	uac_attach("getlipo",get_LipoVoltage);
+
+	uac_printf("Hello, my name is daGloane\n\r");
+
+	/* Infinite loop */
+	while (1)
+	{
+		//Delay(1);
+
+		//!The uAC_Task() must be called periodically
+		uac_task();
+
+		SPI1_read(ACCEL_XOUT_H ,gyro.bytes,8);
+		acc_x = (gyro.bytes[0] << 8) | gyro.bytes[1];
+		acc_y = (gyro.bytes[2] << 8) | gyro.bytes[3];
+		acc_z = (gyro.bytes[4] << 8) | gyro.bytes[5];
+		temp  = (gyro.bytes[6] << 8) | gyro.bytes[7];
+
+		//!If there are outgoing chars, send them
+		if (uac_txavailable() && (USART_GetFlagStatus(USART1, USART_FLAG_TXE)))
+		{
+			USART_ITConfig(USART1, USART_IT_TXE, ENABLE);
+		}
+	}
 }
 
+
+
+
+//A console test command.
+void Hello_CMD (int argc, char *argv[])
+{
+	uac_printf("Hello World!\n");
+	int i;
+	for (i=0;i<argc;i++)
+	{
+		uac_printf("%i: %s\n",i,argv[i]);
+	}
+
+}
+
+
+void get_MPU6000_data(int argc, char *argv[])
+{
+	if(!argc)	//if they didn't give us a parameter
+	{
+				//give them everything!
+		uac_printf("All data the MPU-6000 provides: \n");
+	}
+	else
+	{
+		//which axis do they want to know about?
+		switch (*argv[0])
+		{
+			case 'x':
+				uac_printf("acc_x: %i",acc_x);
+
+				break;
+			case 'y':
+				uac_printf("acc_y: %i",acc_y);
+
+				break;
+			case 'z':
+				uac_printf("acc_z: %i",acc_z);
+
+				break;
+			case 't':
+				uac_printf("Temp: %i\n",temp);
+				uac_printf("Temp: %i\n",(uint16_t)temp);
+
+				break;
+			default:
+				break;
+		}
+	}
+}
+
+void get_LipoVoltage(int argc, char *argv[])
+{
+	uac_printf("LiPo_Voltage: %2fV\n",(float)lipo_voltage/952.558);
+}
 
 
 void RCC_Configuration(void)
 {
-  /* Setup the microcontroller system. Initialize the Embedded Flash Interface,
+	/* Setup the microcontroller system. Initialize the Embedded Flash Interface,
      initialize the PLL and update the SystemFrequency variable. */
-  SystemInit();
+	SystemInit();
 
-   /* PCLK1 = HCLK/2 */
-  RCC_PCLK1Config(RCC_HCLK_Div2);
+	/* PCLK1 = HCLK/2 */
+	RCC_PCLK1Config(RCC_HCLK_Div2);
 
-  //RCC_ADCCLKConfig(RCC_PCLK2_Div4);
+	RCC_ADCCLKConfig(RCC_PCLK2_Div4);
 
-  /* GPIOA, GPIOB and AFIO clocks enable */
-  RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA |  RCC_APB2Periph_GPIOB | RCC_APB2Periph_AFIO, ENABLE);
+	/* GPIOA, GPIOB and AFIO clocks enable */
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA |  RCC_APB2Periph_GPIOB | RCC_APB2Periph_AFIO, ENABLE);
 
-  /* USART1 clock enable */
-  RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1, ENABLE);
+	/* USART1 clock enable */
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1, ENABLE);
 
-  /* TIM3 clock enable */
-  RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE);
+	/* TIM3 clock enable */
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE);
+
+	/* ADC1 clock enable */
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE);
+
+	/* SPI1 clock enable */
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_SPI1, ENABLE);
 }
 
 /**
-  * @brief  Configures the nested vectored interrupt controller.
-  * @param  None
-  * @retval None
-  */
+ * @brief  Configures the nested vectored interrupt controller.
+ * @param  None
+ * @retval None
+ */
 void NVIC_Configuration(void)
 {
-  NVIC_InitTypeDef NVIC_InitStructure;
+	NVIC_InitTypeDef NVIC_InitStructure;
 
-//  /* Enable the TIM3 gloabal interrupt */
-//  NVIC_InitStructure.NVIC_IRQChannel = TIM3_IRQn;
-//  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 4;
-//  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
-//  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-//  NVIC_Init(&NVIC_InitStructure);
-//
-//
-  NVIC_InitStructure.NVIC_IRQChannel = USART1_IRQn;
-  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 4;
-  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;
-  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-  NVIC_Init(&NVIC_InitStructure);
-//
-//  /* Enable the USART2 Interrupt */
-//  NVIC_InitStructure.NVIC_IRQChannel = USART2_IRQn;
-//  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 4;
-//  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;
-//  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-//  NVIC_Init(&NVIC_InitStructure);
+	//  /* Enable the TIM3 gloabal interrupt */
+	//  NVIC_InitStructure.NVIC_IRQChannel = TIM3_IRQn;
+	//  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 4;
+	//  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
+	//  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+	//  NVIC_Init(&NVIC_InitStructure);
+	//
+	//
+	NVIC_InitStructure.NVIC_IRQChannel = USART1_IRQn;
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 4;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+	NVIC_Init(&NVIC_InitStructure);
+
+	NVIC_InitStructure.NVIC_IRQChannel = SPI1_IRQn;
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 3;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+	NVIC_Init(&NVIC_InitStructure);
+	//
+	//  /* Enable the USART2 Interrupt */
+	//  NVIC_InitStructure.NVIC_IRQChannel = USART2_IRQn;
+	//  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 4;
+	//  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;
+	//  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+	//  NVIC_Init(&NVIC_InitStructure);
 
 
-  /* SysTick Priority */
-  NVIC_SetPriority(SysTick_IRQn, 2);
+	/* SysTick Priority */
+	NVIC_SetPriority(SysTick_IRQn, 2);
 }
 
 /**
-  * @brief  Configures the SysTick.
-  * @param  None
-  * @retval None
-  */
+ * @brief  Configures the SysTick.
+ * @param  None
+ * @retval None
+ */
 void SysTick_Configuration(void)
 {
 
-  /* Setup SysTick Timer for 1 msec interrupts  */
-  if (SysTick_Config(SystemCoreClock / 1000))
-  {
-    /* Capture error */
-    while (1);
-  }
+	/* Setup SysTick Timer for 1 msec interrupts  */
+	if (SysTick_Config(SystemCoreClock / 1000))
+	{
+		/* Capture error */
+		while (1);
+	}
 
 
 }
 
 /**
-  * @brief  Inserts a delay time.
-  * @param  nTime: specifies the delay time length, in milliseconds.
-  * @retval None
-  */
+ * @brief  Inserts a delay time.
+ * @param  nTime: specifies the delay time length, in milliseconds.
+ * @retval None
+ */
 void Delay(__IO uint32_t nTime)
 {
-  TimingDelay = nTime;
+	TimingDelay = nTime;
 
-  while(TimingDelay != 0);
+	while(TimingDelay != 0);
 }
 
 /**
-  * @brief  Decrements the TimingDelay variable.
-  * @param  None
-  * @retval None
-  */
+ * @brief  Decrements the TimingDelay variable.
+ * @param  None
+ * @retval None
+ */
 void TimingDelay_Decrement(void)
 {
-  if (TimingDelay != 0x00)
-  {
-    TimingDelay--;
-  }
+	if (TimingDelay != 0x00)
+	{
+		TimingDelay--;
+	}
 }
 
 
@@ -221,8 +323,8 @@ void TimingDelay_Decrement(void)
  * */
 void __assert_func(const char *file, int line, const char *func, const char *failedexpr)
 {
-  while(1)
-  {}
+	while(1)
+	{}
 }
 
 /*
@@ -230,6 +332,6 @@ void __assert_func(const char *file, int line, const char *func, const char *fai
  * */
 void __assert(const char *file, int line, const char *failedexpr)
 {
-   __assert_func (file, line, NULL, failedexpr);
+	__assert_func (file, line, NULL, failedexpr);
 }
 

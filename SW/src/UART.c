@@ -29,6 +29,8 @@ void UART1_Configuration()
   */
   USART_InitTypeDef USART_InitStructure;
   USART_InitStructure.USART_BaudRate = 115200;	//115200Baud/s
+  //This is the word length including the stop bit
+  //So its actually only 7 bits of data!
   USART_InitStructure.USART_WordLength = USART_WordLength_8b;
   USART_InitStructure.USART_StopBits = USART_StopBits_1;
   USART_InitStructure.USART_Parity = USART_Parity_Odd;

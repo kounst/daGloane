@@ -26,6 +26,7 @@
 #include "GPIO.h"
 #include "ADC.h"
 #include "UART.h"
+#include "uAC.h"
 
 /** @addtogroup STM32F10x_StdPeriph_Template
   * @{
@@ -40,6 +41,10 @@
 
 extern volatile char uart_buffer[];
 uint16_t lipo_voltage = 3810; 	//4V
+
+extern volatile uint8_t SPI_MASTER_Buffer_Tx[20];
+extern volatile uint8_t SPI_MASTER_Buffer_Rx[20];
+extern uint8_t BytesToSend;
 
 /******************************************************************************/
 /*            Cortex-M3 Processor Exceptions Handlers                         */
@@ -141,10 +146,6 @@ void PendSV_Handler(void)
 void SysTick_Handler(void)
 {
 	static uint16_t TurnOff_count = 1000;
-	//GPIOB->ODR ^= GPIO_Pin_0;
-	GPIOB->ODR ^= GPIO_Pin_1;
-	GPIOB->ODR ^= GPIO_Pin_4;
-	GPIOB->ODR ^= GPIO_Pin_5;
 
 	//LEDToggle(LED2);
 
@@ -157,8 +158,6 @@ void SysTick_Handler(void)
 	}
 	else
 	{
-		//LEDOff(LED1);
-		//GPIOB->BRR = GPIO_Pin_0;		//reset Mot1
 		if(!TurnOff_count)
 			GPIOB->BRR = GPIO_Pin_2;	//turn off DCDC
 		else
@@ -170,6 +169,11 @@ void SysTick_Handler(void)
 		lipo_voltage--;
 	else
 		lipo_voltage++;
+
+
+	GPIOB->ODR ^= GPIO_Pin_3;
+	GPIOA->ODR ^= GPIO_Pin_15;
+	GPIOB->ODR ^= GPIO_Pin_4;
 
 	TimingDelay_Decrement();  			//Decrement ms counter of Delay() function
 }
@@ -190,27 +194,80 @@ void USART1_IRQHandler(void)
 {
 	static uint16_t TxCounter = 0;
 
+
 	if(USART_GetITStatus(USART1, USART_IT_TXE) != RESET)	// if this is a transmit interrupt..
 	{
-		/* Write one byte to the transmit data register */
-		USART_SendData(USART1, uart_buffer[TxCounter++]);
+//		/* Write one byte to the transmit data register */
+//		USART_SendData(USART1, uart_buffer[TxCounter++]);
+//
+//		if(TxCounter == 499 || uart_buffer[TxCounter] == '\0')
+//		{
+//			/* Disable the USART1 Transmit interrupt */
+//			USART_ITConfig(USART1, USART_IT_TXE, DISABLE);
+//			TxCounter = 0;
+//		}
 
-		if(TxCounter == 499 || uart_buffer[TxCounter] == '\0')
+
+		if(uac_txavailable())
 		{
-			/* Disable the USART1 Transmit interrupt */
+			USART_SendData(USART1, uac_tx());
+		}
+		else
+		{
 			USART_ITConfig(USART1, USART_IT_TXE, DISABLE);
-			TxCounter = 0;
 		}
 	}
 
 	if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET)	// if this is a receive interrupt..
 	{
-		uart_parser(USART_ReceiveData(USART2));
+//		uart_parser(USART_ReceiveData(USART1));
+
+		//!Hand over the char to uAC
+		//We are using only 7 data bits
+		//So we only keep bit 0..6
+		uac_rx(0x7F & USART_ReceiveData(USART1));
 
 
 	}
 	USART_ClearITPendingBit(USART1, USART_IT_TXE);
 	USART_ClearITPendingBit(USART1, USART_IT_RXNE);
+}
+
+
+/**
+  * @brief  This function handles PPP interrupt request.
+  * @param  None
+  * @retval None
+  */
+void SPI_IRQHandler(void)
+{
+	static uint8_t TxIdx = 0;
+	static uint8_t RxIdx = 0;
+	if(SPI_I2S_GetITStatus(SPI1, SPI_I2S_IT_TXE) != RESET)
+	{
+		/* Send SPI_MASTER data */
+		SPI_I2S_SendData(SPI1, SPI_MASTER_Buffer_Tx[TxIdx++]);
+
+		/* Disable SPI_MASTER TXE interrupt */
+		if (TxIdx == BytesToSend)
+		{
+			TxIdx = 0;
+			SPI_I2S_ITConfig(SPI1, SPI_I2S_IT_TXE, DISABLE);
+		}
+	}
+
+	if(SPI_I2S_GetITStatus(SPI1,SPI_I2S_IT_RXNE) != RESET)
+	{
+		/* Store SPI received data */
+		SPI_MASTER_Buffer_Rx[RxIdx++] = SPI_I2S_ReceiveData(SPI1);
+
+		if(RxIdx == BytesToSend)
+		{
+			RxIdx = 0;
+			GPIOA->BSRR = GPIO_Pin_4;
+		}
+	}
+
 }
 
 
