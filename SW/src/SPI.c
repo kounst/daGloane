@@ -9,9 +9,6 @@
 #include "stm32f10x.h"
 #include "SPI.h"
 
-volatile uint8_t SPI_MASTER_Buffer_Tx[20];
-volatile uint8_t SPI_MASTER_Buffer_Rx[20];
-uint8_t BytesToSend;
 
 
 
@@ -131,5 +128,4 @@ void SPI1_read(uint8_t start_address, uint8_t *bytearray, uint8_t NofBytes)
 	*bytearray = SPI_I2S_ReceiveData(SPI1);
 
 	CS_HIGH;
-
 }

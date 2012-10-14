@@ -1,4 +1,4 @@
-// Header: ADC1 initialization for directBEMF detection
+// Header: ADC1 initialization for LiPo voltage measurement
 // File Name: ADC.c
 // Author: Konstantin Reichmeyer
 // Date:

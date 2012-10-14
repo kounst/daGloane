@@ -41,7 +41,5 @@
 
 
 void SPI1_Configuration(void);
-uint8_t MPU_ReadByte(void);
-uint8_t MPU_SendByte(uint8_t);
 void SPI1_read(uint8_t, uint8_t *, uint8_t);
 uint8_t SPI1_readbyte(uint8_t);

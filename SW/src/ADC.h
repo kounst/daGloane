@@ -5,5 +5,4 @@
 
 
 void ADC1_Configuration(void);
-void ADC2_Configuration(void);
 

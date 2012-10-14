@@ -35,27 +35,19 @@
 #include "SPI.h"
 #include "uAC.h"
 
-
-
-
-/* Private typedef */
-/* Private define  */
-
-
-/* Private macro */
-/* Private variables */
 static __IO uint32_t TimingDelay;
 
 /* Global variables */
-volatile char uart_buffer[500];
 extern uint16_t lipo_voltage;
-extern char rx_command[50];
-
-
-
 int16_t acc_x, acc_y, acc_z;
 int16_t gyro_x, gyro_y, gyro_z;
 int16_t temp;
+
+union gyrodata
+{
+	uint8_t bytes[14];
+	uint16_t words[7];
+}gyro;
 
 /* Private function prototypes */
 void RCC_Configuration(void);
@@ -81,15 +73,6 @@ void PwrOff(int argc, char *argv[]);
  */
 int main(void)
 {
-	uint16_t lipo_voltage_mv;
-
-
-	union gyrodata
-	{
-		uint8_t bytes[14];
-		uint16_t words[7];
-	}gyro;
-
 	/* System Clocks Configuration */
 	RCC_Configuration();
 
@@ -129,16 +112,11 @@ int main(void)
 	uac_attach("PwrOff", PwrOff);
 
 
-	uac_printf("Hello, my name is daGloane\n\r");
+	uac_printf("\nHello, my name is daGloane\n");
 
 	/* Infinite loop */
 	while (1)
 	{
-		//Delay(1);
-
-		//!The uAC_Task() must be called periodically
-		uac_task();
-
 		SPI1_read(ACCEL_XOUT_H ,gyro.bytes,14);
 		acc_x = (gyro.bytes[0] << 8) | gyro.bytes[1];
 		acc_y = (gyro.bytes[2] << 8) | gyro.bytes[3];
@@ -148,6 +126,9 @@ int main(void)
 		gyro_y = (gyro.bytes[10] << 8) | gyro.bytes[11];
 		gyro_z = (gyro.bytes[12] << 8) | gyro.bytes[13];
 
+
+		//!The uAC_Task() must be called periodically
+		uac_task();
 		//!If there are outgoing chars, send them
 		if (uac_txavailable() && (USART_GetFlagStatus(USART1, USART_FLAG_TXE)))
 		{
