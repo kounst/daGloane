@@ -110,7 +110,7 @@ void GPIO_Configuration(void)
 
   * @retval 0, 1 this is the debounced input state
   */
-uint16_t debounce(uint16_t IOstate)
+uint8_t debounce(uint16_t IOstate)
 {
 	static uint32_t state = 0;
 	static uint16_t debounce = 0;

@@ -22,7 +22,7 @@ typedef enum
 
 
 void GPIO_Configuration(void);
-uint16_t debounce(uint16_t IOstate);
+uint8_t debounce(uint16_t IOstate);
 void LEDToggle(Led_TypeDef Led);
 void LEDOn(Led_TypeDef Led);
 void LEDOff(Led_TypeDef Led);
