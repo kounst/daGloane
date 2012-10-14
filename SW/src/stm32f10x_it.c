@@ -154,14 +154,24 @@ void SysTick_Handler(void)
 		//LEDOn(LED1);
 		//GPIOB->BSRR = GPIO_Pin_0;		//set Mot1
 		if(TurnOff_count)
+		{
 			TurnOff_count--;
+			if(!(TurnOff_count % 100))
+				uac_printf("TurnOff_count: %i\n", TurnOff_count/100);
+			if(!TurnOff_count)
+				uac_printf("\nBye-bye!\n");
+		}
 	}
 	else
 	{
 		if(!TurnOff_count)
+		{
 			GPIOB->BRR = GPIO_Pin_2;	//turn off DCDC
+		}
 		else
+		{
 			TurnOff_count = 1000;		//reset TurnOff delay
+		}
 	}
 
 
