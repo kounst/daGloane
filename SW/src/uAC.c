@@ -232,7 +232,11 @@ int uac_strcmp (char *a, char *b)
 	int Ret=1;
 
 	for (i=0;a[i]!='\0' && b[i]!='\0';i++) {
+#ifdef uAC_strcmp_casesense
 		if (a[i]!=b[i]) Ret=0;
+#else
+		if ((0x60 | a[i])!=(0x60 | b[i])) Ret=0;
+#endif
 	}
 	if (a[i]!=b[i]) Ret=0;
 

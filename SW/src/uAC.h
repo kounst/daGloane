@@ -15,6 +15,9 @@
 //!Activate uac_print %x support
 #define uAC_Print_x_Type
 
+//!Makes uac_strcmp case sensitive
+//#define uAC_strcmp_casesense
+
 //! A string which defines the chars to signal a new line.
 /**
  * If in a string "\n" is present, it will be replaced by this string.
