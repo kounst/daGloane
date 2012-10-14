@@ -46,19 +46,3 @@ void UART1_Configuration()
 }
 
 
-void uart_parser(uint8_t rx_byte)
-{
-	//static char rx_command[50];
-	static byte_count = 0;
-
-	TIM3_Update(0,rx_byte*8);
-
-//	rx_command[byte_count] = rx_byte;
-//	byte_count++;
-//	if(byte_count >= 50 || rx_byte == '\0')
-//		byte_count = 0;
-
-
-}
-
-
