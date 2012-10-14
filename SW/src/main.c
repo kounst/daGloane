@@ -52,8 +52,9 @@ extern uint16_t lipo_voltage;
 extern char rx_command[50];
 
 
-//int16_t gyrodata;
+
 int16_t acc_x, acc_y, acc_z;
+int16_t gyro_x, gyro_y, gyro_z;
 int16_t temp;
 
 /* Private function prototypes */
@@ -62,10 +63,12 @@ void NVIC_Configuration(void);
 void SysTick_Configuration(void);
 void Delay(__IO uint32_t nTime);
 void TimingDelay_Decrement(void);
-void Test_CMD (int argc, char *argv[]);
+
 void Hello_CMD (int argc, char *argv[]);
 void get_MPU6000_data(int argc, char *argv[]);
-void get_LipoVoltage(int argc, char *argv[]);
+void get_LiPoVoltage(int argc, char *argv[]);
+void get_Switch(int argc, char *argv[]);
+void PwrOff(int argc, char *argv[]);
 
 /* Private functions */
 
@@ -81,7 +84,6 @@ int main(void)
 	uint16_t lipo_voltage_mv;
 
 
-
 	union gyrodata
 	{
 		uint8_t bytes[14];
@@ -93,9 +95,6 @@ int main(void)
 
 	/* NVIC Configuration */
 	NVIC_Configuration();
-
-	/* Systick Configuration */
-	SysTick_Configuration();
 
 	/* GPIO Configuration */
 	GPIO_Configuration();
@@ -115,14 +114,20 @@ int main(void)
 	/* TIM3 Configuration */
 	TIM3_Configuration();
 
+	/* Systick Configuration */
+	SysTick_Configuration();
+
 	/* SPI1 Configuration */
 	SPI1_Configuration();
 
 
 	//Attach uac commands
 	uac_attach("Hello",Hello_CMD);
-	uac_attach("getmpu",get_MPU6000_data);
-	uac_attach("getlipo",get_LipoVoltage);
+	uac_attach("getMPU",get_MPU6000_data);
+	uac_attach("getLiPo",get_LiPoVoltage);
+	uac_attach("getSwitch", get_Switch);
+	uac_attach("PwrOff", PwrOff);
+
 
 	uac_printf("Hello, my name is daGloane\n\r");
 
@@ -134,11 +139,14 @@ int main(void)
 		//!The uAC_Task() must be called periodically
 		uac_task();
 
-		SPI1_read(ACCEL_XOUT_H ,gyro.bytes,8);
+		SPI1_read(ACCEL_XOUT_H ,gyro.bytes,14);
 		acc_x = (gyro.bytes[0] << 8) | gyro.bytes[1];
 		acc_y = (gyro.bytes[2] << 8) | gyro.bytes[3];
 		acc_z = (gyro.bytes[4] << 8) | gyro.bytes[5];
-		temp  = (gyro.bytes[6] << 8) | gyro.bytes[7];
+		temp = (gyro.bytes[6] << 8) | gyro.bytes[7];
+		gyro_x = (gyro.bytes[8] << 8) | gyro.bytes[9];
+		gyro_y = (gyro.bytes[10] << 8) | gyro.bytes[11];
+		gyro_z = (gyro.bytes[12] << 8) | gyro.bytes[13];
 
 		//!If there are outgoing chars, send them
 		if (uac_txavailable() && (USART_GetFlagStatus(USART1, USART_FLAG_TXE)))
@@ -164,12 +172,26 @@ void Hello_CMD (int argc, char *argv[])
 }
 
 
+void PwrOff(int argc, char *argv[])
+{
+	uac_printf("\nBye-bye!\n");
+	while(uac_txavailable());	//wait for uac string to be sent
+	GPIOB->BRR = GPIO_Pin_2;	//turn off DCDC
+}
+
+
+
+
 void get_MPU6000_data(int argc, char *argv[])
 {
 	if(!argc)	//if they didn't give us a parameter
 	{
 				//give them everything!
 		uac_printf("All data the MPU-6000 provides: \n");
+		uac_printf("acc_x:  %i\ngyro_x: %i\n",acc_x, gyro_x);
+		uac_printf("acc_y:  %i\ngyro_y: %i\n",acc_y, gyro_y);
+		uac_printf("acc_z:  %i\ngyro_z: %i\n",acc_z, gyro_z);
+		uac_printf("Temp: %i\n",temp);
 	}
 	else
 	{
@@ -177,20 +199,19 @@ void get_MPU6000_data(int argc, char *argv[])
 		switch (*argv[0])
 		{
 			case 'x':
-				uac_printf("acc_x: %i",acc_x);
+				uac_printf("acc_x:  %i\ngyro_x: %i\n",acc_x, gyro_x);
 
 				break;
 			case 'y':
-				uac_printf("acc_y: %i",acc_y);
+				uac_printf("acc_y:  %i\ngyro_y: %i\n",acc_y, gyro_y);
 
 				break;
 			case 'z':
-				uac_printf("acc_z: %i",acc_z);
+				uac_printf("acc_z:  %i\ngyro_z: %i\n",acc_z, gyro_z);
 
 				break;
 			case 't':
 				uac_printf("Temp: %i\n",temp);
-				uac_printf("Temp: %i\n",(uint16_t)temp);
 
 				break;
 			default:
@@ -199,7 +220,26 @@ void get_MPU6000_data(int argc, char *argv[])
 	}
 }
 
-void get_LipoVoltage(int argc, char *argv[])
+
+void get_Switch(int argc, char *argv[])
+{
+	char *state;
+	switch (debounce(GPIOA->IDR & 2))
+				{
+	case 1:
+		state = "ON";
+		break;
+	case 0:
+		state = "OFF";
+		break;
+	default:
+		break;
+				}
+	uac_printf("SwitchState: %s",state);
+}
+
+
+void get_LiPoVoltage(int argc, char *argv[])
 {
 	uac_printf("LiPo_Voltage: %2fV\n",(float)lipo_voltage/952.558);
 }
