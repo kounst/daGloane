@@ -39,15 +39,18 @@ static __IO uint32_t TimingDelay;
 
 /* Global variables */
 extern uint16_t lipo_voltage;
-int16_t acc_x, acc_y, acc_z;
-int16_t gyro_x, gyro_y, gyro_z;
-int16_t temp;
 
-union gyrodata
+
+
+//We have to consider the endianness of the plattform here.
+//bytes[0] is the low  byte of gyro_z
+//bytes[1] is the high byte of gyro_z
+union mpudata
 {
 	uint8_t bytes[14];
-	uint16_t words[7];
-}gyro;
+	struct { int16_t gyro_z, gyro_y, gyro_x, temp, acc_z, acc_y, acc_x; } words;
+}mpu;
+
 
 /* Private function prototypes */
 void RCC_Configuration(void);
@@ -117,15 +120,7 @@ int main(void)
 	/* Infinite loop */
 	while (1)
 	{
-		SPI1_read(ACCEL_XOUT_H ,gyro.bytes,14);
-		acc_x = (gyro.bytes[0] << 8) | gyro.bytes[1];
-		acc_y = (gyro.bytes[2] << 8) | gyro.bytes[3];
-		acc_z = (gyro.bytes[4] << 8) | gyro.bytes[5];
-		temp = (gyro.bytes[6] << 8) | gyro.bytes[7];
-		gyro_x = (gyro.bytes[8] << 8) | gyro.bytes[9];
-		gyro_y = (gyro.bytes[10] << 8) | gyro.bytes[11];
-		gyro_z = (gyro.bytes[12] << 8) | gyro.bytes[13];
-
+		SPI1_read(ACCEL_XOUT_H ,mpu.bytes,14);
 
 		//!The uAC_Task() must be called periodically
 		uac_task();
@@ -168,11 +163,12 @@ void get_MPU6000_data(int argc, char *argv[])
 	if(!argc)	//if they didn't give us a parameter
 	{
 				//give them everything!
+
 		uac_printf("All data the MPU-6000 provides: \n");
-		uac_printf("acc_x:  %i\ngyro_x: %i\n",acc_x, gyro_x);
-		uac_printf("acc_y:  %i\ngyro_y: %i\n",acc_y, gyro_y);
-		uac_printf("acc_z:  %i\ngyro_z: %i\n",acc_z, gyro_z);
-		uac_printf("Temp: %i\n",temp);
+		uac_printf("acc_x:  %i\ngyro_x: %i\n",mpu.words.acc_x, mpu.words.gyro_x);
+		uac_printf("acc_y:  %i\ngyro_y: %i\n",mpu.words.acc_y, mpu.words.gyro_y);
+		uac_printf("acc_z:  %i\ngyro_z: %i\n",mpu.words.acc_z, mpu.words.gyro_z);
+		uac_printf("Temp: %i\n",mpu.words.temp);
 	}
 	else
 	{
@@ -180,19 +176,19 @@ void get_MPU6000_data(int argc, char *argv[])
 		switch (*argv[0])
 		{
 			case 'x':
-				uac_printf("acc_x:  %i\ngyro_x: %i\n",acc_x, gyro_x);
+				uac_printf("acc_x:  %i\ngyro_x: %i\n",mpu.words.acc_x, mpu.words.gyro_x);
 
 				break;
 			case 'y':
-				uac_printf("acc_y:  %i\ngyro_y: %i\n",acc_y, gyro_y);
+				uac_printf("acc_y:  %i\ngyro_y: %i\n",mpu.words.acc_y, mpu.words.gyro_y);
 
 				break;
 			case 'z':
-				uac_printf("acc_z:  %i\ngyro_z: %i\n",acc_z, gyro_z);
+				uac_printf("acc_z:  %i\ngyro_z: %i\n",mpu.words.acc_z, mpu.words.gyro_z);
 
 				break;
 			case 't':
-				uac_printf("Temp: %i\n",temp);
+				uac_printf("Temp: %i\n",mpu.words.temp);
 
 				break;
 			default:

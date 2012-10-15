@@ -97,9 +97,22 @@ uint8_t SPI1_readbyte(uint8_t address)
 	return temp;
 }
 
+
+/**
+ * @brief  Reads the specified number of bytes starting form a specified address
+ * @param  uint8_t start_address: address to start reading form slave device
+ * @param  uint8_t *bytearray: startaddress of an array to hold the read data
+ * @param  uint8_t NofBytes: Number of bytes to read
+
+ * @retval none
+ */
 void SPI1_read(uint8_t start_address, uint8_t *bytearray, uint8_t NofBytes)
 {
 	CS_LOW;
+
+	//We want to write to the array last element first.
+	//This changes the order of high byte and low byte and allows us to access a whole word at once later on.
+	bytearray += (NofBytes - 1);
 
 	SPI_I2S_SendData(SPI1, 0x80 | start_address);
 
@@ -117,7 +130,7 @@ void SPI1_read(uint8_t start_address, uint8_t *bytearray, uint8_t NofBytes)
 		SPI_I2S_SendData(SPI1, 0x00);
 		while (SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_RXNE) == RESET);
 		*bytearray = SPI_I2S_ReceiveData(SPI1);
-		bytearray++;
+		bytearray--;
 
 		NofBytes--;
 	}
