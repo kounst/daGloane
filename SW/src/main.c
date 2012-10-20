@@ -25,45 +25,34 @@
  *****************************************************************************
  */
 
-/* Includes */
+
+/* Includes ------------------------------------------------------------------*/
 #include <stddef.h>
+#include <math.h>
 #include "stm32f10x.h"
+#include "main.h"
 #include "GPIO.h"
 #include "UART.h"
 #include "ADC.h"
 #include "TIM.h"
 #include "SPI.h"
 #include "uAC.h"
+#include "uAC_CMD.h"
+#include "kalman.h"
 
-static __IO uint32_t TimingDelay;
 
 /* Global variables */
 extern uint16_t lipo_voltage;
+float acc_pitch, acc_roll;
+
+mpudata mpu;
+mpudata mpu_offset;
+
+kalman_data pitch_data;
+kalman_data roll_data;
 
 
 
-//We have to consider the endianness of the plattform here.
-//bytes[0] is the low  byte of gyro_z
-//bytes[1] is the high byte of gyro_z
-union mpudata
-{
-	uint8_t bytes[14];
-	struct { int16_t gyro_z, gyro_y, gyro_x, temp, acc_z, acc_y, acc_x; } words;
-}mpu;
-
-
-/* Private function prototypes */
-void RCC_Configuration(void);
-void NVIC_Configuration(void);
-void SysTick_Configuration(void);
-void Delay(__IO uint32_t nTime);
-void TimingDelay_Decrement(void);
-
-void Hello_CMD (int argc, char *argv[]);
-void get_MPU6000_data(int argc, char *argv[]);
-void get_LiPoVoltage(int argc, char *argv[]);
-void get_Switch(int argc, char *argv[]);
-void PwrOff(int argc, char *argv[]);
 
 /* Private functions */
 
@@ -76,6 +65,8 @@ void PwrOff(int argc, char *argv[]);
  */
 int main(void)
 {
+
+
 	/* System Clocks Configuration */
 	RCC_Configuration();
 
@@ -113,20 +104,49 @@ int main(void)
 	uac_attach("getLiPo",get_LiPoVoltage);
 	uac_attach("getSwitch", get_Switch);
 	uac_attach("PwrOff", PwrOff);
+	uac_attach("accangle", ACC_angle);
+	uac_attach("getangle", get_angle);
 
 
 	uac_printf("\nHello, my name is daGloane\n");
 
+	//measure ACC channels while copter is stationary to obtain offsets.
+	CalibrateACC();
+
+	kalman_init(&pitch_data);
+	kalman_init(&roll_data);
+
 	/* Infinite loop */
 	while (1)
 	{
+		//read data from MPU-6000 starting at address ACCEL_XOUT_H
 		SPI1_read(ACCEL_XOUT_H ,mpu.bytes,14);
+
+		//remove offsets from ACC data
+		mpu.acc_x -= mpu_offset.acc_x;
+		mpu.acc_y -= mpu_offset.acc_y;
+		mpu.acc_z -= mpu_offset.acc_z;
+
+		//calculate roll and pitch angle form ACC data
+		acc_roll  = atan2(mpu.acc_x, mpu.acc_z);
+		acc_pitch = atan2(mpu.acc_y, mpu.acc_z);
+		//acc_angle *= (180/3.1415);
+
+		//Estimate now state with updated sensor data
+		kalman_innovate(&pitch_data, acc_pitch, mpu.gyro_x);
+		kalman_innovate(&roll_data, acc_roll, mpu.gyro_y);
+
+		/* The new kalman estimate is now stored in pitch_data.x1, pitch_data.x2, pitch_data.x3
+		  	   								    roll_data.x1,  roll_data.x2,  roll_data.x3
+		*/
+
 
 		//!The uAC_Task() must be called periodically
 		uac_task();
 		//!If there are outgoing chars, send them
 		if (uac_txavailable() && (USART_GetFlagStatus(USART1, USART_FLAG_TXE)))
 		{
+			//The ISR disables itself after the last char from the TX buffer is sent
 			USART_ITConfig(USART1, USART_IT_TXE, ENABLE);
 		}
 	}
@@ -134,92 +154,29 @@ int main(void)
 
 
 
-
-//A console test command.
-void Hello_CMD (int argc, char *argv[])
+void CalibrateACC()
 {
-	uac_printf("Hello World!\n");
 	int i;
-	for (i=0;i<argc;i++)
+	int neutralX = 0;
+	int neutralY = 0;
+	int neutralZ = 0;
+
+	for(i = 0; i < 128; i++)
 	{
-		uac_printf("%i: %s\n",i,argv[i]);
+		SPI1_read(ACCEL_XOUT_H ,mpu.bytes,14);
+		neutralX += mpu.acc_x;
+		neutralY += mpu.acc_y;
+		neutralZ += mpu.acc_z;
+		Delay(10);
 	}
 
-}
-
-
-void PwrOff(int argc, char *argv[])
-{
-	uac_printf("\nBye-bye!\n");
-	while(uac_txavailable());	//wait for uac string to be sent
-	GPIOB->BRR = GPIO_Pin_2;	//turn off DCDC
+	mpu_offset.acc_x = neutralX / 128;
+	mpu_offset.acc_y = neutralY / 128;
+	mpu_offset.acc_z = neutralZ / 128;
 }
 
 
 
-
-void get_MPU6000_data(int argc, char *argv[])
-{
-	if(!argc)	//if they didn't give us a parameter
-	{
-				//give them everything!
-
-		uac_printf("All data the MPU-6000 provides: \n");
-		uac_printf("acc_x:  %i\ngyro_x: %i\n",mpu.words.acc_x, mpu.words.gyro_x);
-		uac_printf("acc_y:  %i\ngyro_y: %i\n",mpu.words.acc_y, mpu.words.gyro_y);
-		uac_printf("acc_z:  %i\ngyro_z: %i\n",mpu.words.acc_z, mpu.words.gyro_z);
-		uac_printf("Temp: %i\n",mpu.words.temp);
-	}
-	else
-	{
-		//which axis do they want to know about?
-		switch (*argv[0])
-		{
-			case 'x':
-				uac_printf("acc_x:  %i\ngyro_x: %i\n",mpu.words.acc_x, mpu.words.gyro_x);
-
-				break;
-			case 'y':
-				uac_printf("acc_y:  %i\ngyro_y: %i\n",mpu.words.acc_y, mpu.words.gyro_y);
-
-				break;
-			case 'z':
-				uac_printf("acc_z:  %i\ngyro_z: %i\n",mpu.words.acc_z, mpu.words.gyro_z);
-
-				break;
-			case 't':
-				uac_printf("Temp: %i\n",mpu.words.temp);
-
-				break;
-			default:
-				break;
-		}
-	}
-}
-
-
-void get_Switch(int argc, char *argv[])
-{
-	char *state;
-	switch (debounce(GPIOA->IDR & 2))
-				{
-	case 1:
-		state = "ON";
-		break;
-	case 0:
-		state = "OFF";
-		break;
-	default:
-		break;
-				}
-	uac_printf("SwitchState: %s",state);
-}
-
-
-void get_LiPoVoltage(int argc, char *argv[])
-{
-	uac_printf("LiPo_Voltage: %2fV\n",(float)lipo_voltage/952.558);
-}
 
 
 void RCC_Configuration(void)
@@ -289,50 +246,6 @@ void NVIC_Configuration(void)
 	/* SysTick Priority */
 	NVIC_SetPriority(SysTick_IRQn, 2);
 }
-
-/**
- * @brief  Configures the SysTick.
- * @param  None
- * @retval None
- */
-void SysTick_Configuration(void)
-{
-
-	/* Setup SysTick Timer for 1 msec interrupts  */
-	if (SysTick_Config(SystemCoreClock / 1000))
-	{
-		/* Capture error */
-		while (1);
-	}
-
-
-}
-
-/**
- * @brief  Inserts a delay time.
- * @param  nTime: specifies the delay time length, in milliseconds.
- * @retval None
- */
-void Delay(__IO uint32_t nTime)
-{
-	TimingDelay = nTime;
-
-	while(TimingDelay != 0);
-}
-
-/**
- * @brief  Decrements the TimingDelay variable.
- * @param  None
- * @retval None
- */
-void TimingDelay_Decrement(void)
-{
-	if (TimingDelay != 0x00)
-	{
-		TimingDelay--;
-	}
-}
-
 
 
 /*
