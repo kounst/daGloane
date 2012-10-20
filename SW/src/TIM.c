@@ -1,13 +1,20 @@
-// Header:
-// File Name: 
-// Author:
-// Date:
+/*
+ * TIM.c
+ *
+ *  Created on: Oct 20, 2012
+ *      Author: konstantin
+ */
 
 
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f10x.h"
 #include "TIM.h"
+
+
+
+static __IO uint32_t TimingDelay;
+
 
 void TIM3_Configuration(void)
 {
@@ -70,4 +77,48 @@ void TIM3_Update(uint8_t channel, uint16_t pulswidth)
 	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_Low;
 	TIM_OC3Init(TIM3, &TIM_OCInitStructure);
 
+}
+
+
+/**
+ * @brief  Configures the SysTick.
+ * @param  None
+ * @retval None
+ */
+void SysTick_Configuration(void)
+{
+
+	/* Setup SysTick Timer for 1 msec interrupts  */
+	if (SysTick_Config(SystemCoreClock / 1000))
+	{
+		/* Capture error */
+		while (1);
+	}
+
+
+}
+
+/**
+ * @brief  Inserts a delay time.
+ * @param  nTime: specifies the delay time length, in milliseconds.
+ * @retval None
+ */
+void Delay(__IO uint32_t nTime)
+{
+	TimingDelay = nTime;
+
+	while(TimingDelay != 0);
+}
+
+/**
+ * @brief  Decrements the TimingDelay variable.
+ * @param  None
+ * @retval None
+ */
+void TimingDelay_Decrement(void)
+{
+	if (TimingDelay != 0x00)
+	{
+		TimingDelay--;
+	}
 }
