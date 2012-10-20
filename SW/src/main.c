@@ -76,7 +76,7 @@ int main(void)
 	/* GPIO Configuration */
 	GPIO_Configuration();
 
-	/* keep DCDC form turning off again (set Power_ON_µC)*/
+	/* keep DC/DC form turning off again (set Power_ON_µC) */
 	GPIOB->BSRR = GPIO_Pin_2;
 
 	/* ADC Configuration */
@@ -88,6 +88,9 @@ int main(void)
 	/* Init the uAC */
 	uac_init();
 
+	/* Attach uac commands */
+	uAC_CMD_attach();
+
 	/* TIM3 Configuration */
 	TIM3_Configuration();
 
@@ -97,20 +100,9 @@ int main(void)
 	/* SPI1 Configuration */
 	SPI1_Configuration();
 
-
-	//Attach uac commands
-	uac_attach("Hello",Hello_CMD);
-	uac_attach("getMPU",get_MPU6000_data);
-	uac_attach("getLiPo",get_LiPoVoltage);
-	uac_attach("getSwitch", get_Switch);
-	uac_attach("PwrOff", PwrOff);
-	uac_attach("accangle", ACC_angle);
-	uac_attach("getangle", get_angle);
-
-
 	uac_printf("\nHello, my name is daGloane\n");
 
-	//measure ACC channels while copter is stationary to obtain offsets.
+	/* measure ACC channels while copter is stationary to obtain offsets. */
 	CalibrateACC();
 
 	kalman_init(&pitch_data);
@@ -132,23 +124,23 @@ int main(void)
 		acc_pitch = atan2(mpu.acc_y, mpu.acc_z);
 		//acc_angle *= (180/3.1415);
 
-		//Estimate now state with updated sensor data
+		//Estimate new state with updated sensor data
 		kalman_innovate(&pitch_data, acc_pitch, mpu.gyro_x);
 		kalman_innovate(&roll_data, acc_roll, mpu.gyro_y);
 
 		/* The new kalman estimate is now stored in pitch_data.x1, pitch_data.x2, pitch_data.x3
-		  	   								    roll_data.x1,  roll_data.x2,  roll_data.x3
-		*/
+		 * 	   									    roll_data.x1,  roll_data.x2,  roll_data.x3
+		 */
 
 
-		//!The uAC_Task() must be called periodically
+		/* The uAC_Task() must be called periodically
+		 * It checks whether a command has been received and
+		 * calls the corresponding uAC_CMD function
+		 */
 		uac_task();
-		//!If there are outgoing chars, send them
-		if (uac_txavailable() && (USART_GetFlagStatus(USART1, USART_FLAG_TXE)))
-		{
-			//The ISR disables itself after the last char from the TX buffer is sent
-			USART_ITConfig(USART1, USART_IT_TXE, ENABLE);
-		}
+
+		//If there are outgoing chars, send them
+		uac_tx_task();
 	}
 }
 
