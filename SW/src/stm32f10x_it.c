@@ -145,32 +145,15 @@ void PendSV_Handler(void)
  */
 void SysTick_Handler(void)
 {
-	static uint16_t TurnOff_count = 1000;
-
-	if(debounce(GPIOA->IDR & 2))		//tactile switch input
-	{
-		if(TurnOff_count)
-		{
-			TurnOff_count--;
-			if(!(TurnOff_count % 100))
-				uac_printf("TurnOff_count: %i\n", TurnOff_count/100);
-			if(!TurnOff_count)
-				uac_printf("\nBye-bye!\n");
-		}
-	}
-	else
-	{
-		if(!TurnOff_count)
-		{
-			GPIOB->BRR = GPIO_Pin_2;	//turn off DCDC
-		}
-		else
-		{
-			TurnOff_count = 1000;		//reset TurnOff delay
-		}
-	}
+	/*	Checks whether the push-bottom is being held down and turns of the power if
+	 * 	it is released after more than 1 second
+	 */
+	PWR_Buttom_handler();
 
 
+	/*	This is sort of a low pass filter
+	 *  Its characteristic is not great but OK for this application
+	 */
 	if(lipo_voltage > ADC_GetConversionValue(ADC1))
 		lipo_voltage--;
 	else
@@ -207,9 +190,10 @@ void USART1_IRQHandler(void)
 
 	if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET)	// if this is a receive interrupt..
 	{
-		//!Hand over the char to uAC
-		//We are using only 7 data bits
-		//So we only keep bit 0..6
+		/* Hand over the char to uAC
+		 * We are using only 7 data bits
+		 * So we only keep bit 0..6
+		 */
 		uac_rx(0x7F & USART_ReceiveData(USART1));
 
 

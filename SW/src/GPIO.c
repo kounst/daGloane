@@ -9,6 +9,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f10x.h"
 #include "GPIO.h"
+#include "uAC.h"
 
 
 void GPIO_Configuration(void)
@@ -103,6 +104,35 @@ void GPIO_Configuration(void)
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
 	GPIO_Init(GPIOA, &GPIO_InitStructure);
 
+}
+
+
+void PWR_Buttom_handler()
+{
+	static uint16_t TurnOff_count = 1000;
+
+	if(debounce(GPIOA->IDR & 2))		//tactile switch input
+	{
+		if(TurnOff_count)
+		{
+			TurnOff_count--;
+			if(!(TurnOff_count % 100))
+				uac_printf("TurnOff_count: %i\n", TurnOff_count/100);
+			if(!TurnOff_count)
+				uac_printf("\nBye-bye!\n");
+		}
+	}
+	else
+	{
+		if(!TurnOff_count)
+		{
+			GPIOB->BRR = GPIO_Pin_2;	//turn off DCDC
+		}
+		else
+		{
+			TurnOff_count = 1000;		//reset TurnOff delay
+		}
+	}
 }
 
 
