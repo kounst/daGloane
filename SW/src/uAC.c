@@ -1,10 +1,12 @@
-/**
- * @file uAC.c
- * @author Thomas Weinhold
- * @date 27.06.2011
- * @version 0.5
+/*
+ * uAC.c
+ *
+ *  Created on: Sep 01, 2011
+ *      Author: Thomas Weinhold
  */
 
+
+/* Includes ------------------------------------------------------------------*/
 #include "uAC.h"
 #include <stdarg.h>
 

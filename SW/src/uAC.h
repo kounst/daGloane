@@ -1,8 +1,8 @@
-/**
- * @file uAC.h
- * @author Thomas Weinhold
- * @date 12.06.2011
- * @version 0.5
+/*
+ * uAC.h
+ *
+ *  Created on: Sep 01, 2011
+ *      Author: Thomas Weinhold
  */
 
 #ifndef UAC_H_
