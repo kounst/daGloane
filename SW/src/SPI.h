@@ -10,9 +10,6 @@
 
 
 
-#endif /* SPI_H_ */
-
-
 
 #define READ				0x80	//MSB to select read or write operation
 #define WHO_AM_I			0x75	//WHO_AM_I register
@@ -43,3 +40,9 @@
 void SPI1_Configuration(void);
 void SPI1_read(uint8_t, uint8_t *, uint8_t);
 uint8_t SPI1_readbyte(uint8_t);
+
+
+
+
+
+#endif /* SPI_H_ */
