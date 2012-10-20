@@ -1,8 +1,9 @@
-// Header: ADC1 initialization for LiPo voltage measurement
-// File Name: ADC.c
-// Author: Konstantin Reichmeyer
-// Date:
-
+/*
+ * ADC.c
+ *
+ *  Created on: Nov 13, 2010
+ *      Author: konstantin
+ */
 
 
 /* Includes ------------------------------------------------------------------*/

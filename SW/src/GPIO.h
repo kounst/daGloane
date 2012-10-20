@@ -1,7 +1,9 @@
-// Header:
-// File Name: 	GPIO.h
-// Author: 		Konstantin Reichmeyer
-// Date: 		28.04.10
+/*
+ * GPIO.c
+ *
+ *  Created on: Nov 13, 2010
+ *      Author: konstantin
+ */
 
 
 /* Private define ------------------------------------------------------------*/

@@ -1,7 +1,9 @@
-// Header: 		IO Port Configuation
-// File Name: 	GPIO.c
-// Author: 		Konstantin Reichmeyer
-// Date:   		13.11.10
+/*
+ * GPIO.c
+ *
+ *  Created on: Nov 13, 2010
+ *      Author: konstantin
+ */
 
 
 /* Includes ------------------------------------------------------------------*/

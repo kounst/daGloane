@@ -5,6 +5,7 @@
  *      Author: konstantin
  */
 
+
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f10x.h"
 #include "SPI.h"

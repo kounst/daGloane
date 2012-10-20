@@ -1,7 +1,9 @@
-// Header:
-// File Name: ADC.h
-// Author: Konstantin Reichmeyer
-// Date: 28.04.10
+/*
+ * ADC.c
+ *
+ *  Created on: Nov 13, 2010
+ *      Author: konstantin
+ */
 
 
 void ADC1_Configuration(void);
