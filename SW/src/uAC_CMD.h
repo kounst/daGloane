@@ -8,6 +8,8 @@
 #ifndef UAC_CMD_H_
 #define UAC_CMD_H_
 
+void uAC_CMD_attach(void);
+void uac_tx_task(void);
 void Hello_CMD (int argc, char *argv[]);
 void get_MPU6000_data(int argc, char *argv[]);
 void get_LiPoVoltage(int argc, char *argv[]);

@@ -22,6 +22,28 @@ extern kalman_data pitch_data;
 extern kalman_data roll_data;
 
 
+void uAC_CMD_attach(void)
+{
+	uac_attach("Hello",Hello_CMD);
+	uac_attach("getMPU",get_MPU6000_data);
+	uac_attach("getLiPo",get_LiPoVoltage);
+	uac_attach("getSwitch", get_Switch);
+	uac_attach("PwrOff", PwrOff);
+	uac_attach("accangle", ACC_angle);
+	uac_attach("getangle", get_angle);
+}
+
+void uac_tx_task(void)
+{
+	//If there are outgoing chars, send them
+	if (uac_txavailable() && (USART_GetFlagStatus(USART1, USART_FLAG_TXE)))
+	{
+		//The ISR disables itself after the last char from the TX buffer is sent
+		USART_ITConfig(USART1, USART_IT_TXE, ENABLE);
+	}
+}
+
+
 void get_angle(int argc, char *argv[])
 {
 	if(!argc)
