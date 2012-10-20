@@ -347,7 +347,8 @@ void _printf(char* Format, va_list ListPointer, char AdressType) //0-Ram, 1-Flas
 			case 'f':
 				VaFloat = va_arg(ListPointer, double);
 				VaInt = VaFloat;
-				if (VaInt < 0)
+				//if (VaInt < 0)	//this should probably fix the problem with numbers < 0 and > -1
+				if (VaFloat < 0)
 				{
 					_putchar('-');
 					VaInt *= -1;
