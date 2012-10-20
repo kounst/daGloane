@@ -1,6 +1,9 @@
-// Header: 
-// File Name: UART.h
-// Author: Konstantin Reichmeyer
-// Date: 28.04.10
+/*
+ * UART.h
+ *
+ *  Created on: Sep 23, 2012
+ *      Author: konstantin
+ */
 
 void UART1_Configuration(void);
+void UART2_Configuration(void);

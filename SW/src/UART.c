@@ -1,9 +1,12 @@
-// Header:
-// File Name: 
-// Author:
-// Date:
+/*
+ * UART.c
+ *
+ *  Created on: Sep 23, 2012
+ *      Author: konstantin
+ */
 
 
+/* Includes ------------------------------------------------------------------*/
 #include "stm32f10x.h"
 #include "UART.h"
 
