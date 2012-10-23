@@ -9,7 +9,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f10x.h"
 #include "SPI.h"
-#include "TIM.h"
+#include "TIM.h"	//function Delay defined in TIM.c
 
 
 
