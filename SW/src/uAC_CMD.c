@@ -106,10 +106,10 @@ void get_MPU6000_data(int argc, char *argv[])
 				//give them everything!
 
 		uac_printf("All data the MPU-6000 provides: \n");
-		uac_printf("acc_x:  %i\ngyro_x: %i\n",mpu.acc_x, mpu.gyro_x);
-		uac_printf("acc_y:  %i\ngyro_y: %i\n",mpu.acc_y, mpu.gyro_y);
-		uac_printf("acc_z:  %i\ngyro_z: %i\n",mpu.acc_z, mpu.gyro_z);
-		uac_printf("Temp: %i\n",mpu.temp);
+		uac_printf("acc_x:  %i\ngyro_x: %i\n",mpu.words.acc_x, mpu.words.gyro_x);
+		uac_printf("acc_y:  %i\ngyro_y: %i\n",mpu.words.acc_y, mpu.words.gyro_y);
+		uac_printf("acc_z:  %i\ngyro_z: %i\n",mpu.words.acc_z, mpu.words.gyro_z);
+		uac_printf("Temp: %i\n",mpu.words.temp);
 	}
 	else
 	{
@@ -117,19 +117,19 @@ void get_MPU6000_data(int argc, char *argv[])
 		switch (*argv[0])
 		{
 			case 'x':
-				uac_printf("acc_x:  %i\ngyro_x: %i\n",mpu.acc_x, mpu.gyro_x);
+				uac_printf("acc_x:  %i\ngyro_x: %i\n",mpu.words.acc_x, mpu.words.gyro_x);
 
 				break;
 			case 'y':
-				uac_printf("acc_y:  %i\ngyro_y: %i\n",mpu.acc_y, mpu.gyro_y);
+				uac_printf("acc_y:  %i\ngyro_y: %i\n",mpu.words.acc_y, mpu.words.gyro_y);
 
 				break;
 			case 'z':
-				uac_printf("acc_z:  %i\ngyro_z: %i\n",mpu.acc_z, mpu.gyro_z);
+				uac_printf("acc_z:  %i\ngyro_z: %i\n",mpu.words.acc_z, mpu.words.gyro_z);
 
 				break;
 			case 't':
-				uac_printf("Temp: %i\n",mpu.temp);
+				uac_printf("Temp: %i\n",mpu.words.temp);
 
 				break;
 			default:

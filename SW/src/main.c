@@ -115,18 +115,18 @@ int main(void)
 		SPI1_read(ACCEL_XOUT_H ,mpu.bytes,14);
 
 		//remove offsets from ACC data
-		mpu.acc_x -= mpu_offset.acc_x;
-		mpu.acc_y -= mpu_offset.acc_y;
-		mpu.acc_z -= mpu_offset.acc_z;
+//		mpu.words.acc_x -= mpu_offset.words.acc_x;
+//		mpu.words.acc_y -= mpu_offset.words.acc_y;
+//		mpu.words.acc_z -= mpu_offset.words.acc_z;
 
 		//calculate roll and pitch angle form ACC data
-		acc_roll  = atan2(mpu.acc_x, mpu.acc_z);
-		acc_pitch = atan2(mpu.acc_y, mpu.acc_z);
+		acc_roll  = atan2(mpu.words.acc_x, mpu.words.acc_z);
+		acc_pitch = atan2(mpu.words.acc_y, mpu.words.acc_z);
 		//acc_angle *= (180/3.1415);
 
 		//Estimate new state with updated sensor data
-		kalman_innovate(&pitch_data, acc_pitch, mpu.gyro_x);
-		kalman_innovate(&roll_data, acc_roll, mpu.gyro_y);
+//		kalman_innovate(&pitch_data, acc_pitch, mpu.words.gyro_x);
+//		kalman_innovate(&roll_data, acc_roll, mpu.words.gyro_y);
 
 		/* The new kalman estimate is now stored in pitch_data.x1, pitch_data.x2, pitch_data.x3
 		 * 	   									    roll_data.x1,  roll_data.x2,  roll_data.x3
@@ -156,15 +156,15 @@ void CalibrateACC()
 	for(i = 0; i < 128; i++)
 	{
 		SPI1_read(ACCEL_XOUT_H ,mpu.bytes,14);
-		neutralX += mpu.acc_x;
-		neutralY += mpu.acc_y;
-		neutralZ += mpu.acc_z;
+		neutralX += mpu.words.acc_x;
+		neutralY += mpu.words.acc_y;
+		neutralZ += mpu.words.acc_z;
 		Delay(10);
 	}
 
-	mpu_offset.acc_x = neutralX / 128;
-	mpu_offset.acc_y = neutralY / 128;
-	mpu_offset.acc_z = neutralZ / 128;
+	mpu_offset.words.acc_x = neutralX / 128;
+	mpu_offset.words.acc_y = neutralY / 128;
+	mpu_offset.words.acc_z = neutralZ / 128;
 }
 
 

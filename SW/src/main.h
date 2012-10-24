@@ -14,8 +14,8 @@
 union _mpudata
 {
 	uint8_t bytes[14];
-	//struct { int16_t gyro_z, gyro_y, gyro_x, temp, acc_z, acc_y, acc_x; } words;
-	int16_t gyro_z, gyro_y, gyro_x, temp, acc_z, acc_y, acc_x;
+	struct { int16_t gyro_z, gyro_y, gyro_x, temp, acc_z, acc_y, acc_x; } words;
+	//int16_t gyro_z, gyro_y, gyro_x, temp, acc_z, acc_y, acc_x;
 };
 
 typedef union _mpudata mpudata;
