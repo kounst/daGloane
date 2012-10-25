@@ -29,4 +29,5 @@ void PWR_Buttom_handler(void);
 void LEDToggle(Led_TypeDef Led);
 void LEDOn(Led_TypeDef Led);
 void LEDOff(Led_TypeDef Led);
+void HeartBeat(void);
 
