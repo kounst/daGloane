@@ -150,6 +150,8 @@ void SysTick_Handler(void)
 	 */
 	PWR_Buttom_handler();
 
+	HeartBeat();
+
 
 	/*	This is sort of a low pass filter
 	 *  Its characteristic is not great but OK for this application
