@@ -16,27 +16,20 @@ void GPIO_Configuration(void)
 {
 	GPIO_InitTypeDef GPIO_InitStructure;
 
+	GPIO_PinRemapConfig(GPIO_Remap_SWJ_JTAGDisable, ENABLE);
+	GPIO_PinRemapConfig(GPIO_PartialRemap_TIM3, ENABLE);
 
 	/* LED1 & LED2 */
-	//  GPIO_InitStructure.GPIO_Pin = LED1_PIN;
+	GPIO_InitStructure.GPIO_Pin = LED1_PIN;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	//  GPIO_Init(LED1_GPIO_PORT, &GPIO_InitStructure);
-	//
-	//  GPIO_InitStructure.GPIO_Pin = LED2_PIN;
-	//  GPIO_Init(LED2_GPIO_PORT, &GPIO_InitStructure);
+	GPIO_Init(LED1_GPIO_PORT, &GPIO_InitStructure);
 
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3;
-	GPIO_Init(GPIOB, &GPIO_InitStructure);
+	GPIO_InitStructure.GPIO_Pin = LED2_PIN;
+	GPIO_Init(LED2_GPIO_PORT, &GPIO_InitStructure);
 
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_15;
-	GPIO_Init(GPIOA, &GPIO_InitStructure);
-
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4;
-	GPIO_Init(GPIOB, &GPIO_InitStructure);
-
+	LEDOff(LED1);
+	LEDOff(LED2);
 
 	/* Power_ON_µC */
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2;
@@ -51,14 +44,13 @@ void GPIO_Configuration(void)
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0;
 	GPIO_Init(GPIOB, &GPIO_InitStructure);
-	//GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1;
 	GPIO_Init(GPIOB, &GPIO_InitStructure);
 
-	GPIO_PinRemapConfig(GPIO_PartialRemap_TIM3, ENABLE);
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4;
+	GPIO_Init(GPIOB, &GPIO_InitStructure);
 
-	//  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4;
-	//  GPIO_Init(GPIOB, &GPIO_InitStructure);
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5;
 	GPIO_Init(GPIOB, &GPIO_InitStructure);
 
@@ -158,6 +150,22 @@ uint8_t debounce(uint16_t IOstate)
 		debounce = 1;
 
 	return debounce;
+}
+
+/**
+ * @brief  Toggles LED1 with 1Hz 50% duty cycle
+ * @param  none
+ * @retval none
+ */
+void HeartBeat(void)
+{
+	static uint16_t heart_count = 0;
+	if(heart_count == 500)
+	{
+		heart_count = 0;
+		LEDToggle(LED1);
+	}
+	heart_count++;
 }
 
 
