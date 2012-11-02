@@ -7,12 +7,15 @@
 
 
 /* Includes ------------------------------------------------------------------*/
+#include <stdlib.h>
+
 #include "stm32f10x.h"
 #include "main.h"
 #include "kalman.h"
 #include "GPIO.h"
 #include "uAC.h"
 #include "uAC_CMD.h"
+#include "SPI.h"
 
 
 extern mpudata mpu;
@@ -31,7 +34,64 @@ void uAC_CMD_attach(void)
 	uac_attach("PwrOff", PwrOff);
 	uac_attach("accangle", ACC_angle);
 	uac_attach("getangle", get_angle);
+	uac_attach("mpu", MPU_cmd);
 }
+
+
+void MPU_cmd(int argc, char *argv[])
+{
+	uint8_t rw_byte;
+	uint8_t address = 0;
+
+	if(argc < 2)
+	{
+		uac_printf("specify whether you want to read from or write to one of the mpu's registers\n");
+
+	}
+	else
+	{
+		if(strlen(argv[1]) >= 2)
+		{
+			//convert ASCII representation of address to integer
+			address = strtol(argv[1], NULL, 0);
+
+			switch(*argv[0])
+			{
+				case 'r':
+
+					SPI1_read(address ,&rw_byte,1);
+					uac_printf("read address %s = %i: 0x%x\n", argv[1], address, rw_byte);
+
+					break;
+
+				case 'w':
+
+					if(argc > 2)
+					{
+						//convert ASCII representation of data byte to integer
+						rw_byte = strtol(argv[2], NULL, 0);
+						SPI1_writebyte(address, rw_byte);
+						uac_printf("write address %s = %i: 0x%x\n", argv[1], address, rw_byte);
+
+					}
+					else
+					{
+						uac_printf("write address missing\n");
+					}
+
+					break;
+
+				default:
+					break;
+			}
+		}
+		else
+		{
+			uac_printf("not implemented 2\n");
+		}
+	}
+}
+
 
 void uac_tx_task(void)
 {
