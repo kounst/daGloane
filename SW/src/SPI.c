@@ -32,41 +32,15 @@ void SPI1_Configuration()
 	/* Enable SPI1 */
 	SPI_Cmd(SPI1, ENABLE);
 
-	Delay(500);		// wait for MPU-6000 to be ready to perform read/write operations
+	Delay(100);		// wait for MPU-6000 to be ready to perform read/write operations
 
 
-	CS_LOW;
-	//Delay(1);
-	/* Wait for SPI1 Tx buffer empty */
-	while (SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_TXE) == RESET);
-	/* Send SPI1 data */
-	SPI_I2S_SendData(SPI1, PWR_MGMT_1);		//address USER_CTRL register
-	/* Wait for SPI1 Tx buffer empty */
-	while (SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_TXE) == RESET);
-	/* Send SPI1 data */
-	SPI_I2S_SendData(SPI1, DEVICE_RESET);			//write USER_CTRL register
-	// wait for RXNE = 1
-	while(SPI_I2S_GetFlagStatus(SPI1,SPI_I2S_FLAG_RXNE) == RESET);
-	Delay(1);
-	CS_HIGH;
+	SPI1_writebyte(PWR_MGMT_1, DEVICE_RESET);
 
-	Delay(500);
+	Delay(100);
 
-	CS_LOW;
-	//Delay(1);
-	/* Wait for SPI1 Tx buffer empty */
-	while (SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_TXE) == RESET);
-	/* Send SPI1 data */
-	SPI_I2S_SendData(SPI1, PWR_MGMT_1);		//address PowerManagement1 register
-	/* Wait for SPI1 Tx buffer empty */
-	while (SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_TXE) == RESET);
-	/* Send SPI1 data */
-	SPI_I2S_SendData(SPI1, 0x03);			//write PowerManagement1 register
-											//set clocksource to Z-axis gyroscope reference
-	// wait for RXNE = 1
-	while(SPI_I2S_GetFlagStatus(SPI1,SPI_I2S_FLAG_RXNE) == RESET);
-	Delay(1);
-	CS_HIGH;
+	SPI1_writebyte(USER_CTRL, I2C_IF_DIS);	//disable the MPU's I2C interface
+	SPI1_writebyte(PWR_MGMT_1, 0x03);		//use Z axis resonator as a clock source
 
 	Delay(100);
 
@@ -141,6 +115,31 @@ void SPI1_read(uint8_t start_address, uint8_t *bytearray, uint8_t NofBytes)
 	while (SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_BSY) == SET);
 
 	*bytearray = SPI_I2S_ReceiveData(SPI1);
+
+	CS_HIGH;
+}
+
+
+/**
+ * @brief  Writes a byte to the specified data register
+ * @param  uint8_t address: register address to write to
+ * @param  uint8_t byte: data byte to write to specified data register
+ * @retval none
+ */
+void SPI1_writebyte(uint8_t address, uint8_t byte)
+{
+	CS_LOW;
+
+	/* Wait for SPI1 Tx buffer empty */
+	while (SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_TXE) == RESET);
+
+	SPI_I2S_SendData(SPI1, address);
+
+	while (SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_TXE) == RESET);
+
+	SPI_I2S_SendData(SPI1, byte);
+
+	while (SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_BSY) == SET);
 
 	CS_HIGH;
 }
