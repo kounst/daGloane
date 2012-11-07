@@ -8,6 +8,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include <stdlib.h>
+#include <string.h>
 
 #include "stm32f10x.h"
 #include "main.h"
@@ -16,6 +17,8 @@
 #include "uAC.h"
 #include "uAC_CMD.h"
 #include "SPI.h"
+#include "TIM.h"
+
 
 
 extern mpudata mpu;
@@ -35,7 +38,27 @@ void uAC_CMD_attach(void)
 	uac_attach("accangle", ACC_angle);
 	uac_attach("getangle", get_angle);
 	uac_attach("mpu", MPU_cmd);
+	uac_attach("setpwm", setpwm_cmd);
 }
+
+
+void setpwm_cmd(int argc, char *argv[])
+{
+	if(argc == 2)
+	{
+
+		uint16_t puls = strtol(argv[1], NULL, 0);
+		PWM_update(*argv[0] - 0x30, puls);
+
+
+	}
+	else
+	{
+		uac_printf("specify pwm channel (1..4) and duty-cycle (0..1000)");
+
+	}
+}
+
 
 
 void MPU_cmd(int argc, char *argv[])

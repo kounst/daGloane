@@ -34,7 +34,7 @@ void TIM3_Configuration(void)
 	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
 	TIM_OCInitStructure.TIM_Pulse = 6000;
-	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_Low;
+	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
 
 	TIM_OC1Init(TIM3, &TIM_OCInitStructure);
 
@@ -42,7 +42,7 @@ void TIM3_Configuration(void)
 	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
 	TIM_OCInitStructure.TIM_Pulse = 12000;
-	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_Low;
+	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
 
 	TIM_OC2Init(TIM3, &TIM_OCInitStructure);
 
@@ -50,7 +50,7 @@ void TIM3_Configuration(void)
 	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
 	TIM_OCInitStructure.TIM_Pulse = 18000;
-	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_Low;
+	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
 
 	TIM_OC3Init(TIM3, &TIM_OCInitStructure);
 
@@ -58,7 +58,7 @@ void TIM3_Configuration(void)
 	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
 	TIM_OCInitStructure.TIM_Pulse = 23000;
-	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_Low;
+	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
 
 	TIM_OC4Init(TIM3, &TIM_OCInitStructure);
 
@@ -67,16 +67,33 @@ void TIM3_Configuration(void)
 	TIM_Cmd(TIM3, ENABLE);
 }
 
-void TIM3_Update(uint8_t channel, uint16_t pulswidth)
+
+void PWM_update(uint8_t channel, uint16_t pulswidth)
 {
-	TIM_OCInitTypeDef  TIM_OCInitStructure;
-
-	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
-	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
-	TIM_OCInitStructure.TIM_Pulse = pulswidth;
-	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_Low;
-	TIM_OC3Init(TIM3, &TIM_OCInitStructure);
-
+	pulswidth *= 24;
+	switch(channel)
+	{
+	case 0:
+		TIM_SetCompare1(TIM3, pulswidth);
+		TIM_SetCompare2(TIM3, pulswidth);
+		TIM_SetCompare3(TIM3, pulswidth);
+		TIM_SetCompare4(TIM3, pulswidth);
+		break;
+	case 1:
+		TIM_SetCompare1(TIM3, pulswidth);
+		break;
+	case 2:
+		TIM_SetCompare2(TIM3, pulswidth);
+		break;
+	case 3:
+		TIM_SetCompare3(TIM3, pulswidth);
+		break;
+	case 4:
+		TIM_SetCompare4(TIM3, pulswidth);
+		break;
+	default:
+		break;
+	}
 }
 
 
