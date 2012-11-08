@@ -9,7 +9,8 @@
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f10x.h"
 #include "SPI.h"
-#include "TIM.h"	//function Delay defined in TIM.c
+#include "TIM.h"
+#include "main.h"
 
 
 
@@ -86,10 +87,6 @@ void SPI1_read(uint8_t start_address, uint8_t *bytearray, uint8_t NofBytes)
 {
 	CS_LOW;
 
-	//We want to write to the array last element first.
-	//This changes the order of high byte and low byte and allows us to access a whole word at once later on.
-	bytearray += (NofBytes - 1);
-
 	SPI_I2S_SendData(SPI1, 0x80 | start_address);
 
 	while (SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_TXE) == RESET);
@@ -106,7 +103,7 @@ void SPI1_read(uint8_t start_address, uint8_t *bytearray, uint8_t NofBytes)
 		SPI_I2S_SendData(SPI1, 0x00);
 		while (SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_RXNE) == RESET);
 		*bytearray = SPI_I2S_ReceiveData(SPI1);
-		bytearray--;
+		bytearray++;
 
 		NofBytes--;
 	}
@@ -117,6 +114,20 @@ void SPI1_read(uint8_t start_address, uint8_t *bytearray, uint8_t NofBytes)
 	*bytearray = SPI_I2S_ReceiveData(SPI1);
 
 	CS_HIGH;
+}
+
+void MPU_read(mpudata *mpu)
+{
+	uint8_t bytes[14];
+	SPI1_read(ACCEL_XOUT_H, bytes, 14);
+
+	mpu->acc_x = (bytes[0] << 8) | bytes[1];
+	mpu->acc_y = (bytes[2] << 8) | bytes[3];
+	mpu->acc_z = (bytes[4] << 8) | bytes[5];
+	mpu->gyro_x = (bytes[6] << 8) | bytes[7];
+	mpu->gyro_y = (bytes[8] << 8) | bytes[9];
+	mpu->gyro_z = (bytes[10] << 8) | bytes[11];
+	mpu->temp = (bytes[12] << 8) | bytes[13];
 }
 
 

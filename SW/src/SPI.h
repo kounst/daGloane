@@ -9,6 +9,12 @@
 #define SPI_H_
 
 
+struct _mpudata
+{
+	int16_t acc_x, acc_y, acc_z, gyro_x, gyro_y, gyro_z, temp;
+};
+
+typedef struct _mpudata mpudata;
 
 
 #define READ				0x80	//MSB to select read or write operation
@@ -42,6 +48,7 @@ void SPI1_read(uint8_t, uint8_t *, uint8_t);
 uint8_t SPI1_readbyte(uint8_t);
 void SPI1_read(uint8_t, uint8_t *, uint8_t);
 void SPI1_writebyte(uint8_t, uint8_t);
+void MPU_read(mpudata *mpu);
 
 
 

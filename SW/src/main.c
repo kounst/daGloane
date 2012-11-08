@@ -94,6 +94,9 @@ int main(void)
 	/* TIM3 Configuration */
 	TIM3_Configuration();
 
+	/* TIM2 Configuration */
+	LED_Timer_Configuration();
+
 	/* Systick Configuration */
 	SysTick_Configuration();
 
@@ -103,7 +106,7 @@ int main(void)
 	uac_printf("\nHello, my name is daGloane\n");
 
 	/* measure ACC channels while copter is stationary to obtain offsets. */
-	CalibrateACC();
+	GetCalibrationData();
 
 	kalman_init(&pitch_data);
 	kalman_init(&roll_data);
@@ -111,17 +114,19 @@ int main(void)
 	/* Infinite loop */
 	while (1)
 	{
-		//read data from MPU-6000 starting at address ACCEL_XOUT_H
-		SPI1_read(ACCEL_XOUT_H ,mpu.bytes,14);
+		//read data from MPU-6000
+		MPU_read(&mpu);
 
 		//remove offsets from ACC data
-//		mpu.words.acc_x -= mpu_offset.words.acc_x;
-//		mpu.words.acc_y -= mpu_offset.words.acc_y;
-//		mpu.words.acc_z -= mpu_offset.words.acc_z;
+		mpu.acc_x -= mpu_offset.acc_x;
+		mpu.acc_y -= mpu_offset.acc_y;
+		mpu.gyro_x -= mpu_offset.gyro_x;
+		mpu.gyro_y -= mpu_offset.gyro_y;
+		mpu.gyro_z -= mpu_offset.gyro_z;
 
 		//calculate roll and pitch angle form ACC data
-		acc_roll  = atan2(mpu.words.acc_x, mpu.words.acc_z);
-		acc_pitch = atan2(mpu.words.acc_y, mpu.words.acc_z);
+		acc_roll  = atan2(mpu.acc_x, mpu.acc_z);
+		acc_pitch = atan2(mpu.acc_y, mpu.acc_z);
 		//acc_angle *= (180/3.1415);
 
 		//Estimate new state with updated sensor data
@@ -146,25 +151,35 @@ int main(void)
 
 
 
-void CalibrateACC()
+void GetCalibrationData()
 {
 	int i;
 	int neutralX = 0;
 	int neutralY = 0;
-	int neutralZ = 0;
+	//int neutralZ = 0;
+	int neutralPi = 0;
+	int neutralRo = 0;
+	int neutralYa = 0;
 
 	for(i = 0; i < 128; i++)
 	{
-		SPI1_read(ACCEL_XOUT_H ,mpu.bytes,14);
-		neutralX += mpu.words.acc_x;
-		neutralY += mpu.words.acc_y;
-		neutralZ += mpu.words.acc_z;
+		//SPI1_read(ACCEL_XOUT_H ,mpu.bytes,14);
+		MPU_read(&mpu);
+		neutralX += mpu.acc_x;
+		neutralY += mpu.acc_y;
+		//neutralZ += mpu.acc_z;
+		neutralPi += mpu.gyro_x;
+		neutralRo += mpu.gyro_y;
+		neutralYa += mpu.gyro_z;
 		Delay(10);
 	}
 
-	mpu_offset.words.acc_x = neutralX / 128;
-	mpu_offset.words.acc_y = neutralY / 128;
-	mpu_offset.words.acc_z = neutralZ / 128;
+	mpu_offset.acc_x = neutralX / 128;
+	mpu_offset.acc_y = neutralY / 128;
+	//mpu_offset.acc_z = neutralZ / 128;
+	mpu_offset.gyro_x = neutralPi / 128;
+	mpu_offset.gyro_y = neutralRo / 128;
+	mpu_offset.gyro_z = neutralYa / 128;
 }
 
 
@@ -190,6 +205,9 @@ void RCC_Configuration(void)
 
 	/* TIM3 clock enable */
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE);
+
+	/* TIM2 clock enable */
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
 
 	/* ADC1 clock enable */
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE);
