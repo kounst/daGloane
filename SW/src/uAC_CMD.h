@@ -19,6 +19,7 @@ void ACC_angle(int argc, char *argv[]);
 void get_angle(int argc, char *argv[]);
 void MPU_cmd(int argc, char *argv[]);
 void setpwm_cmd(int argc, char *argv[]);
+void setled_cmd(int argc, char *argv[]);
 
 
 #endif /* UAC_CMD_H_ */

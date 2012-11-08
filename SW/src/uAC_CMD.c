@@ -39,6 +39,7 @@ void uAC_CMD_attach(void)
 	uac_attach("getangle", get_angle);
 	uac_attach("mpu", MPU_cmd);
 	uac_attach("setpwm", setpwm_cmd);
+	uac_attach("setled", setled_cmd);
 }
 
 
@@ -55,6 +56,24 @@ void setpwm_cmd(int argc, char *argv[])
 	else
 	{
 		uac_printf("specify pwm channel (1..4) and duty-cycle (0..1000)");
+
+	}
+}
+
+
+void setled_cmd(int argc, char *argv[])
+{
+	if(argc == 2)
+	{
+
+		uint16_t puls = strtol(argv[1], NULL, 0);
+		LED_update(*argv[0] - 0x30, puls);
+
+
+	}
+	else
+	{
+		uac_printf("specify pwm channel (1..2) and duty-cycle (0..1000)");
 
 	}
 }
@@ -189,10 +208,10 @@ void get_MPU6000_data(int argc, char *argv[])
 				//give them everything!
 
 		uac_printf("All data the MPU-6000 provides: \n");
-		uac_printf("acc_x:  %i\ngyro_x: %i\n",mpu.words.acc_x, mpu.words.gyro_x);
-		uac_printf("acc_y:  %i\ngyro_y: %i\n",mpu.words.acc_y, mpu.words.gyro_y);
-		uac_printf("acc_z:  %i\ngyro_z: %i\n",mpu.words.acc_z, mpu.words.gyro_z);
-		uac_printf("Temp: %i\n",mpu.words.temp);
+		uac_printf("acc_x:  %i\ngyro_x: %i\n",mpu.acc_x, mpu.gyro_x);
+		uac_printf("acc_y:  %i\ngyro_y: %i\n",mpu.acc_y, mpu.gyro_y);
+		uac_printf("acc_z:  %i\ngyro_z: %i\n",mpu.acc_z, mpu.gyro_z);
+		uac_printf("Temp: %i\n",mpu.temp);
 	}
 	else
 	{
@@ -200,19 +219,19 @@ void get_MPU6000_data(int argc, char *argv[])
 		switch (*argv[0])
 		{
 			case 'x':
-				uac_printf("acc_x:  %i\ngyro_x: %i\n",mpu.words.acc_x, mpu.words.gyro_x);
+				uac_printf("acc_x:  %i\ngyro_x: %i\n",mpu.acc_x, mpu.gyro_x);
 
 				break;
 			case 'y':
-				uac_printf("acc_y:  %i\ngyro_y: %i\n",mpu.words.acc_y, mpu.words.gyro_y);
+				uac_printf("acc_y:  %i\ngyro_y: %i\n",mpu.acc_y, mpu.gyro_y);
 
 				break;
 			case 'z':
-				uac_printf("acc_z:  %i\ngyro_z: %i\n",mpu.words.acc_z, mpu.words.gyro_z);
+				uac_printf("acc_z:  %i\ngyro_z: %i\n",mpu.acc_z, mpu.gyro_z);
 
 				break;
 			case 't':
-				uac_printf("Temp: %i\n",mpu.words.temp);
+				uac_printf("Temp: %i\n",mpu.temp);
 
 				break;
 			default:
