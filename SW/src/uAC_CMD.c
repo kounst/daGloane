@@ -40,7 +40,49 @@ void uAC_CMD_attach(void)
 	uac_attach("mpu", MPU_cmd);
 	uac_attach("setpwm", setpwm_cmd);
 	uac_attach("setled", setled_cmd);
+	uac_attach("kalman", set_kalman);
 }
+
+
+void set_kalman(int argc, char *argv[])
+{
+	uac_printf("R = ( %f , %f )\n",pitch_data.r1, pitch_data.r2);
+	uac_printf("Q = ( %f , %f , %f )\n\n",pitch_data.q1, pitch_data.q2, pitch_data.q3);
+	if(argc >= 2)
+	{
+		switch (*argv[0])
+		{
+		case 'r':
+
+			pitch_data.r1 = strtol(argv[1], NULL, 0);
+			pitch_data.r2 = strtol(argv[2], NULL, 0);
+
+			roll_data.r1 = strtol(argv[1], NULL, 0);
+			roll_data.r2 = strtol(argv[2], NULL, 0);
+
+			uac_printf("R = ( %f , %f )\n",pitch_data.r1, pitch_data.r2);
+			break;
+
+		case 'q':
+
+			pitch_data.q1 = strtol(argv[1], NULL, 0);
+			pitch_data.q2 = strtol(argv[2], NULL, 0);
+
+			roll_data.q1 = strtol(argv[1], NULL, 0);
+			roll_data.q2 =  strtol(argv[2], NULL, 0);
+
+			if(argc >= 3)
+			{
+				roll_data.q3 =  strtol(argv[3], NULL, 0);
+				pitch_data.q3 = strtol(argv[3], NULL, 0);
+			}
+			uac_printf("Q = ( %f , %f , %f )\n",pitch_data.q1, pitch_data.q2, pitch_data.q3);
+			break;
+		}
+
+	}
+}
+
 
 
 void setpwm_cmd(int argc, char *argv[])
@@ -152,6 +194,10 @@ void get_angle(int argc, char *argv[])
 	{
 	uac_printf("Roll Angle: %f\n", roll_data.x1);
 	uac_printf("Pitch Angle: %f\n", pitch_data.x1);
+	uac_printf("Roll Velocity: %f\n", roll_data.x2);
+	uac_printf("Pitch Velocity: %f\n", pitch_data.x2);
+	uac_printf("Roll Bias: %f\n", roll_data.x3);
+	uac_printf("Pitch Bias: %f\n", pitch_data.x3);
 	}
 	else
 	{
