@@ -124,10 +124,10 @@ void MPU_read(mpudata *mpu)
 	mpu->acc_x = (bytes[0] << 8) | bytes[1];
 	mpu->acc_y = (bytes[2] << 8) | bytes[3];
 	mpu->acc_z = (bytes[4] << 8) | bytes[5];
-	mpu->gyro_x = (bytes[6] << 8) | bytes[7];
-	mpu->gyro_y = (bytes[8] << 8) | bytes[9];
-	mpu->gyro_z = (bytes[10] << 8) | bytes[11];
-	mpu->temp = (bytes[12] << 8) | bytes[13];
+	mpu->temp = (bytes[6] << 8) | bytes[7];
+	mpu->gyro_x = (bytes[8] << 8) | bytes[9];
+	mpu->gyro_y = (bytes[10] << 8) | bytes[11];
+	mpu->gyro_z = (bytes[12] << 8) | bytes[13];
 }
 
 
