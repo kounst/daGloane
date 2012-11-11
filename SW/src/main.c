@@ -128,10 +128,12 @@ int main(void)
 		acc_roll  = atan2(mpu.acc_x, mpu.acc_z);
 		acc_pitch = atan2(mpu.acc_y, mpu.acc_z);
 		//acc_angle *= (180/3.1415);
+		acc_roll *= (180/3.1415);
+		acc_pitch *= (180/3.1415);
 
 		//Estimate new state with updated sensor data
-//		kalman_innovate(&pitch_data, acc_pitch, mpu.words.gyro_x);
-//		kalman_innovate(&roll_data, acc_roll, mpu.words.gyro_y);
+		kalman_innovate(&pitch_data, acc_pitch, mpu.gyro_x / 16);
+		kalman_innovate(&roll_data, acc_roll, mpu.gyro_y / 16);
 
 		/* The new kalman estimate is now stored in pitch_data.x1, pitch_data.x2, pitch_data.x3
 		 * 	   									    roll_data.x1,  roll_data.x2,  roll_data.x3
