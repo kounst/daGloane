@@ -85,6 +85,9 @@ int main(void)
 	/* UART1 Configuration */
 	UART1_Configuration();
 
+	/* UART2 Configuration */
+	UART2_Configuration();
+
 	/* Init the uAC */
 	uac_init();
 
@@ -128,8 +131,8 @@ int main(void)
 		acc_roll  = atan2(mpu.acc_x, mpu.acc_z);
 		acc_pitch = atan2(mpu.acc_y, mpu.acc_z);
 		//acc_angle *= (180/3.1415);
-		acc_roll *= (180/3.1415);
-		acc_pitch *= (180/3.1415);
+		acc_roll *= (180/M_PI);
+		acc_pitch *= (180/M_PI);
 
 		//Estimate new state with updated sensor data
 		kalman_innovate(&pitch_data, acc_pitch, mpu.gyro_x / 16);
@@ -246,13 +249,13 @@ void NVIC_Configuration(void)
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
 	NVIC_Init(&NVIC_InitStructure);
-	//
-	//  /* Enable the USART2 Interrupt */
-	//  NVIC_InitStructure.NVIC_IRQChannel = USART2_IRQn;
-	//  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 4;
-	//  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;
-	//  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-	//  NVIC_Init(&NVIC_InitStructure);
+
+	/* Enable the USART2 Interrupt */
+	NVIC_InitStructure.NVIC_IRQChannel = USART2_IRQn;
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 4;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+	NVIC_Init(&NVIC_InitStructure);
 
 
 	/* SysTick Priority */

@@ -29,6 +29,7 @@
 #include "UART.h"
 #include "uAC.h"
 #include "TIM.h"
+#include "com.h"
 
 /** @addtogroup STM32F10x_StdPeriph_Template
  * @{
@@ -210,7 +211,22 @@ void USART1_IRQHandler(void)
  */
 void USART2_IRQHandler(void)
 {
+	if(USART_GetITStatus(USART2, USART_IT_TXE) != RESET)	// if this is a transmit interrupt..
+	{
+		if(is_send_buffer_empty())
+		{
+			USART_ITConfig(USART2, USART_IT_TXE, DISABLE);
+		}
+		else
+		{
+			USART_SendData(USART2, get_buffer_byte());
+		}
+	}
 
+	if(USART_GetITStatus(USART2, USART_IT_RXNE) != RESET)	// if this is a receive interrupt..
+	{
+		// TODO: implement usart2 receive isr
+	}
 }
 
 
