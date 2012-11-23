@@ -85,8 +85,8 @@ int main(void)
 	/* UART1 Configuration */
 	UART1_Configuration();
 
-	/* UART2 Configuration */
-	UART2_Configuration();
+	/* UART2 Configuration for bluetooth AT command mode */
+	UART2_Configuration_AT(38400);
 
 	/* Init the uAC */
 	uac_init();
@@ -207,6 +207,9 @@ void RCC_Configuration(void)
 
 	/* USART1 clock enable */
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1, ENABLE);
+
+	/* USART2 clock enable */
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, ENABLE);
 
 	/* TIM3 clock enable */
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE);
