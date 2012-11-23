@@ -153,7 +153,6 @@ void SysTick_Handler(void)
 
 	HeartBeat();
 
-
 	/*	This is sort of a low pass filter
 	 *  Its characteristic is not great but OK for this application
 	 */
@@ -198,8 +197,6 @@ void USART1_IRQHandler(void)
 		 * So we only keep bit 0..6
 		 */
 		uac_rx(0x7F & USART_ReceiveData(USART1));
-
-
 	}
 }
 
@@ -211,6 +208,7 @@ void USART1_IRQHandler(void)
  */
 void USART2_IRQHandler(void)
 {
+	char byte;
 	if(USART_GetITStatus(USART2, USART_IT_TXE) != RESET)	// if this is a transmit interrupt..
 	{
 		if(is_send_buffer_empty())
@@ -225,7 +223,11 @@ void USART2_IRQHandler(void)
 
 	if(USART_GetITStatus(USART2, USART_IT_RXNE) != RESET)	// if this is a receive interrupt..
 	{
-		// TODO: implement usart2 receive isr
+		//uac_printf("BT: ");
+		byte = USART_ReceiveData(USART2);
+		//uac_printf("%i",byte);
+		USART_SendData(USART1, byte);
+		store_received_byte(byte);
 	}
 }
 
