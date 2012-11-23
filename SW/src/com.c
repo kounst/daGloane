@@ -38,7 +38,7 @@ void send_data(uint8_t type, uint8_t *bytearray, uint8_t length)
 	crc = crc_xmodem_update(crc, length);
 
 	presendarray[0] = type;
-	presendarray[1] = length;
+	presendarray[1] = length + 4;
 
 	for(i = 0; i < length; i++)
 	{
@@ -64,6 +64,8 @@ void send_to_buffer(uint8_t *sendarray, uint8_t send_length)
 		send_buffer[write_pointer] = sendarray[i];
 		write_pointer++;
 	}
+	send_buffer[write_pointer] = 0;		//write 0 byte to indictate end of frame
+	write_pointer++;
 
 	USART_ITConfig(USART2, USART_IT_TXE, ENABLE);	//enable TXE interrupt to initiate uart transmission
 }
