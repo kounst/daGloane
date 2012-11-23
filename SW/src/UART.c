@@ -31,7 +31,7 @@ void UART1_Configuration()
 	 */
 	USART_InitTypeDef USART_InitStructure;
 	USART_InitStructure.USART_BaudRate = 115200;	//115200Baud/s
-	//This is the word length including the stop bit
+	//This is the word length including the parity bit
 	//So its actually only 7 bits of data!
 	USART_InitStructure.USART_WordLength = USART_WordLength_8b;
 	USART_InitStructure.USART_StopBits = USART_StopBits_1;
@@ -68,9 +68,8 @@ void UART2_Configuration()
 	 */
 	USART_InitTypeDef USART_InitStructure;
 	USART_InitStructure.USART_BaudRate = 115200;	//115200Baud/s
-	//This is the word length including the stop bit
-	//So its actually only 8 bits of data!
-	USART_InitStructure.USART_WordLength = USART_WordLength_9b;
+	//This is the word length including the parity bit
+	USART_InitStructure.USART_WordLength = USART_WordLength_8b;
 	USART_InitStructure.USART_StopBits = USART_StopBits_1;
 	USART_InitStructure.USART_Parity = USART_Parity_No;
 	USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
@@ -78,7 +77,39 @@ void UART2_Configuration()
 
 	/* Configure the USART2 */
 	USART_Init(USART2, &USART_InitStructure);
-	//USART_ITConfig(USART2, USART_IT_TXE, ENABLE);	//receive interrupt enabled
+	USART_ITConfig(USART2, USART_IT_RXNE, ENABLE);	//receive interrupt enabled
+
+	/* Enable USART2 */
+	USART_Cmd(USART2, ENABLE);
+}
+
+
+
+void UART2_Configuration_AT(uint32_t baudrate)
+{
+	/* USART2 configuration ------------------------------------------------------*/
+	/* USART2 configured as follow:
+        - BaudRate = 115200 baud
+        - Word Length = 8 Bits
+        - One Stop Bit
+        - Odd parity
+        - Hardware flow control disabled (RTS and CTS signals)
+        - Receive and transmit enabled
+	 */
+	USART_DeInit(USART2);
+
+	USART_InitTypeDef USART_InitStructure;
+	USART_InitStructure.USART_BaudRate = baudrate;
+	//This is the word length including the parity bit
+	USART_InitStructure.USART_WordLength = USART_WordLength_8b;
+	USART_InitStructure.USART_StopBits = USART_StopBits_1;
+	USART_InitStructure.USART_Parity = USART_Parity_No;
+	USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
+	USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
+
+	/* Configure the USART2 */
+	USART_Init(USART2, &USART_InitStructure);
+	USART_ITConfig(USART2, USART_IT_RXNE, ENABLE);	//receive interrupt enabled
 
 	/* Enable USART2 */
 	USART_Cmd(USART2, ENABLE);
