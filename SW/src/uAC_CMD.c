@@ -18,6 +18,8 @@
 #include "uAC_CMD.h"
 #include "SPI.h"
 #include "TIM.h"
+#include "com.h"
+#include "UART.h"
 
 
 
@@ -41,6 +43,37 @@ void uAC_CMD_attach(void)
 	uac_attach("setpwm", setpwm_cmd);
 	uac_attach("setled", setled_cmd);
 	uac_attach("kalman", set_kalman);
+	uac_attach("bt", bluetooth_send);
+	uac_attach("btconf", bluetooth_config);
+}
+
+
+
+void bluetooth_config(int argc, char *argv[])
+{
+	if(argc >= 1)
+	{
+		UART2_Configuration_AT(strtol(argv[0], NULL, 0));
+	}
+}
+
+
+void bluetooth_send(int argc, char *argv[])
+{
+	char *buffer;
+	uint8_t strlength;
+
+	if(argc >= 0)
+	{
+		strlength = strlen(argv[0]);
+		buffer = alloca(strlength + 2);
+		strcpy(buffer, argv[0]);
+		buffer[strlength] = 0x0D;
+		buffer[strlength + 1] = 0x0A;
+
+		send_to_buffer(buffer, strlength + 2);
+		//uac_printf("%s",buffer);
+	}
 }
 
 
