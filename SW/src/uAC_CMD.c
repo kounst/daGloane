@@ -45,9 +45,22 @@ void uAC_CMD_attach(void)
 	uac_attach("kalman", set_kalman);
 	uac_attach("bt", bluetooth_send);
 	uac_attach("btconf", bluetooth_config);
+	uac_attach("btmsg", bluetooth_msg);
 }
 
 
+void bluetooth_msg(int argc, char *argv[])
+{
+	uint8_t bytes_to_send[3];
+	if(argc >= 3)
+	{
+		bytes_to_send[0] = strtol(argv[0], NULL, 0);
+		bytes_to_send[1] = strtol(argv[1], NULL, 0);
+		bytes_to_send[2] = strtol(argv[2], NULL, 0);
+
+		send_data(1, bytes_to_send, 3);
+	}
+}
 
 void bluetooth_config(int argc, char *argv[])
 {
