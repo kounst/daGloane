@@ -25,38 +25,43 @@ uint8_t write_pointer = 0;
 msg1 control_msg;
 
 
+// private function prototypes
+uint16_t crc_xmodem_update(uint16_t crc, uint8_t data);
+void process_rx_msg(uint8_t rx_msg_length);
+
+
 
 
 void send_data(uint8_t type, uint8_t *bytearray, uint8_t length)
 {
 	uint8_t i;
-	uint8_t *presendarray = alloca(length + 4);	// clear data array
-	uint8_t *sendarray = alloca(length + 5);
 	uint16_t crc = 0;
 
-	crc = crc_xmodem_update(crc, type);		//crc checksum
-	crc = crc_xmodem_update(crc, length);
+	uint8_t sendarray[255];
+	//uint8_t *sendarray = alloca(length + 5);
 
-	presendarray[0] = type;
-	presendarray[1] = length + 4;
+	sendarray[0] = type;
+	sendarray[1] = length + 4;				//send along the total length including msg type, length byte, and check sum
+
+	crc = crc_xmodem_update(crc, type);		//crc checksum
+	crc = crc_xmodem_update(crc, length + 4);
 
 	for(i = 0; i < length; i++)
 	{
 		crc = crc_xmodem_update(crc, bytearray[i]);
-		presendarray[i + 2] = bytearray[i];
+		sendarray[i + 2] = bytearray[i];
 	}
+	sendarray[length + 2] = (crc >> 8);
+	sendarray[length + 3] = crc;
 
-	presendarray[length + 2] = (crc >> 8);
-	presendarray[length + 3] = crc;
+	cobs_encode_(sendarray, length + 4);	//COBS
 
-	cobs_encode(presendarray, length + 4, sendarray);	//COBS
-
-	send_to_buffer(sendarray, length + 5);
+	send_to_buffer(sendarray, length + 5, 1);
 }
 
 
 
-void send_to_buffer(uint8_t *sendarray, uint8_t send_length)
+void send_to_buffer(uint8_t *sendarray, uint8_t send_length, uint8_t add_zero)
 {
 	uint8_t i;
 	for(i = 0; i < send_length; i++)
@@ -64,10 +69,13 @@ void send_to_buffer(uint8_t *sendarray, uint8_t send_length)
 		send_buffer[write_pointer] = sendarray[i];
 		write_pointer++;
 	}
-	send_buffer[write_pointer] = 0;		//write 0 byte to indictate end of frame
-	write_pointer++;
+	if(add_zero)
+	{
+		send_buffer[write_pointer] = 0;		//write 0 byte to indicate end of frame
+		write_pointer++;
+	}
 
-	USART_ITConfig(USART2, USART_IT_TXE, ENABLE);	//enable TXE interrupt to initiate uart transmission
+	USART_ITConfig(USART2, USART_IT_TXE, ENABLE);	//enable TXE interrupt to initiate UART transmission
 }
 
 uint8_t is_send_buffer_empty (void)
