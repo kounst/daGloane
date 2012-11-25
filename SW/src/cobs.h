@@ -10,5 +10,6 @@
 
 size_t cobs_encode(const uint8_t * input, size_t length, uint8_t * output);
 size_t cobs_decode(const uint8_t * input, size_t length, uint8_t * output);
+uint8_t cobs_encode_(uint8_t * inout, size_t length);
 
 #endif

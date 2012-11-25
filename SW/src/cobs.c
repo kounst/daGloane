@@ -8,9 +8,6 @@
 /* Stuffs "length" bytes of data at the location pointed to by
  * "input", writing the output to the location pointed to by
  * "output". Returns the number of bytes written to "output".
- *
- * Remove the "restrict" qualifiers if compiling with a
- * pre-C99 C dialect.
  */
 size_t cobs_encode(const uint8_t * input, size_t length, uint8_t * output)
 {
@@ -46,14 +43,43 @@ size_t cobs_encode(const uint8_t * input, size_t length, uint8_t * output)
     return write_index;
 }
 
+
+/* Stuffs "length" bytes of data at the location pointed to by
+ * "input", writing the output to the same location
+ * Returns the number of bytes written to "output".
+ */
+uint8_t cobs_encode_(uint8_t * inout, size_t length)
+{
+    uint8_t read_index = length - 1;
+    uint8_t write_index = length;
+    uint8_t code = 1;
+
+    while(write_index > 0)
+    {
+    	if(inout[read_index] == 0)
+    	{
+    		inout[write_index] = code;
+    		code = 1;
+    	}
+    	else
+    	{
+    		inout[write_index] = inout[read_index];
+    		code++;
+    	}
+    	write_index--;
+    	read_index--;
+    }
+    inout[write_index] = code;
+
+    return length + 1;
+}
+
+
 /* Unstuffs "length" bytes of data at the location pointed to by
  * "input", writing the output * to the location pointed to by
  * "output". Returns the number of bytes written to "output" if
  * "input" was successfully unstuffed, and 0 if there was an
  * error unstuffing "input".
- *
- * Remove the "restrict" qualifiers if compiling with a
- * pre-C99 C dialect.
  */
 size_t cobs_decode(const uint8_t * input, size_t length, uint8_t * output)
 {
