@@ -51,15 +51,13 @@ void uAC_CMD_attach(void)
 
 void bluetooth_msg(int argc, char *argv[])
 {
-	uint8_t bytes_to_send[3];
-	if(argc >= 3)
+	uint8_t bytes_to_send[20];
+	uint8_t i;
+	for(i = 0; i < argc; i++)
 	{
-		bytes_to_send[0] = strtol(argv[0], NULL, 0);
-		bytes_to_send[1] = strtol(argv[1], NULL, 0);
-		bytes_to_send[2] = strtol(argv[2], NULL, 0);
-
-		send_data(1, bytes_to_send, 3);
+		bytes_to_send[i] = strtol(argv[i], NULL, 0);
 	}
+	send_data(1, bytes_to_send, argc);
 }
 
 void bluetooth_config(int argc, char *argv[])
@@ -84,8 +82,7 @@ void bluetooth_send(int argc, char *argv[])
 		buffer[strlength] = 0x0D;
 		buffer[strlength + 1] = 0x0A;
 
-		send_to_buffer(buffer, strlength + 2);
-		//uac_printf("%s",buffer);
+		send_to_buffer(buffer, strlength + 2, 0);
 	}
 }
 
