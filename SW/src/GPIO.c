@@ -163,18 +163,21 @@ void HeartBeat(void)
 {
 	static uint16_t heart_count = 0;
 	static uint8_t fade_dir = 1;
-;
+
 	if(fade_dir)
 		heart_count++;
 	else
 		heart_count--;
 
 	if(heart_count == 1000)
+	{
 		fade_dir = 0;
+	}
 	if(heart_count == 0)
 		fade_dir = 1;
 
 	TIM_SetCompare2(TIM2, heart_count*32);
+
 }
 
 
