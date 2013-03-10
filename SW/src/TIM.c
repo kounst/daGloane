@@ -24,7 +24,7 @@ void TIM3_Configuration(void)
 
 	/* Time base configuration */
 	TIM_TimeBaseStructure.TIM_Period = 24000;
-	TIM_TimeBaseStructure.TIM_Prescaler = 5;//(uint16_t) (SystemCoreClock / 24000000) - 1;
+	TIM_TimeBaseStructure.TIM_Prescaler = 8;//(uint16_t) (SystemCoreClock / 24000000) - 1;
 	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
 	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
 
@@ -33,7 +33,7 @@ void TIM3_Configuration(void)
 	/* PWM1 Mode configuration: Channel1 */
 	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
-	TIM_OCInitStructure.TIM_Pulse = 6000;
+	TIM_OCInitStructure.TIM_Pulse = 8000;
 	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
 
 	TIM_OC1Init(TIM3, &TIM_OCInitStructure);
@@ -41,7 +41,7 @@ void TIM3_Configuration(void)
 	/* PWM1 Mode configuration: Channel2 */
 	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
-	TIM_OCInitStructure.TIM_Pulse = 12000;
+	TIM_OCInitStructure.TIM_Pulse = 8000;
 	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
 
 	TIM_OC2Init(TIM3, &TIM_OCInitStructure);
@@ -49,7 +49,7 @@ void TIM3_Configuration(void)
 	/* PWM1 Mode configuration: Channel3 */
 	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
-	TIM_OCInitStructure.TIM_Pulse = 18000;
+	TIM_OCInitStructure.TIM_Pulse = 8000;
 	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
 
 	TIM_OC3Init(TIM3, &TIM_OCInitStructure);
@@ -57,7 +57,7 @@ void TIM3_Configuration(void)
 	/* PWM1 Mode configuration: Channel4 */
 	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
-	TIM_OCInitStructure.TIM_Pulse = 23000;
+	TIM_OCInitStructure.TIM_Pulse = 8000;
 	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
 
 	TIM_OC4Init(TIM3, &TIM_OCInitStructure);
@@ -105,7 +105,7 @@ void LED_Timer_Configuration(void)
 
 void PWM_update(uint8_t channel, uint16_t pulswidth)
 {
-	pulswidth *= 24;
+	pulswidth *= 8;
 	switch(channel)
 	{
 	case 0:
