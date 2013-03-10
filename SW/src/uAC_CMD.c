@@ -140,7 +140,7 @@ void setpwm_cmd(int argc, char *argv[])
 	}
 	else
 	{
-		uac_printf("specify pwm channel (1..4) and duty-cycle (0..1000)");
+		uac_printf("specify pwm channel (1..4) and duty-cycle (0..3000ms)");
 
 	}
 }
@@ -277,7 +277,7 @@ void Hello_CMD (int argc, char *argv[])
 void PwrOff(int argc, char *argv[])
 {
 	uac_printf("\nBye-bye!\n");
-	while(uac_txavailable());	//wait for uac string to be sent
+	Delay(100);
 	GPIOB->BRR = GPIO_Pin_2;	//turn off DCDC
 }
 
