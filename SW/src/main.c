@@ -1,30 +1,10 @@
-/**
- *****************************************************************************
- **
- **  File        : main.c
- **
- **  Abstract    : main function.
- **
- **  Functions   : main
- **
- **  Environment : Atollic TrueSTUDIO/STM32
- **                STMicroelectronics STM32F10x Standard Peripherals Library
- **
- **  Distribution: The file is distributed “as is,” without any warranty
- **                of any kind.
- **
- **  (c)Copyright Atollic AB.
- **  You may use this file as-is or modify it according to the needs of your
- **  project. Distribution of this file (unmodified or modified) is not
- **  permitted. Atollic AB permit registered Atollic TrueSTUDIO(R) users the
- **  rights to distribute the assembled, compiled & linked contents of this
- **  file as part of an application binary file, provided that it is built
- **  using the Atollic TrueSTUDIO(R) toolchain.
- **
- **
- *****************************************************************************
- */
-
+/*
+ * main.c
+ *
+ *  Created on: Oct 20, 2012
+ *      Author: konstantin
+ *
+*/
 
 /* Includes ------------------------------------------------------------------*/
 #include <stddef.h>
@@ -39,13 +19,17 @@
 #include "uAC.h"
 #include "uAC_CMD.h"
 #include "kalman.h"
+#include "com.h"
 
 
 /* Global variables */
 extern uint16_t lipo_voltage;
 float acc_pitch, acc_roll;
 
+uint8_t msg2_bytearray[12];
+
 mpudata mpu;
+mpudata mpu_45;
 mpudata mpu_offset;
 
 kalman_data pitch_data;
@@ -127,21 +111,46 @@ int main(void)
 		mpu.gyro_y -= mpu_offset.gyro_y;
 		mpu.gyro_z -= mpu_offset.gyro_z;
 
+		//rotate gyro coordinate system to rotor coordinate system
+		mpu_45.acc_x = sin_45deg * mpu.acc_x + sin_45deg * mpu.acc_y;
+		mpu_45.acc_y = sin_45deg * mpu.acc_y - sin_45deg * mpu.acc_x;
+		mpu_45.acc_z = mpu.acc_z;
+		mpu_45.gyro_x = sin_45deg * mpu.gyro_x + sin_45deg * mpu.gyro_y;
+		mpu_45.gyro_y = sin_45deg * mpu.gyro_y - sin_45deg * mpu.gyro_x;
+		mpu_45.gyro_z = mpu.gyro_z;
+
 		//calculate roll and pitch angle form ACC data
-		acc_roll  = atan2(mpu.acc_x, mpu.acc_z);
-		acc_pitch = atan2(mpu.acc_y, mpu.acc_z);
+//		acc_roll  = atan2(mpu.acc_x, mpu.acc_z);
+//		acc_pitch = atan2(mpu.acc_y, mpu.acc_z);
+		acc_roll  = atan2(mpu_45.acc_x, mpu_45.acc_z);
+		acc_pitch = atan2(mpu_45.acc_y, mpu_45.acc_z);
 		//acc_angle *= (180/3.1415);
 		acc_roll *= (180/M_PI);
 		acc_pitch *= (180/M_PI);
 
 		//Estimate new state with updated sensor data
-		kalman_innovate(&pitch_data, acc_pitch, mpu.gyro_x / 16);
-		kalman_innovate(&roll_data, acc_roll, mpu.gyro_y / 16);
+		kalman_innovate(&pitch_data, acc_pitch, mpu_45.gyro_x / 16);
+		kalman_innovate(&roll_data, acc_roll, mpu_45.gyro_y / 16);
 
 		/* The new kalman estimate is now stored in pitch_data.x1, pitch_data.x2, pitch_data.x3
 		 * 	   									    roll_data.x1,  roll_data.x2,  roll_data.x3
 		 */
+		msg2_bytearray[0] = ((uint32_t)pitch_data.x1 >> 24);
+		msg2_bytearray[1] = ((uint32_t)pitch_data.x1 >> 16);
+		msg2_bytearray[2] = ((uint32_t)pitch_data.x1 >> 8);
+		msg2_bytearray[3] = ((uint32_t)pitch_data.x1);
+		msg2_bytearray[4] = ((uint32_t)pitch_data.x2 >> 24);
+		msg2_bytearray[5] = ((uint32_t)pitch_data.x2 >> 16);
+		msg2_bytearray[6] = ((uint32_t)pitch_data.x2 >> 8);
+		msg2_bytearray[7] = ((uint32_t)pitch_data.x2);
+		msg2_bytearray[8] = ((uint32_t)pitch_data.x3 >> 24);
+		msg2_bytearray[9] = ((uint32_t)pitch_data.x3 >> 16);
+		msg2_bytearray[10] = ((uint32_t)pitch_data.x3 >> 8);
+		msg2_bytearray[11] = ((uint32_t)pitch_data.x3);
 
+
+		send_data(2, msg2_bytearray, 12);
+		Delay(100);
 
 		/* The uAC_Task() must be called periodically
 		 * It checks whether a command has been received and

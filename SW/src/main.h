@@ -16,7 +16,7 @@
 //	//int16_t gyro_z, gyro_y, gyro_x, temp, acc_z, acc_y, acc_x;
 //};
 
-
+#define sin_45deg 0.70710678118
 
 
 
