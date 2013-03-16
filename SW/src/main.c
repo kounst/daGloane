@@ -35,6 +35,8 @@ mpudata mpu_offset;
 kalman_data pitch_data;
 kalman_data roll_data;
 
+extern msg1 control_msg;
+
 
 
 
@@ -70,7 +72,7 @@ int main(void)
 	UART1_Configuration();
 
 	/* UART2 Configuration for bluetooth AT command mode */
-	UART2_Configuration_AT(38400);
+	UART2_Configuration_AT(115200);
 
 	/* Init the uAC */
 	uac_init();
@@ -97,6 +99,11 @@ int main(void)
 
 	kalman_init(&pitch_data);
 	kalman_init(&roll_data);
+
+	control_msg.throttle = 0;
+	control_msg.nick = 0;
+	control_msg.roll = 0;
+	control_msg.yaw = 0;
 
 	/* Infinite loop */
 	while (1)
@@ -149,7 +156,9 @@ int main(void)
 		msg2_bytearray[11] = ((uint32_t)pitch_data.x3);
 
 
-		send_data(2, msg2_bytearray, 12);
+
+
+		//send_data(2, msg2_bytearray, 12);
 		Delay(100);
 
 		/* The uAC_Task() must be called periodically
