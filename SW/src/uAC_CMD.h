@@ -24,6 +24,6 @@ void set_kalman(int argc, char *argv[]);
 void bluetooth_send(int argc, char *argv[]);
 void bluetooth_config(int argc, char *argv[]);
 void bluetooth_msg(int argc, char *argv[]);
-
+void getpwm_cmd(int argc, char *argv[]);
 
 #endif /* UAC_CMD_H_ */

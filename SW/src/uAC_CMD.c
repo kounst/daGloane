@@ -28,6 +28,7 @@ extern uint16_t lipo_voltage;
 extern float acc_pitch, acc_roll;
 extern kalman_data pitch_data;
 extern kalman_data roll_data;
+extern msg1 control_msg;
 
 
 void uAC_CMD_attach(void)
@@ -46,6 +47,7 @@ void uAC_CMD_attach(void)
 	uac_attach("bt", bluetooth_send);
 	uac_attach("btconf", bluetooth_config);
 	uac_attach("btmsg", bluetooth_msg);
+	uac_attach("getpwm", getpwm_cmd);
 }
 
 
@@ -143,6 +145,11 @@ void setpwm_cmd(int argc, char *argv[])
 		uac_printf("specify pwm channel (1..4) and duty-cycle (0..3000ms)");
 
 	}
+}
+
+void getpwm_cmd(int argc, char *argv[])
+{
+	uac_printf("CH1 = %i, CH2 = %i, CH3 = %i, CH4 = %i, CH5 = %i, CH6 = %i, CH7 = %i", control_msg.roll, control_msg.nick, control_msg.yaw, control_msg.throttle, 0,0,0);
 }
 
 
