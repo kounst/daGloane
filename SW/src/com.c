@@ -11,6 +11,7 @@
 #include "cobs.h"
 #include "alloca.h"
 #include "uac.h"
+#include "TIM.h";
 
 
 uint8_t send_buffer[256];
@@ -23,6 +24,8 @@ uint8_t write_pointer = 0;
 
 
 msg1 control_msg;
+
+
 
 
 // private function prototypes
@@ -116,7 +119,6 @@ void process_rx_msg(uint8_t rx_msg_length)
 
 	decoded_length = cobs_decode(receive_buffer, rx_msg_length, cobs_decoded_msg);
 
-
 	if(decoded_length)	//if cobs_decoding successful
 	{
 		for(i = 0; i < decoded_length; i++)
@@ -129,15 +131,16 @@ void process_rx_msg(uint8_t rx_msg_length)
 			switch(cobs_decoded_msg[0])	//which message type?
 			{
 			case 1:
-				if(decoded_length == 13)
+				if(decoded_length >= 13)
 				{
-					control_msg.throttle = (cobs_decoded_msg[2] << 8) | cobs_decoded_msg[3];
+					control_msg.roll = (cobs_decoded_msg[2] << 8) | cobs_decoded_msg[3];
 					control_msg.nick = (cobs_decoded_msg[4] << 8) | cobs_decoded_msg[5];
-					control_msg.roll = (cobs_decoded_msg[6] << 8) | cobs_decoded_msg[7];
-					control_msg.yaw = (cobs_decoded_msg[8] << 8) | cobs_decoded_msg[9];
+					control_msg.yaw = (cobs_decoded_msg[6] << 8) | cobs_decoded_msg[7];
+					control_msg.throttle = (cobs_decoded_msg[8] << 8) | cobs_decoded_msg[9];
 					control_msg.control = cobs_decoded_msg[10];
 
-					uac_printf("testmsg: %i , %i , %i, %i , %i",control_msg.control, control_msg.nick, control_msg.roll, control_msg.throttle, control_msg.yaw);
+					//uac_printf("testmsg: %i , %i , %i, %i , %i",control_msg.control, control_msg.nick, control_msg.roll, control_msg.throttle, control_msg.yaw);
+					PWM_update(3,(control_msg.throttle+4000)/4);
 				}
 				else
 				{
