@@ -1,0 +1,4 @@
+The target is to make the daGloane qaudcopter controlable using a Android Smartphone.
+For now to ease devolempent a common RC remote control will be used.
+daGloane_remote is a stm32_discovery eval board and a bluetooth interface that connects to a RC remote control. 
+It will read the PPM signal of the remote and transfer the channel information via bluetooth to daGloane.
