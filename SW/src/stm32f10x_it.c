@@ -227,7 +227,7 @@ void USART2_IRQHandler(void)
 		//uac_printf("BT: ");
 		byte = USART_ReceiveData(USART2);
 		//uac_printf("%i",byte);
-		USART_SendData(USART1, byte);
+		//USART_SendData(USART1, byte);
 		store_received_byte(byte);
 	}
 }
