@@ -34,6 +34,7 @@
 #include "UART.h"
 #include "cobs.h"
 #include "TIM.h"
+#include "at_com_fsm.h"
 
 
 /* Private typedef */
@@ -51,8 +52,7 @@ _pwm neutral;
 extern uint8_t tick;
 extern uint8_t ppm_decode;
 
-extern uint8_t AT_cmd_OK;
-extern uint8_t AT_cmd_ERROR_17;
+extern enum AT_FSM at_fsm_state;
 
 /* Private function prototypes */
 /* Private functions */
@@ -88,23 +88,28 @@ int main(void)
 
 	Calibrate();
 
-	/* Try to connect to copter */
-	BT_send_AT_command("AT+init");
-	while(AT_cmd_OK != 1 && AT_cmd_ERROR_17 != 1);
-	AT_cmd_OK = 0;
-	AT_cmd_ERROR_17 = 0;
-	BT_send_AT_command("AT+pair=0015,E9,006DD9,5");
-	while(AT_cmd_OK != 1);
-	AT_cmd_OK = 0;
-	BT_send_AT_command("AT+link=0015,E9,006DD9");
-	while(AT_cmd_OK != 1);
-	AT_cmd_OK = 0;
+//	/* Try to connect to copter */
+//	BT_send_AT_command("AT+init");
+//	while(AT_cmd_OK != 1 && AT_cmd_ERROR_17 != 1);
+//	AT_cmd_OK = 0;
+//	AT_cmd_ERROR_17 = 0;
+//	BT_send_AT_command("AT+pair=0015,E9,006DD9,5");
+//	while(AT_cmd_OK != 1);
+//	AT_cmd_OK = 0;
+//	BT_send_AT_command("AT+link=0015,E9,006DD9");
+//	while(AT_cmd_OK != 1);
+//	AT_cmd_OK = 0;
 
 
 	/* Infinite loop */
 	while (1)
 	{
-		if(ppm_decode == 1)
+		if(tick)	//1ms tick
+		{
+			tick = 0;
+			AT_FMS_fct();		//AT command state machine
+		}
+		if(ppm_decode == 1  && at_fsm_state == CONNECTED)	//if new ppm message and BT connection active
 		{
 			ppm_decode = 0;
 			uint8_t puls[14];
@@ -118,7 +123,7 @@ int main(void)
 
 				//The ISR disables itself after the last char from the TX buffer is sent
 				USART_ITConfig(USART3, USART_IT_TXE, ENABLE);
-				LEDToggle(LED1);
+				//LEDToggle(LED1);
 			}
 
 		}

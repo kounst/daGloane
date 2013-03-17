@@ -20,13 +20,10 @@ uint8_t rx_read_index = 0;
 uint8_t cr = 0;
 uint8_t lf = 0;
 
-uint8_t AT_cmd_OK = 0;
-uint8_t AT_cmd_ERROR_0 = 0;
-uint8_t AT_cmd_ERROR_16 = 0;
-uint8_t AT_cmd_ERROR_17 = 0;
-uint8_t AT_cmd_FAIL = 0;
 
-char at_cmdlib[10][20] = {"OK","ERROR(0)","ERROR(16)","ERROR(17)","FAIL","ERROR(0)","ERROR(0)","ERROR(0)","ERROR(0)","ERROR(0)"};
+enum _at_resp AT_resp = none;
+
+char at_cmdlib[4][20] = {"OK","ERROR(16)","ERROR(17)","FAIL"};
 #define AT_CmdLibLength 2
 
 
@@ -146,14 +143,19 @@ void process_rx_msg(uint8_t write_index)
 	switch(i)
 	{
 	case 0:
-		AT_cmd_OK = 1;
+		AT_resp = OK;
 		break;
 	case 1:
+		AT_resp = ERROR_16;
 		break;
 	case 3:
-		AT_cmd_ERROR_17 = 1;
+		AT_resp = ERROR_17;
+		break;
+	case 4:
+		AT_resp = FAIL;
 		break;
 	default:
+		AT_resp = OTHER;
 		break;
 	}
 }
