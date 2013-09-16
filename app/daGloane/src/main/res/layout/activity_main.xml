@@ -1,0 +1,76 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainLayout"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity">
+
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="connect"
+        android:id="@+id/button_connectToDev"
+        android:layout_marginLeft="15dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="false"
+        android:layout_marginTop="14dp"
+        android:longClickable="false"
+        android:clickable="false" />
+
+    <TextView
+        android:layout_width="230dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="no device"
+        android:id="@+id/textView_device"
+        android:layout_alignTop="@+id/button_connectToDev"
+        android:layout_alignBottom="@+id/button_connectToDev"
+        android:layout_alignRight="@+id/listView_btdev"
+        android:gravity="left|fill_vertical|top"
+        android:layout_toRightOf="@+id/button_connectToDev"
+        android:layout_marginLeft="10dp" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        android:id="@+id/listView_btdev"
+        android:choiceMode="singleChoice"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/button_connectToDev"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="15dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/textView_pitch"
+        android:layout_below="@+id/listView_btdev"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/textView_roll"
+        android:layout_alignLeft="@+id/textView_pitch" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/textView_yaw"
+        android:layout_alignLeft="@+id/textView_roll"
+        android:layout_below="@+id/listView_btdev" />
+
+</RelativeLayout>
