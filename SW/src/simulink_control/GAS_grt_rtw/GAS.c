@@ -95,10 +95,10 @@ void GAS_step(void)
                    GAS_U.ctrl_roll * GAS_P.weight_roll_e4_Value) +
                   GAS_U.ctrl_azimuth * GAS_P.weight_azimuth_e4_Value) + 0.0;
 
-  /* Matfile logging */
+  /* Matfile logging Was ist das?*/
   rt_UpdateTXYLogVars(GAS_M->rtwLogInfo, (&GAS_M->Timing.taskTime0));
 
-  /* signal main to stop simulation */
+  /* signal main to stop simulation Was ist das?*/
   {                                    /* Sample time: [0.001s, 0.0s] */
     if ((rtmGetTFinal(GAS_M)!=-1) &&
         !((rtmGetTFinal(GAS_M)-GAS_M->Timing.taskTime0) >
