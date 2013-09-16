@@ -3,9 +3,9 @@
  *
  * Code generation for model "PID_Controller".
  *
- * Model version              : 1.12
+ * Model version              : 1.13
  * Simulink Coder version : 8.4 (R2013a) 13-Feb-2013
- * C source code generated on : Mon Sep 16 12:23:48 2013
+ * C source code generated on : Mon Sep 16 14:23:05 2013
  *
  * Target selection: grt.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -80,7 +80,7 @@ struct P_PID_Controller_T_ {
   real_T DiscreteTimeIntegrator_UpperSat;/* Expression: 0.5*10^18
                                           * Referenced by: '<S3>/Discrete-Time Integrator'
                                           */
-  real_T DiscreteTimeIntegrator_LowerSat;/* Expression: -0.5*10^37
+  real_T DiscreteTimeIntegrator_LowerSat;/* Expression: -0.5*10^18
                                           * Referenced by: '<S3>/Discrete-Time Integrator'
                                           */
   real_T I_Value;                      /* Expression: 1
@@ -107,7 +107,7 @@ struct P_PID_Controller_T_ {
   real_T DiscreteTimeIntegrator_UpperS_j;/* Expression: 0.5*10^18
                                           * Referenced by: '<S4>/Discrete-Time Integrator'
                                           */
-  real_T DiscreteTimeIntegrator_LowerS_d;/* Expression: -0.5*10^37
+  real_T DiscreteTimeIntegrator_LowerS_d;/* Expression: -0.5*10^18
                                           * Referenced by: '<S4>/Discrete-Time Integrator'
                                           */
   real_T I_Value_b;                    /* Expression: 1
@@ -134,7 +134,7 @@ struct P_PID_Controller_T_ {
   real_T DiscreteTimeIntegrator_UpperS_e;/* Expression: 0.5*10^18
                                           * Referenced by: '<S2>/Discrete-Time Integrator'
                                           */
-  real_T DiscreteTimeIntegrator_LowerS_a;/* Expression: -0.5*10^37
+  real_T DiscreteTimeIntegrator_LowerS_a;/* Expression: -0.5*10^18
                                           * Referenced by: '<S2>/Discrete-Time Integrator'
                                           */
   real_T I_Value_a;                    /* Expression: 1

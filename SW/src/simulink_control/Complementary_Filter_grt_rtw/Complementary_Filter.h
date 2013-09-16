@@ -3,9 +3,9 @@
  *
  * Code generation for model "Complementary_Filter".
  *
- * Model version              : 1.12
+ * Model version              : 1.13
  * Simulink Coder version : 8.4 (R2013a) 13-Feb-2013
- * C source code generated on : Mon Sep 16 12:23:11 2013
+ * C source code generated on : Mon Sep 16 14:22:42 2013
  *
  * Target selection: grt.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -75,7 +75,7 @@ struct P_Complementary_Filter_T_ {
   real_T DiscreteTimeIntegrator_UpperSat;/* Expression: 0.5*10^18
                                           * Referenced by: '<S3>/Discrete-Time Integrator'
                                           */
-  real_T DiscreteTimeIntegrator_LowerSat;/* Expression: -0.5*10^37
+  real_T DiscreteTimeIntegrator_LowerSat;/* Expression: -0.5*10^18
                                           * Referenced by: '<S3>/Discrete-Time Integrator'
                                           */
   real_T gain_gyro_to_ist_pitch_Value; /* Expression: 0.98
@@ -96,7 +96,7 @@ struct P_Complementary_Filter_T_ {
   real_T DiscreteTimeIntegrator_UpperS_j;/* Expression: 0.5*10^18
                                           * Referenced by: '<S4>/Discrete-Time Integrator'
                                           */
-  real_T DiscreteTimeIntegrator_LowerS_l;/* Expression: -0.5*10^37
+  real_T DiscreteTimeIntegrator_LowerS_l;/* Expression: -0.5*10^18
                                           * Referenced by: '<S4>/Discrete-Time Integrator'
                                           */
   real_T gain_gyro_to_ist_roll_Value;  /* Expression: 0.98
@@ -117,7 +117,7 @@ struct P_Complementary_Filter_T_ {
   real_T DiscreteTimeIntegrator_UpperS_a;/* Expression: 0.5*10^18
                                           * Referenced by: '<S2>/Discrete-Time Integrator'
                                           */
-  real_T DiscreteTimeIntegrator_LowerS_p;/* Expression: -0.5*10^37
+  real_T DiscreteTimeIntegrator_LowerS_p;/* Expression: -0.5*10^18
                                           * Referenced by: '<S2>/Discrete-Time Integrator'
                                           */
 };
