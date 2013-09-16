@@ -5,7 +5,7 @@
  *
  * Model version              : 1.13
  * Simulink Coder version : 8.4 (R2013a) 13-Feb-2013
- * C source code generated on : Mon Sep 16 14:22:42 2013
+ * C source code generated on : Mon Sep 16 14:26:16 2013
  *
  * Target selection: grt.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping

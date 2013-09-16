@@ -5,7 +5,7 @@
  *
  * Model version              : 1.13
  * Simulink Coder version : 8.4 (R2013a) 13-Feb-2013
- * C source code generated on : Mon Sep 16 14:23:19 2013
+ * C source code generated on : Mon Sep 16 14:26:55 2013
  *
  * Target selection: grt.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -44,7 +44,7 @@ typedef struct {
   real_T ctrl_pitch;                   /* '<Root>/ctrl_pitch' */
   real_T ctrl_roll;                    /* '<Root>/ctrl_roll' */
   real_T ctrl_azimuth;                 /* '<Root>/ctrl_azimuth' */
-  real_T ctrl_throttle;                /* '<Root>/ctrl_throttle' */
+  real_T control_msgthrottle;          /* '<Root>/control_msg.throttle' */
 } ExtU_GAS_for_Engines_T;
 
 /* External outputs (root outports fed by signals with auto storage) */

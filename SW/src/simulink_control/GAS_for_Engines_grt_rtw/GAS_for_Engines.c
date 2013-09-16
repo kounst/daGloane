@@ -5,7 +5,7 @@
  *
  * Model version              : 1.13
  * Simulink Coder version : 8.4 (R2013a) 13-Feb-2013
- * C source code generated on : Mon Sep 16 14:23:19 2013
+ * C source code generated on : Mon Sep 16 14:26:55 2013
  *
  * Target selection: grt.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -35,10 +35,10 @@ void GAS_for_Engines_step(void)
    *  Constant: '<S3>/weight_azimuth_e1'
    *  Constant: '<S3>/weight_pitch_e1'
    *  Constant: '<S3>/weight_roll_e1'
+   *  Inport: '<Root>/control_msg.throttle'
    *  Inport: '<Root>/ctrl_azimuth'
    *  Inport: '<Root>/ctrl_pitch'
    *  Inport: '<Root>/ctrl_roll'
-   *  Inport: '<Root>/ctrl_throttle'
    *  Product: '<S3>/Product'
    *  Product: '<S3>/Product1'
    *  Product: '<S3>/Product2'
@@ -47,7 +47,7 @@ void GAS_for_Engines_step(void)
         GAS_for_Engines_U.ctrl_roll * GAS_for_Engines_P.weight_roll_e1_Value) +
        GAS_for_Engines_U.ctrl_azimuth *
        GAS_for_Engines_P.weight_azimuth_e1_Value) +
-    GAS_for_Engines_U.ctrl_throttle;
+    GAS_for_Engines_U.control_msgthrottle;
 
   /* Saturate: '<S3>/Saturation_e1' */
   if (u >= GAS_for_Engines_P.Saturation_e1_UpperSat) {
@@ -69,10 +69,10 @@ void GAS_for_Engines_step(void)
    *  Constant: '<S4>/weight_azimuth_e2'
    *  Constant: '<S4>/weight_pitch_e2'
    *  Constant: '<S4>/weight_roll_e2'
+   *  Inport: '<Root>/control_msg.throttle'
    *  Inport: '<Root>/ctrl_azimuth'
    *  Inport: '<Root>/ctrl_pitch'
    *  Inport: '<Root>/ctrl_roll'
-   *  Inport: '<Root>/ctrl_throttle'
    *  Product: '<S4>/Product'
    *  Product: '<S4>/Product1'
    *  Product: '<S4>/Product2'
@@ -81,7 +81,7 @@ void GAS_for_Engines_step(void)
         GAS_for_Engines_U.ctrl_roll * GAS_for_Engines_P.weight_roll_e2_Value) +
        GAS_for_Engines_U.ctrl_azimuth *
        GAS_for_Engines_P.weight_azimuth_e2_Value) +
-    GAS_for_Engines_U.ctrl_throttle;
+    GAS_for_Engines_U.control_msgthrottle;
 
   /* Saturate: '<S4>/Saturation_e2' */
   if (u >= GAS_for_Engines_P.Saturation_e2_UpperSat) {
@@ -103,10 +103,10 @@ void GAS_for_Engines_step(void)
    *  Constant: '<S5>/weight_azimuth_e3'
    *  Constant: '<S5>/weight_pitch_e3'
    *  Constant: '<S5>/weight_roll_e3'
+   *  Inport: '<Root>/control_msg.throttle'
    *  Inport: '<Root>/ctrl_azimuth'
    *  Inport: '<Root>/ctrl_pitch'
    *  Inport: '<Root>/ctrl_roll'
-   *  Inport: '<Root>/ctrl_throttle'
    *  Product: '<S5>/Product'
    *  Product: '<S5>/Product1'
    *  Product: '<S5>/Product2'
@@ -115,7 +115,7 @@ void GAS_for_Engines_step(void)
         GAS_for_Engines_U.ctrl_roll * GAS_for_Engines_P.weight_roll_e3_Value) +
        GAS_for_Engines_U.ctrl_azimuth *
        GAS_for_Engines_P.weight_azimuth_e3_Value) +
-    GAS_for_Engines_U.ctrl_throttle;
+    GAS_for_Engines_U.control_msgthrottle;
 
   /* Saturate: '<S5>/Saturation_e3' */
   if (u >= GAS_for_Engines_P.Saturation_e3_UpperSat) {
@@ -137,10 +137,10 @@ void GAS_for_Engines_step(void)
    *  Constant: '<S2>/weight_azimuth_e4'
    *  Constant: '<S2>/weight_pitch_e4'
    *  Constant: '<S2>/weight_roll_e4'
+   *  Inport: '<Root>/control_msg.throttle'
    *  Inport: '<Root>/ctrl_azimuth'
    *  Inport: '<Root>/ctrl_pitch'
    *  Inport: '<Root>/ctrl_roll'
-   *  Inport: '<Root>/ctrl_throttle'
    *  Product: '<S2>/Product'
    *  Product: '<S2>/Product1'
    *  Product: '<S2>/Product2'
@@ -149,7 +149,7 @@ void GAS_for_Engines_step(void)
         GAS_for_Engines_U.ctrl_roll * GAS_for_Engines_P.weight_roll_e4_Value) +
        GAS_for_Engines_U.ctrl_azimuth *
        GAS_for_Engines_P.weight_azimuth_e4_Value) +
-    GAS_for_Engines_U.ctrl_throttle;
+    GAS_for_Engines_U.control_msgthrottle;
 
   /* Saturate: '<S2>/Saturation_e4' */
   if (u >= GAS_for_Engines_P.Saturation_e4_UpperSat) {
