@@ -1,0 +1,26 @@
+%implements s0_b0_q439m_Derivatives "C"
+
+%function Derivatives(block, system) Output
+%<SLibCG_TrackContStatesDerivative(0)>\
+_rtXdot = %<(SLibCG_SE(SLibGetContStatesDerivativeStructPtr()))>;
+%<SLibCG_TrackBlockIO(0)>\
+/* Derivatives for Integrator: '<S3>/Integrator' */
+_rtXdot->Integrator_CSTATE = PID0_B.Sum;
+/* Derivatives for Integrator: '<S4>/Integrator' */
+_rtXdot->Integrator_CSTATE_a = PID0_B.Sum_a;
+/* Derivatives for Integrator: '<S2>/Integrator' */
+_rtXdot->Integrator_CSTATE_c = PID0_B.Sum_b;
+%assign fcnProtoType = ""
+%openfile fcnProtoType
+static void Derivatives(\
+%assign comma = ""
+%closefile fcnProtoType
+%<SLibCG_SetFcnProtoType(0, 3, fcnProtoType)>
+
+%assign localVarDecl = ""
+%openfile localVarDecl
+XDot_PID0_T *_rtXdot;
+
+%closefile localVarDecl
+%<LibSetSystemField(system, "CachedDerivativeLocalVars", localVarDecl)>
+%endfunction

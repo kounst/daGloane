@@ -1,0 +1,16 @@
+%implements s0_b0_q439m_Update "C"
+
+%function Update(block, system) Output
+%assign tlcUpdateFcnOfS0B3 = OpaqueTLCBlockFcn("Update", 0, 3, 0, 2)
+%assign tlcUpdateFcnOfS0B8 = OpaqueTLCBlockFcn("Update", 0, 8, 0, 2)
+%assign tlcUpdateFcnOfS0B13 = OpaqueTLCBlockFcn("Update", 0, 13, 0, 2)
+%<tlcUpdateFcnOfS0B3>\
+%<tlcUpdateFcnOfS0B8>\
+%<tlcUpdateFcnOfS0B13>\
+%assign fcnProtoType = ""
+%openfile fcnProtoType
+static void Update(\
+%assign comma = ""
+%closefile fcnProtoType
+%<SLibCG_SetFcnProtoType(0, 2, fcnProtoType)>
+%endfunction

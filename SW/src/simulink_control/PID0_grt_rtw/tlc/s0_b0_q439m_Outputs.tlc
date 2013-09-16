@@ -1,0 +1,102 @@
+%implements s0_b0_q439m_Outputs "C"
+
+%function Outputs(block, system) Output
+%<SLibCGIRAccessLocalVar(12, 0)> %% rtb_Derivative
+
+%assign tlcOutputsFcnOfS0B3 = OpaqueTLCBlockFcn("Outputs", 0, 3, 0, 1)
+%assign tlcOutputsFcnOfS0B8 = OpaqueTLCBlockFcn("Outputs", 0, 8, 0, 1)
+%assign tlcOutputsFcnOfS0B13 = OpaqueTLCBlockFcn("Outputs", 0, 13, 0, 1)
+%<SLibCG_TrackContStates(0)>\
+%<SLibCG_TrackParam(0)>\
+%<SLibCG_TrackBlockIO(0)>\
+%<SLibCG_TrackEO(2)>\
+%<SLibCG_TrackEO(1)>\
+%<SLibCG_TrackEO(0)>\
+%<SLibCG_TrackEI(5)>\
+%<SLibCG_TrackEI(4)>\
+%<SLibCG_TrackEI(3)>\
+%<SLibCG_TrackEI(2)>\
+%<SLibCG_TrackEI(1)>\
+%<SLibCG_TrackEI(0)>\
+/* Sum: '<S3>/Sum' incorporates:
+ *  Inport: '<Root>/control_msg.pitch'
+ *  Inport: '<Root>/ist_pitch'
+ */
+PID0_B.Sum = PID0_U.control_msgpitch - PID0_U.ist_pitch;
+/* Product: '<S3>/Product' incorporates:
+ *  Constant: '<S3>/P'
+ */
+rtb_Product = PID0_B.Sum * PID0_P.P_Value;
+/* Integrator: '<S3>/Integrator' */
+rtb_Derivative = PID0_X.Integrator_CSTATE;
+/* Product: '<S3>/Product1' incorporates:
+ *  Constant: '<S3>/I'
+ */
+rtb_Product1 = rtb_Derivative * PID0_P.I_Value;
+%<tlcOutputsFcnOfS0B3>\
+/* Outport: '<Root>/ctrl_pitch' incorporates:
+ *  Constant: '<S3>/D'
+ *  Product: '<S3>/Product2'
+ *  Sum: '<S3>/Sum1'
+ */
+PID0_Y.ctrl_pitch = (rtb_Product + rtb_Product1) + PID0_P.D_Value * rtb_Derivative;
+/* Sum: '<S4>/Sum' incorporates:
+ *  Inport: '<Root>/control_msg.roll'
+ *  Inport: '<Root>/ist_roll'
+ */
+PID0_B.Sum_a = PID0_U.control_msgroll - PID0_U.ist_roll;
+/* Product: '<S4>/Product' incorporates:
+ *  Constant: '<S4>/P'
+ */
+rtb_Product = PID0_B.Sum_a * PID0_P.P_Value_d;
+/* Integrator: '<S4>/Integrator' */
+rtb_Derivative = PID0_X.Integrator_CSTATE_a;
+/* Product: '<S4>/Product1' incorporates:
+ *  Constant: '<S4>/I'
+ */
+rtb_Product1 = rtb_Derivative * PID0_P.I_Value_b;
+%<tlcOutputsFcnOfS0B8>\
+/* Outport: '<Root>/ctrl_roll' incorporates:
+ *  Constant: '<S4>/D'
+ *  Product: '<S4>/Product2'
+ *  Sum: '<S4>/Sum1'
+ */
+PID0_Y.ctrl_roll = (rtb_Product + rtb_Product1) + PID0_P.D_Value_l * rtb_Derivative;
+/* Sum: '<S2>/Sum' incorporates:
+ *  Inport: '<Root>/control_msg.azimuth'
+ *  Inport: '<Root>/ist_azimuth'
+ */
+PID0_B.Sum_b = PID0_U.control_msgazimuth - PID0_U.ist_azimuth;
+/* Product: '<S2>/Product' incorporates:
+ *  Constant: '<S2>/P'
+ */
+rtb_Product = PID0_B.Sum_b * PID0_P.P_Value_j;
+/* Integrator: '<S2>/Integrator' */
+rtb_Derivative = PID0_X.Integrator_CSTATE_c;
+/* Product: '<S2>/Product1' incorporates:
+ *  Constant: '<S2>/I'
+ */
+rtb_Product1 = rtb_Derivative * PID0_P.I_Value_a;
+%<tlcOutputsFcnOfS0B13>\
+/* Outport: '<Root>/ctrl_azimuth' incorporates:
+ *  Constant: '<S2>/D'
+ *  Product: '<S2>/Product2'
+ *  Sum: '<S2>/Sum1'
+ */
+PID0_Y.ctrl_azimuth = (rtb_Product + rtb_Product1) + PID0_P.D_Value_b * rtb_Derivative;
+%<SLibInsertSolverResetCode()>\
+%assign fcnProtoType = ""
+%openfile fcnProtoType
+static void Outputs(\
+%assign comma = ""
+%closefile fcnProtoType
+%<SLibCG_SetFcnProtoType(0, 1, fcnProtoType)>
+
+%assign localVarDecl = ""
+%openfile localVarDecl
+real_T rtb_Product;
+real_T rtb_Product1;
+
+%closefile localVarDecl
+%<LibSetSystemField(system, "CachedOutputLocalVars", localVarDecl)>
+%endfunction

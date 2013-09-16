@@ -1,0 +1,326 @@
+%implements s0_b0_q439m_TLCInterface "C"
+
+%function getInputAddr_0_3_0_0_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackBlockIO(0)>
+
+%return "&PID0_B.Sum"
+%endfunction
+
+%function getInput_0_3_0_0_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackBlockIO(0)>
+
+%return "PID0_B.Sum"
+%endfunction
+
+%function getOutputAddr_0_3_0_0_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCGIRAccessLocalVar(12, 0)> %% rtb_Derivative
+
+%return "&rtb_Derivative"
+%endfunction
+
+%function getOutput_0_3_0_0_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCGIRAccessLocalVar(12, 0)> %% rtb_Derivative
+
+%return "rtb_Derivative"
+%endfunction
+
+%function getDWorkAddr_0_3_0_0_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackDW(0)>
+
+%return "&PID0_DW.Derivative_RWORK" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getDWork_0_3_0_0_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackDW(0)>
+
+%return "PID0_DW.Derivative_RWORK" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getInputAddr_0_8_0_0_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackBlockIO(0)>
+
+%return "&PID0_B.Sum_a"
+%endfunction
+
+%function getInput_0_8_0_0_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackBlockIO(0)>
+
+%return "PID0_B.Sum_a"
+%endfunction
+
+%function getOutputAddr_0_8_0_0_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCGIRAccessLocalVar(12, 0)> %% rtb_Derivative
+
+%return "&rtb_Derivative"
+%endfunction
+
+%function getOutput_0_8_0_0_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCGIRAccessLocalVar(12, 0)> %% rtb_Derivative
+
+%return "rtb_Derivative"
+%endfunction
+
+%function getDWorkAddr_0_8_0_0_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackDW(0)>
+
+%return "&PID0_DW.Derivative_RWORK_g" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getDWork_0_8_0_0_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackDW(0)>
+
+%return "PID0_DW.Derivative_RWORK_g" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getInputAddr_0_13_0_0_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackBlockIO(0)>
+
+%return "&PID0_B.Sum_b"
+%endfunction
+
+%function getInput_0_13_0_0_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackBlockIO(0)>
+
+%return "PID0_B.Sum_b"
+%endfunction
+
+%function getOutputAddr_0_13_0_0_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCGIRAccessLocalVar(12, 0)> %% rtb_Derivative
+
+%return "&rtb_Derivative"
+%endfunction
+
+%function getOutput_0_13_0_0_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCGIRAccessLocalVar(12, 0)> %% rtb_Derivative
+
+%return "rtb_Derivative"
+%endfunction
+
+%function getDWorkAddr_0_13_0_0_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackDW(0)>
+
+%return "&PID0_DW.Derivative_RWORK_h" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getDWork_0_13_0_0_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackDW(0)>
+
+%return "PID0_DW.Derivative_RWORK_h" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getInputAddr_0_3_0_1_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackBlockIO(0)>
+
+%return "&PID0_B.Sum"
+%endfunction
+
+%function getInput_0_3_0_1_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackBlockIO(0)>
+
+%return "PID0_B.Sum"
+%endfunction
+
+%function getOutputAddr_0_3_0_1_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCGIRAccessLocalVar(12, 0)> %% rtb_Derivative
+
+%return "&rtb_Derivative"
+%endfunction
+
+%function getOutput_0_3_0_1_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCGIRAccessLocalVar(12, 0)> %% rtb_Derivative
+
+%return "rtb_Derivative"
+%endfunction
+
+%function getDWorkAddr_0_3_0_1_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackDW(0)>
+
+%return "&PID0_DW.Derivative_RWORK" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getDWork_0_3_0_1_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackDW(0)>
+
+%return "PID0_DW.Derivative_RWORK" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getInputAddr_0_8_0_1_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackBlockIO(0)>
+
+%return "&PID0_B.Sum_a"
+%endfunction
+
+%function getInput_0_8_0_1_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackBlockIO(0)>
+
+%return "PID0_B.Sum_a"
+%endfunction
+
+%function getOutputAddr_0_8_0_1_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCGIRAccessLocalVar(12, 0)> %% rtb_Derivative
+
+%return "&rtb_Derivative"
+%endfunction
+
+%function getOutput_0_8_0_1_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCGIRAccessLocalVar(12, 0)> %% rtb_Derivative
+
+%return "rtb_Derivative"
+%endfunction
+
+%function getDWorkAddr_0_8_0_1_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackDW(0)>
+
+%return "&PID0_DW.Derivative_RWORK_g" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getDWork_0_8_0_1_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackDW(0)>
+
+%return "PID0_DW.Derivative_RWORK_g" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getInputAddr_0_13_0_1_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackBlockIO(0)>
+
+%return "&PID0_B.Sum_b"
+%endfunction
+
+%function getInput_0_13_0_1_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackBlockIO(0)>
+
+%return "PID0_B.Sum_b"
+%endfunction
+
+%function getOutputAddr_0_13_0_1_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCGIRAccessLocalVar(12, 0)> %% rtb_Derivative
+
+%return "&rtb_Derivative"
+%endfunction
+
+%function getOutput_0_13_0_1_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCGIRAccessLocalVar(12, 0)> %% rtb_Derivative
+
+%return "rtb_Derivative"
+%endfunction
+
+%function getDWorkAddr_0_13_0_1_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackDW(0)>
+
+%return "&PID0_DW.Derivative_RWORK_h" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getDWork_0_13_0_1_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackDW(0)>
+
+%return "PID0_DW.Derivative_RWORK_h" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getInputAddr_0_3_0_2_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackBlockIO(0)>
+
+%return "&PID0_B.Sum"
+%endfunction
+
+%function getInput_0_3_0_2_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackBlockIO(0)>
+
+%return "PID0_B.Sum"
+%endfunction
+
+%function getOutputAddr_0_3_0_2_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCGIRAccessLocalVar(12, 0)> %% rtb_Derivative
+
+%return "&rtb_Derivative"
+%endfunction
+
+%function getOutput_0_3_0_2_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCGIRAccessLocalVar(12, 0)> %% rtb_Derivative
+
+%return "rtb_Derivative"
+%endfunction
+
+%function getDWorkAddr_0_3_0_2_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackDW(0)>
+
+%return "&PID0_DW.Derivative_RWORK" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getDWork_0_3_0_2_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackDW(0)>
+
+%return "PID0_DW.Derivative_RWORK" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getInputAddr_0_8_0_2_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackBlockIO(0)>
+
+%return "&PID0_B.Sum_a"
+%endfunction
+
+%function getInput_0_8_0_2_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackBlockIO(0)>
+
+%return "PID0_B.Sum_a"
+%endfunction
+
+%function getOutputAddr_0_8_0_2_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCGIRAccessLocalVar(12, 0)> %% rtb_Derivative
+
+%return "&rtb_Derivative"
+%endfunction
+
+%function getOutput_0_8_0_2_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCGIRAccessLocalVar(12, 0)> %% rtb_Derivative
+
+%return "rtb_Derivative"
+%endfunction
+
+%function getDWorkAddr_0_8_0_2_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackDW(0)>
+
+%return "&PID0_DW.Derivative_RWORK_g" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getDWork_0_8_0_2_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackDW(0)>
+
+%return "PID0_DW.Derivative_RWORK_g" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getInputAddr_0_13_0_2_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackBlockIO(0)>
+
+%return "&PID0_B.Sum_b"
+%endfunction
+
+%function getInput_0_13_0_2_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackBlockIO(0)>
+
+%return "PID0_B.Sum_b"
+%endfunction
+
+%function getOutputAddr_0_13_0_2_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCGIRAccessLocalVar(12, 0)> %% rtb_Derivative
+
+%return "&rtb_Derivative"
+%endfunction
+
+%function getOutput_0_13_0_2_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCGIRAccessLocalVar(12, 0)> %% rtb_Derivative
+
+%return "rtb_Derivative"
+%endfunction
+
+%function getDWorkAddr_0_13_0_2_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackDW(0)>
+
+%return "&PID0_DW.Derivative_RWORK_h" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getDWork_0_13_0_2_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackDW(0)>
+
+%return "PID0_DW.Derivative_RWORK_h" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
