@@ -3,15 +3,15 @@
  *
  * Code generation for model "PID_Controller".
  *
- * Model version              : 1.20
+ * Model version              : 1.21
  * Simulink Coder version : 8.4 (R2013a) 13-Feb-2013
- * C source code generated on : Thu Sep 19 13:48:34 2013
+ * C source code generated on : Thu Sep 19 14:25:02 2013
  *
  * Target selection: grt.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
- * Embedded hardware selection: 32-bit Generic
+ * Embedded hardware selection: ARM Compatible->ARM Cortex
  * Code generation objective: Execution efficiency
- * Validation result: Not run
+ * Validation result: Passed (8), Warnings (3), Error (0)
  */
 #ifndef RTW_HEADER_PID_Controller_h_
 #define RTW_HEADER_PID_Controller_h_
@@ -68,86 +68,10 @@ typedef struct {
   real_T ctrl_azimuth;                 /* '<Root>/ctrl_azimuth' */
 } ExtY_PID_Controller_T;
 
-/* Parameters (auto storage) */
-struct P_PID_Controller_T_ {
-  real_T P_Value;                      /* Expression: 1
-                                        * Referenced by: '<S3>/P'
-                                        */
-  real_T DiscreteTimeIntegrator_gainval;/* Computed Parameter: DiscreteTimeIntegrator_gainval
-                                         * Referenced by: '<S3>/Discrete-Time Integrator'
-                                         */
-  real_T DiscreteTimeIntegrator_IC;    /* Expression: 0
-                                        * Referenced by: '<S3>/Discrete-Time Integrator'
-                                        */
-  real_T DiscreteTimeIntegrator_UpperSat;/* Expression: 0.5*10^18
-                                          * Referenced by: '<S3>/Discrete-Time Integrator'
-                                          */
-  real_T DiscreteTimeIntegrator_LowerSat;/* Expression: -0.5*10^18
-                                          * Referenced by: '<S3>/Discrete-Time Integrator'
-                                          */
-  real_T I_Value;                      /* Expression: 1
-                                        * Referenced by: '<S3>/I'
-                                        */
-  real_T D_Value;                      /* Expression: 1
-                                        * Referenced by: '<S3>/D'
-                                        */
-  real_T P_Value_d;                    /* Expression: 1
-                                        * Referenced by: '<S4>/P'
-                                        */
-  real_T DiscreteTimeIntegrator_gainva_j;/* Computed Parameter: DiscreteTimeIntegrator_gainva_j
-                                          * Referenced by: '<S4>/Discrete-Time Integrator'
-                                          */
-  real_T DiscreteTimeIntegrator_IC_c;  /* Expression: 0
-                                        * Referenced by: '<S4>/Discrete-Time Integrator'
-                                        */
-  real_T DiscreteTimeIntegrator_UpperS_j;/* Expression: 0.5*10^18
-                                          * Referenced by: '<S4>/Discrete-Time Integrator'
-                                          */
-  real_T DiscreteTimeIntegrator_LowerS_d;/* Expression: -0.5*10^18
-                                          * Referenced by: '<S4>/Discrete-Time Integrator'
-                                          */
-  real_T I_Value_b;                    /* Expression: 1
-                                        * Referenced by: '<S4>/I'
-                                        */
-  real_T D_Value_l;                    /* Expression: 1
-                                        * Referenced by: '<S4>/D'
-                                        */
-  real_T P_Value_j;                    /* Expression: 0
-                                        * Referenced by: '<S2>/P'
-                                        */
-  real_T DiscreteTimeIntegrator_gainv_jy;/* Computed Parameter: DiscreteTimeIntegrator_gainv_jy
-                                          * Referenced by: '<S2>/Discrete-Time Integrator'
-                                          */
-  real_T DiscreteTimeIntegrator_IC_cx; /* Expression: 0
-                                        * Referenced by: '<S2>/Discrete-Time Integrator'
-                                        */
-  real_T DiscreteTimeIntegrator_UpperS_e;/* Expression: 0.5*10^18
-                                          * Referenced by: '<S2>/Discrete-Time Integrator'
-                                          */
-  real_T DiscreteTimeIntegrator_LowerS_a;/* Expression: -0.5*10^18
-                                          * Referenced by: '<S2>/Discrete-Time Integrator'
-                                          */
-  real_T I_Value_a;                    /* Expression: 0
-                                        * Referenced by: '<S2>/I'
-                                        */
-  real_T D_Value_b;                    /* Expression: 0
-                                        * Referenced by: '<S2>/D'
-                                        */
-  real_T TSamp_WtEt;                   /* Computed Parameter: TSamp_WtEt
-                                        * Referenced by: '<S5>/TSamp'
-                                        */
-  real_T UD_InitialCondition;          /* Expression: ICPrevScaledInput
-                                        * Referenced by: '<S5>/UD'
-                                        */
-};
-
 /* Real-time Model Data Structure */
 struct tag_RTM_PID_Controller_T {
   const char_T *errorStatus;
 };
-
-/* Block parameters (auto storage) */
-extern P_PID_Controller_T PID_Controller_P;
 
 /* Block states (auto storage) */
 extern DW_PID_Controller_T PID_Controller_DW;

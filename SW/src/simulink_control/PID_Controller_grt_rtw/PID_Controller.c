@@ -3,15 +3,15 @@
  *
  * Code generation for model "PID_Controller".
  *
- * Model version              : 1.20
+ * Model version              : 1.21
  * Simulink Coder version : 8.4 (R2013a) 13-Feb-2013
- * C source code generated on : Thu Sep 19 13:48:34 2013
+ * C source code generated on : Thu Sep 19 14:25:02 2013
  *
  * Target selection: grt.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
- * Embedded hardware selection: 32-bit Generic
+ * Embedded hardware selection: ARM Compatible->ARM Cortex
  * Code generation objective: Execution efficiency
- * Validation result: Not run
+ * Validation result: Passed (8), Warnings (3), Error (0)
  */
 #include "PID_Controller.h"
 #include "PID_Controller_private.h"
@@ -35,7 +35,6 @@ void PID_Controller_step(void)
   real_T rtb_Sum;
   real_T rtb_Sum_a;
   real_T rtb_Sum_b;
-  real_T rtb_TSamp;
 
   /* Sum: '<S3>/Sum' incorporates:
    *  Inport: '<Root>/control_msg.pitch'
@@ -44,22 +43,16 @@ void PID_Controller_step(void)
   rtb_Sum = PID_Controller_U.control_msgpitch - PID_Controller_U.ist_pitch;
 
   /* Outport: '<Root>/ctrl_pitch' incorporates:
-   *  Constant: '<S3>/D'
-   *  Constant: '<S3>/I'
-   *  Constant: '<S3>/P'
    *  DiscreteIntegrator: '<S3>/Discrete-Time Integrator'
    *  Inport: '<Root>/control_msg.pitch_d'
    *  Inport: '<Root>/ist_pitch_d'
    *  Product: '<S3>/Product'
-   *  Product: '<S3>/Product1'
-   *  Product: '<S3>/Product2'
    *  Sum: '<S3>/Sum1'
    *  Sum: '<S3>/Sum2'
    */
-  PID_Controller_Y.ctrl_pitch = (rtb_Sum * PID_Controller_P.P_Value +
-    PID_Controller_DW.DiscreteTimeIntegrator_DSTATE * PID_Controller_P.I_Value)
-    + (PID_Controller_U.control_msgpitch_d - PID_Controller_U.ist_pitch_d) *
-    PID_Controller_P.D_Value;
+  PID_Controller_Y.ctrl_pitch = (rtb_Sum +
+    PID_Controller_DW.DiscreteTimeIntegrator_DSTATE) +
+    (PID_Controller_U.control_msgpitch_d - PID_Controller_U.ist_pitch_d);
 
   /* Sum: '<S4>/Sum' incorporates:
    *  Inport: '<Root>/control_msg.roll'
@@ -68,22 +61,16 @@ void PID_Controller_step(void)
   rtb_Sum_a = PID_Controller_U.control_msgroll - PID_Controller_U.ist_roll;
 
   /* Outport: '<Root>/ctrl_roll' incorporates:
-   *  Constant: '<S4>/D'
-   *  Constant: '<S4>/I'
-   *  Constant: '<S4>/P'
    *  DiscreteIntegrator: '<S4>/Discrete-Time Integrator'
    *  Inport: '<Root>/control_msg.roll_d'
    *  Inport: '<Root>/ist_roll_d'
    *  Product: '<S4>/Product'
-   *  Product: '<S4>/Product1'
-   *  Product: '<S4>/Product2'
    *  Sum: '<S4>/Sum1'
    *  Sum: '<S4>/Sum2'
    */
-  PID_Controller_Y.ctrl_roll = (rtb_Sum_a * PID_Controller_P.P_Value_d +
-    PID_Controller_DW.DiscreteTimeIntegrator_DSTATE_d *
-    PID_Controller_P.I_Value_b) + (PID_Controller_U.control_msgroll_d -
-    PID_Controller_U.ist_roll_d) * PID_Controller_P.D_Value_l;
+  PID_Controller_Y.ctrl_roll = (rtb_Sum_a +
+    PID_Controller_DW.DiscreteTimeIntegrator_DSTATE_d) +
+    (PID_Controller_U.control_msgroll_d - PID_Controller_U.ist_roll_d);
 
   /* Sum: '<S2>/Sum' incorporates:
    *  Inport: '<Root>/control_msg.azimuth'
@@ -91,83 +78,55 @@ void PID_Controller_step(void)
    */
   rtb_Sum_b = PID_Controller_U.control_msgazimuth - PID_Controller_U.ist_azimuth;
 
-  /* SampleTimeMath: '<S5>/TSamp'
-   *
-   * About '<S5>/TSamp':
-   *  y = u * K where K = 1 / ( w * Ts )
-   */
-  rtb_TSamp = rtb_Sum_b * PID_Controller_P.TSamp_WtEt;
-
   /* Outport: '<Root>/ctrl_azimuth' incorporates:
    *  Constant: '<S2>/D'
-   *  Constant: '<S2>/I'
-   *  Constant: '<S2>/P'
-   *  DiscreteIntegrator: '<S2>/Discrete-Time Integrator'
-   *  Product: '<S2>/Product'
-   *  Product: '<S2>/Product1'
    *  Product: '<S2>/Product2'
-   *  Sum: '<S2>/Sum1'
-   *  Sum: '<S5>/Diff'
-   *  UnitDelay: '<S5>/UD'
    */
-  PID_Controller_Y.ctrl_azimuth = (rtb_Sum_b * PID_Controller_P.P_Value_j +
-    PID_Controller_DW.DiscreteTimeIntegrator_DSTATE_g *
-    PID_Controller_P.I_Value_a) + (rtb_TSamp - PID_Controller_DW.UD_DSTATE) *
-    PID_Controller_P.D_Value_b;
+  PID_Controller_Y.ctrl_azimuth = 0.0;
 
   /* Update for DiscreteIntegrator: '<S3>/Discrete-Time Integrator' */
-  PID_Controller_DW.DiscreteTimeIntegrator_DSTATE +=
-    PID_Controller_P.DiscreteTimeIntegrator_gainval * rtb_Sum;
-  if (PID_Controller_DW.DiscreteTimeIntegrator_DSTATE >=
-      PID_Controller_P.DiscreteTimeIntegrator_UpperSat) {
-    PID_Controller_DW.DiscreteTimeIntegrator_DSTATE =
-      PID_Controller_P.DiscreteTimeIntegrator_UpperSat;
+  PID_Controller_DW.DiscreteTimeIntegrator_DSTATE += 0.004 * rtb_Sum;
+  if (PID_Controller_DW.DiscreteTimeIntegrator_DSTATE >= 5.0E+17) {
+    PID_Controller_DW.DiscreteTimeIntegrator_DSTATE = 5.0E+17;
   } else {
-    if (PID_Controller_DW.DiscreteTimeIntegrator_DSTATE <=
-        PID_Controller_P.DiscreteTimeIntegrator_LowerSat) {
-      PID_Controller_DW.DiscreteTimeIntegrator_DSTATE =
-        PID_Controller_P.DiscreteTimeIntegrator_LowerSat;
+    if (PID_Controller_DW.DiscreteTimeIntegrator_DSTATE <= -5.0E+17) {
+      PID_Controller_DW.DiscreteTimeIntegrator_DSTATE = -5.0E+17;
     }
   }
 
   /* End of Update for DiscreteIntegrator: '<S3>/Discrete-Time Integrator' */
 
   /* Update for DiscreteIntegrator: '<S4>/Discrete-Time Integrator' */
-  PID_Controller_DW.DiscreteTimeIntegrator_DSTATE_d +=
-    PID_Controller_P.DiscreteTimeIntegrator_gainva_j * rtb_Sum_a;
-  if (PID_Controller_DW.DiscreteTimeIntegrator_DSTATE_d >=
-      PID_Controller_P.DiscreteTimeIntegrator_UpperS_j) {
-    PID_Controller_DW.DiscreteTimeIntegrator_DSTATE_d =
-      PID_Controller_P.DiscreteTimeIntegrator_UpperS_j;
+  PID_Controller_DW.DiscreteTimeIntegrator_DSTATE_d += 0.004 * rtb_Sum_a;
+  if (PID_Controller_DW.DiscreteTimeIntegrator_DSTATE_d >= 5.0E+17) {
+    PID_Controller_DW.DiscreteTimeIntegrator_DSTATE_d = 5.0E+17;
   } else {
-    if (PID_Controller_DW.DiscreteTimeIntegrator_DSTATE_d <=
-        PID_Controller_P.DiscreteTimeIntegrator_LowerS_d) {
-      PID_Controller_DW.DiscreteTimeIntegrator_DSTATE_d =
-        PID_Controller_P.DiscreteTimeIntegrator_LowerS_d;
+    if (PID_Controller_DW.DiscreteTimeIntegrator_DSTATE_d <= -5.0E+17) {
+      PID_Controller_DW.DiscreteTimeIntegrator_DSTATE_d = -5.0E+17;
     }
   }
 
   /* End of Update for DiscreteIntegrator: '<S4>/Discrete-Time Integrator' */
 
   /* Update for DiscreteIntegrator: '<S2>/Discrete-Time Integrator' */
-  PID_Controller_DW.DiscreteTimeIntegrator_DSTATE_g +=
-    PID_Controller_P.DiscreteTimeIntegrator_gainv_jy * rtb_Sum_b;
-  if (PID_Controller_DW.DiscreteTimeIntegrator_DSTATE_g >=
-      PID_Controller_P.DiscreteTimeIntegrator_UpperS_e) {
-    PID_Controller_DW.DiscreteTimeIntegrator_DSTATE_g =
-      PID_Controller_P.DiscreteTimeIntegrator_UpperS_e;
+  PID_Controller_DW.DiscreteTimeIntegrator_DSTATE_g += 0.004 * rtb_Sum_b;
+  if (PID_Controller_DW.DiscreteTimeIntegrator_DSTATE_g >= 5.0E+17) {
+    PID_Controller_DW.DiscreteTimeIntegrator_DSTATE_g = 5.0E+17;
   } else {
-    if (PID_Controller_DW.DiscreteTimeIntegrator_DSTATE_g <=
-        PID_Controller_P.DiscreteTimeIntegrator_LowerS_a) {
-      PID_Controller_DW.DiscreteTimeIntegrator_DSTATE_g =
-        PID_Controller_P.DiscreteTimeIntegrator_LowerS_a;
+    if (PID_Controller_DW.DiscreteTimeIntegrator_DSTATE_g <= -5.0E+17) {
+      PID_Controller_DW.DiscreteTimeIntegrator_DSTATE_g = -5.0E+17;
     }
   }
 
   /* End of Update for DiscreteIntegrator: '<S2>/Discrete-Time Integrator' */
 
-  /* Update for UnitDelay: '<S5>/UD' */
-  PID_Controller_DW.UD_DSTATE = rtb_TSamp;
+  /* Update for UnitDelay: '<S5>/UD' incorporates:
+   *  SampleTimeMath: '<S5>/TSamp'
+   *
+   * About '<S5>/TSamp':
+   *  y = u * K where K = 1 / ( w * Ts )
+   */
+  PID_Controller_DW.UD_DSTATE = rtb_Sum_b * 250.0;
 }
 
 /* Model initialize function */
@@ -191,19 +150,16 @@ void PID_Controller_initialize(void)
                 sizeof(ExtY_PID_Controller_T));
 
   /* InitializeConditions for DiscreteIntegrator: '<S3>/Discrete-Time Integrator' */
-  PID_Controller_DW.DiscreteTimeIntegrator_DSTATE =
-    PID_Controller_P.DiscreteTimeIntegrator_IC;
+  PID_Controller_DW.DiscreteTimeIntegrator_DSTATE = 0.0;
 
   /* InitializeConditions for DiscreteIntegrator: '<S4>/Discrete-Time Integrator' */
-  PID_Controller_DW.DiscreteTimeIntegrator_DSTATE_d =
-    PID_Controller_P.DiscreteTimeIntegrator_IC_c;
+  PID_Controller_DW.DiscreteTimeIntegrator_DSTATE_d = 0.0;
 
   /* InitializeConditions for DiscreteIntegrator: '<S2>/Discrete-Time Integrator' */
-  PID_Controller_DW.DiscreteTimeIntegrator_DSTATE_g =
-    PID_Controller_P.DiscreteTimeIntegrator_IC_cx;
+  PID_Controller_DW.DiscreteTimeIntegrator_DSTATE_g = 0.0;
 
   /* InitializeConditions for UnitDelay: '<S5>/UD' */
-  PID_Controller_DW.UD_DSTATE = PID_Controller_P.UD_InitialCondition;
+  PID_Controller_DW.UD_DSTATE = 0.0;
 }
 
 /* Model terminate function */

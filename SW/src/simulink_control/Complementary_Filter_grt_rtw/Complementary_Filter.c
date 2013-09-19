@@ -3,15 +3,15 @@
  *
  * Code generation for model "Complementary_Filter".
  *
- * Model version              : 1.20
+ * Model version              : 1.21
  * Simulink Coder version : 8.4 (R2013a) 13-Feb-2013
- * C source code generated on : Thu Sep 19 13:47:59 2013
+ * C source code generated on : Thu Sep 19 14:24:11 2013
  *
  * Target selection: grt.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
- * Embedded hardware selection: 32-bit Generic
+ * Embedded hardware selection: ARM Compatible->ARM Cortex
  * Code generation objective: Execution efficiency
- * Validation result: Not run
+ * Validation result: Passed (9), Warnings (2), Error (0)
  */
 #include "Complementary_Filter.h"
 #include "Complementary_Filter_private.h"
@@ -33,9 +33,6 @@ RT_MODEL_Complementary_Filter_T *const Complementary_Filter_M =
 /* Model step function */
 void Complementary_Filter_step(void)
 {
-  real_T rtb_Sum;
-  real_T rtb_Sum1;
-
   /* Sum: '<S3>/Sum' incorporates:
    *  Constant: '<S3>/gain_acc_to_ist_pitch'
    *  Constant: '<S3>/gain_gyro_to_ist_pitch'
@@ -47,15 +44,10 @@ void Complementary_Filter_step(void)
    *  Sum: '<S3>/Add'
    *  UnitDelay: '<S3>/Unit Delay'
    */
-  rtb_Sum = (Complementary_Filter_P.Zeitschritt_Gain *
-             Complementary_Filter_U.mpu_45gyro_x +
-             Complementary_Filter_DW.UnitDelay_DSTATE) *
-    Complementary_Filter_P.gain_gyro_to_ist_pitch_Value +
-    Complementary_Filter_U.acc_pitch *
-    Complementary_Filter_P.gain_acc_to_ist_pitch_Value;
-
-  /* Outport: '<Root>/ist_pitch' */
-  Complementary_Filter_Y.ist_pitch = rtb_Sum;
+  Complementary_Filter_Y.ist_pitch = (0.004 *
+    Complementary_Filter_U.mpu_45gyro_x +
+    Complementary_Filter_DW.UnitDelay_DSTATE) * 0.98 +
+    Complementary_Filter_U.acc_pitch * 0.02;
 
   /* Sum: '<S4>/Sum1' incorporates:
    *  Constant: '<S4>/gain_acc_to_ist_roll'
@@ -68,15 +60,9 @@ void Complementary_Filter_step(void)
    *  Sum: '<S4>/Sum2'
    *  UnitDelay: '<S4>/Unit Delay'
    */
-  rtb_Sum1 = (Complementary_Filter_P.Zeitschritt_Gain_a *
-              Complementary_Filter_U.mpu_45gyro_y +
-              Complementary_Filter_DW.UnitDelay_DSTATE_j) *
-    Complementary_Filter_P.gain_gyro_to_ist_roll_Value +
-    Complementary_Filter_U.acc_roll *
-    Complementary_Filter_P.gain_acc_to_ist_roll_Value;
-
-  /* Outport: '<Root>/ist_roll' */
-  Complementary_Filter_Y.ist_roll = rtb_Sum1;
+  Complementary_Filter_Y.ist_roll = (0.004 * Complementary_Filter_U.mpu_45gyro_y
+    + Complementary_Filter_DW.UnitDelay_DSTATE_j) * 0.98 +
+    Complementary_Filter_U.acc_roll * 0.02;
 
   /* Outport: '<Root>/ist_azimuth' incorporates:
    *  DiscreteIntegrator: '<S2>/Discrete-Time Integrator'
@@ -85,26 +71,21 @@ void Complementary_Filter_step(void)
     Complementary_Filter_DW.DiscreteTimeIntegrator_DSTATE;
 
   /* Update for UnitDelay: '<S3>/Unit Delay' */
-  Complementary_Filter_DW.UnitDelay_DSTATE = rtb_Sum;
+  Complementary_Filter_DW.UnitDelay_DSTATE = Complementary_Filter_Y.ist_pitch;
 
   /* Update for UnitDelay: '<S4>/Unit Delay' */
-  Complementary_Filter_DW.UnitDelay_DSTATE_j = rtb_Sum1;
+  Complementary_Filter_DW.UnitDelay_DSTATE_j = Complementary_Filter_Y.ist_roll;
 
   /* Update for DiscreteIntegrator: '<S2>/Discrete-Time Integrator' incorporates:
    *  Update for Inport: '<Root>/mpu_45.gyro_z'
    */
-  Complementary_Filter_DW.DiscreteTimeIntegrator_DSTATE +=
-    Complementary_Filter_P.DiscreteTimeIntegrator_gainval *
+  Complementary_Filter_DW.DiscreteTimeIntegrator_DSTATE += 0.004 *
     Complementary_Filter_U.mpu_45gyro_z;
-  if (Complementary_Filter_DW.DiscreteTimeIntegrator_DSTATE >=
-      Complementary_Filter_P.DiscreteTimeIntegrator_UpperSat) {
-    Complementary_Filter_DW.DiscreteTimeIntegrator_DSTATE =
-      Complementary_Filter_P.DiscreteTimeIntegrator_UpperSat;
+  if (Complementary_Filter_DW.DiscreteTimeIntegrator_DSTATE >= 5.0E+17) {
+    Complementary_Filter_DW.DiscreteTimeIntegrator_DSTATE = 5.0E+17;
   } else {
-    if (Complementary_Filter_DW.DiscreteTimeIntegrator_DSTATE <=
-        Complementary_Filter_P.DiscreteTimeIntegrator_LowerSat) {
-      Complementary_Filter_DW.DiscreteTimeIntegrator_DSTATE =
-        Complementary_Filter_P.DiscreteTimeIntegrator_LowerSat;
+    if (Complementary_Filter_DW.DiscreteTimeIntegrator_DSTATE <= -5.0E+17) {
+      Complementary_Filter_DW.DiscreteTimeIntegrator_DSTATE = -5.0E+17;
     }
   }
 
@@ -132,16 +113,13 @@ void Complementary_Filter_initialize(void)
                 sizeof(ExtY_Complementary_Filter_T));
 
   /* InitializeConditions for UnitDelay: '<S3>/Unit Delay' */
-  Complementary_Filter_DW.UnitDelay_DSTATE =
-    Complementary_Filter_P.UnitDelay_InitialCondition;
+  Complementary_Filter_DW.UnitDelay_DSTATE = 0.0;
 
   /* InitializeConditions for UnitDelay: '<S4>/Unit Delay' */
-  Complementary_Filter_DW.UnitDelay_DSTATE_j =
-    Complementary_Filter_P.UnitDelay_InitialCondition_d;
+  Complementary_Filter_DW.UnitDelay_DSTATE_j = 0.0;
 
   /* InitializeConditions for DiscreteIntegrator: '<S2>/Discrete-Time Integrator' */
-  Complementary_Filter_DW.DiscreteTimeIntegrator_DSTATE =
-    Complementary_Filter_P.DiscreteTimeIntegrator_IC;
+  Complementary_Filter_DW.DiscreteTimeIntegrator_DSTATE = 0.0;
 }
 
 /* Model terminate function */

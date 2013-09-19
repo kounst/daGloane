@@ -3,15 +3,15 @@
  *
  * Code generation for model "GAS_for_Engines".
  *
- * Model version              : 1.20
+ * Model version              : 1.21
  * Simulink Coder version : 8.4 (R2013a) 13-Feb-2013
- * C source code generated on : Thu Sep 19 13:48:50 2013
+ * C source code generated on : Thu Sep 19 14:25:48 2013
  *
  * Target selection: grt.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
- * Embedded hardware selection: 32-bit Generic
+ * Embedded hardware selection: ARM Compatible->ARM Cortex
  * Code generation objective: Execution efficiency
- * Validation result: Not run
+ * Validation result: Passed (9), Warnings (2), Error (0)
  */
 #include "GAS_for_Engines.h"
 #include "GAS_for_Engines_private.h"
@@ -33,28 +33,21 @@ void GAS_for_Engines_step(void)
 
   /* Sum: '<S2>/Sum' incorporates:
    *  Constant: '<S2>/weight_azimuth_e1'
-   *  Constant: '<S2>/weight_pitch_e1'
-   *  Constant: '<S2>/weight_roll_e1'
    *  Inport: '<Root>/control_msg.throttle'
    *  Inport: '<Root>/ctrl_azimuth'
    *  Inport: '<Root>/ctrl_pitch'
-   *  Inport: '<Root>/ctrl_roll'
    *  Product: '<S2>/Product'
-   *  Product: '<S2>/Product1'
    *  Product: '<S2>/Product2'
    */
-  u = ((GAS_for_Engines_U.ctrl_pitch * GAS_for_Engines_P.weight_pitch_e1_Value +
-        GAS_for_Engines_U.ctrl_roll * GAS_for_Engines_P.weight_roll_e1_Value) +
-       GAS_for_Engines_U.ctrl_azimuth *
-       GAS_for_Engines_P.weight_azimuth_e1_Value) +
+  u = (GAS_for_Engines_U.ctrl_azimuth * 0.1 + GAS_for_Engines_U.ctrl_pitch) +
     GAS_for_Engines_U.control_msgthrottle;
 
   /* Saturate: '<S2>/Saturation_e1' */
-  if (u >= GAS_for_Engines_P.Saturation_e1_UpperSat) {
-    u = GAS_for_Engines_P.Saturation_e1_UpperSat;
+  if (u >= 1000.0) {
+    u = 1000.0;
   } else {
-    if (u <= GAS_for_Engines_P.Saturation_e1_LowerSat) {
-      u = GAS_for_Engines_P.Saturation_e1_LowerSat;
+    if (u <= 1.0) {
+      u = 1.0;
     }
   }
 
@@ -63,32 +56,25 @@ void GAS_for_Engines_step(void)
    *  Saturate: '<S2>/Saturation_e1'
    *  Sum: '<S2>/add_offset'
    */
-  GAS_for_Engines_Y.out_e1 = u + GAS_for_Engines_P.offset_e1_Value;
+  GAS_for_Engines_Y.out_e1 = u + 1000.0;
 
   /* Sum: '<S3>/Sum' incorporates:
    *  Constant: '<S3>/weight_azimuth_e2'
-   *  Constant: '<S3>/weight_pitch_e2'
-   *  Constant: '<S3>/weight_roll_e2'
    *  Inport: '<Root>/control_msg.throttle'
    *  Inport: '<Root>/ctrl_azimuth'
-   *  Inport: '<Root>/ctrl_pitch'
    *  Inport: '<Root>/ctrl_roll'
-   *  Product: '<S3>/Product'
    *  Product: '<S3>/Product1'
    *  Product: '<S3>/Product2'
    */
-  u = ((GAS_for_Engines_U.ctrl_pitch * GAS_for_Engines_P.weight_pitch_e2_Value +
-        GAS_for_Engines_U.ctrl_roll * GAS_for_Engines_P.weight_roll_e2_Value) +
-       GAS_for_Engines_U.ctrl_azimuth *
-       GAS_for_Engines_P.weight_azimuth_e2_Value) +
+  u = (GAS_for_Engines_U.ctrl_azimuth * -0.1 + GAS_for_Engines_U.ctrl_roll) +
     GAS_for_Engines_U.control_msgthrottle;
 
   /* Saturate: '<S3>/Saturation_e2' */
-  if (u >= GAS_for_Engines_P.Saturation_e2_UpperSat) {
-    u = GAS_for_Engines_P.Saturation_e2_UpperSat;
+  if (u >= 1000.0) {
+    u = 1000.0;
   } else {
-    if (u <= GAS_for_Engines_P.Saturation_e2_LowerSat) {
-      u = GAS_for_Engines_P.Saturation_e2_LowerSat;
+    if (u <= 1.0) {
+      u = 1.0;
     }
   }
 
@@ -97,32 +83,25 @@ void GAS_for_Engines_step(void)
    *  Saturate: '<S3>/Saturation_e2'
    *  Sum: '<S3>/add_offset'
    */
-  GAS_for_Engines_Y.out_e2 = u + GAS_for_Engines_P.offset_e2_Value;
+  GAS_for_Engines_Y.out_e2 = u + 1000.0;
 
   /* Sum: '<S4>/Sum' incorporates:
    *  Constant: '<S4>/weight_azimuth_e3'
-   *  Constant: '<S4>/weight_pitch_e3'
-   *  Constant: '<S4>/weight_roll_e3'
    *  Inport: '<Root>/control_msg.throttle'
    *  Inport: '<Root>/ctrl_azimuth'
    *  Inport: '<Root>/ctrl_pitch'
-   *  Inport: '<Root>/ctrl_roll'
    *  Product: '<S4>/Product'
-   *  Product: '<S4>/Product1'
    *  Product: '<S4>/Product2'
    */
-  u = ((GAS_for_Engines_U.ctrl_pitch * GAS_for_Engines_P.weight_pitch_e3_Value +
-        GAS_for_Engines_U.ctrl_roll * GAS_for_Engines_P.weight_roll_e3_Value) +
-       GAS_for_Engines_U.ctrl_azimuth *
-       GAS_for_Engines_P.weight_azimuth_e3_Value) +
+  u = (GAS_for_Engines_U.ctrl_azimuth * 0.1 + -GAS_for_Engines_U.ctrl_pitch) +
     GAS_for_Engines_U.control_msgthrottle;
 
   /* Saturate: '<S4>/Saturation_e3' */
-  if (u >= GAS_for_Engines_P.Saturation_e3_UpperSat) {
-    u = GAS_for_Engines_P.Saturation_e3_UpperSat;
+  if (u >= 1000.0) {
+    u = 1000.0;
   } else {
-    if (u <= GAS_for_Engines_P.Saturation_e3_LowerSat) {
-      u = GAS_for_Engines_P.Saturation_e3_LowerSat;
+    if (u <= 1.0) {
+      u = 1.0;
     }
   }
 
@@ -131,32 +110,25 @@ void GAS_for_Engines_step(void)
    *  Saturate: '<S4>/Saturation_e3'
    *  Sum: '<S4>/add_offset'
    */
-  GAS_for_Engines_Y.out_e3 = u + GAS_for_Engines_P.offset_e3_Value;
+  GAS_for_Engines_Y.out_e3 = u + 1000.0;
 
   /* Sum: '<S5>/Sum' incorporates:
    *  Constant: '<S5>/weight_azimuth_e4'
-   *  Constant: '<S5>/weight_pitch_e4'
-   *  Constant: '<S5>/weight_roll_e4'
    *  Inport: '<Root>/control_msg.throttle'
    *  Inport: '<Root>/ctrl_azimuth'
-   *  Inport: '<Root>/ctrl_pitch'
    *  Inport: '<Root>/ctrl_roll'
-   *  Product: '<S5>/Product'
    *  Product: '<S5>/Product1'
    *  Product: '<S5>/Product2'
    */
-  u = ((GAS_for_Engines_U.ctrl_pitch * GAS_for_Engines_P.weight_pitch_e4_Value +
-        GAS_for_Engines_U.ctrl_roll * GAS_for_Engines_P.weight_roll_e4_Value) +
-       GAS_for_Engines_U.ctrl_azimuth *
-       GAS_for_Engines_P.weight_azimuth_e4_Value) +
+  u = (GAS_for_Engines_U.ctrl_azimuth * -0.1 + -GAS_for_Engines_U.ctrl_roll) +
     GAS_for_Engines_U.control_msgthrottle;
 
   /* Saturate: '<S5>/Saturation_e4' */
-  if (u >= GAS_for_Engines_P.Saturation_e4_UpperSat) {
-    u = GAS_for_Engines_P.Saturation_e4_UpperSat;
+  if (u >= 1000.0) {
+    u = 1000.0;
   } else {
-    if (u <= GAS_for_Engines_P.Saturation_e4_LowerSat) {
-      u = GAS_for_Engines_P.Saturation_e4_LowerSat;
+    if (u <= 1.0) {
+      u = 1.0;
     }
   }
 
@@ -165,7 +137,7 @@ void GAS_for_Engines_step(void)
    *  Saturate: '<S5>/Saturation_e4'
    *  Sum: '<S5>/add_offset'
    */
-  GAS_for_Engines_Y.out_e4 = u + GAS_for_Engines_P.offset_e4_Value;
+  GAS_for_Engines_Y.out_e4 = u + 1000.0;
 }
 
 /* Model initialize function */
