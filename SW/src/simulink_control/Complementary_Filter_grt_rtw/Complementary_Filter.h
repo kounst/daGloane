@@ -3,9 +3,9 @@
  *
  * Code generation for model "Complementary_Filter".
  *
- * Model version              : 1.13
+ * Model version              : 1.20
  * Simulink Coder version : 8.4 (R2013a) 13-Feb-2013
- * C source code generated on : Mon Sep 16 14:26:16 2013
+ * C source code generated on : Thu Sep 19 13:47:59 2013
  *
  * Target selection: grt.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -41,11 +41,9 @@
 
 /* Block states (auto storage) for system '<Root>' */
 typedef struct {
-  real_T DiscreteTimeIntegrator_DSTATE;/* '<S3>/Discrete-Time Integrator' */
   real_T UnitDelay_DSTATE;             /* '<S3>/Unit Delay' */
-  real_T DiscreteTimeIntegrator_DSTATE_d;/* '<S4>/Discrete-Time Integrator' */
   real_T UnitDelay_DSTATE_j;           /* '<S4>/Unit Delay' */
-  real_T DiscreteTimeIntegrator_DSTATE_f;/* '<S2>/Discrete-Time Integrator' */
+  real_T DiscreteTimeIntegrator_DSTATE;/* '<S2>/Discrete-Time Integrator' */
 } DW_Complementary_Filter_T;
 
 /* External inputs (root inport signals with auto storage) */
@@ -66,41 +64,23 @@ typedef struct {
 
 /* Parameters (auto storage) */
 struct P_Complementary_Filter_T_ {
-  real_T DiscreteTimeIntegrator_gainval;/* Computed Parameter: DiscreteTimeIntegrator_gainval
-                                         * Referenced by: '<S3>/Discrete-Time Integrator'
-                                         */
-  real_T DiscreteTimeIntegrator_IC;    /* Expression: 0
-                                        * Referenced by: '<S3>/Discrete-Time Integrator'
-                                        */
-  real_T DiscreteTimeIntegrator_UpperSat;/* Expression: 0.5*10^18
-                                          * Referenced by: '<S3>/Discrete-Time Integrator'
-                                          */
-  real_T DiscreteTimeIntegrator_LowerSat;/* Expression: -0.5*10^18
-                                          * Referenced by: '<S3>/Discrete-Time Integrator'
-                                          */
-  real_T gain_gyro_to_ist_pitch_Value; /* Expression: 0.98
-                                        * Referenced by: '<S3>/gain_gyro_to_ist_pitch'
+  real_T Zeitschritt_Gain;             /* Expression: 0.004
+                                        * Referenced by: '<S3>/Zeitschritt'
                                         */
   real_T UnitDelay_InitialCondition;   /* Expression: 0
                                         * Referenced by: '<S3>/Unit Delay'
                                         */
+  real_T gain_gyro_to_ist_pitch_Value; /* Expression: 0.98
+                                        * Referenced by: '<S3>/gain_gyro_to_ist_pitch'
+                                        */
   real_T gain_acc_to_ist_pitch_Value;  /* Expression: 0.02
                                         * Referenced by: '<S3>/gain_acc_to_ist_pitch'
                                         */
-  real_T DiscreteTimeIntegrator_gainva_k;/* Computed Parameter: DiscreteTimeIntegrator_gainva_k
-                                          * Referenced by: '<S4>/Discrete-Time Integrator'
-                                          */
-  real_T DiscreteTimeIntegrator_IC_m;  /* Expression: 0
-                                        * Referenced by: '<S4>/Discrete-Time Integrator'
-                                        */
-  real_T DiscreteTimeIntegrator_UpperS_j;/* Expression: 0.5*10^18
-                                          * Referenced by: '<S4>/Discrete-Time Integrator'
-                                          */
-  real_T DiscreteTimeIntegrator_LowerS_l;/* Expression: -0.5*10^18
-                                          * Referenced by: '<S4>/Discrete-Time Integrator'
-                                          */
   real_T gain_gyro_to_ist_roll_Value;  /* Expression: 0.98
                                         * Referenced by: '<S4>/gain_gyro_to_ist_roll'
+                                        */
+  real_T Zeitschritt_Gain_a;           /* Expression: 0.004
+                                        * Referenced by: '<S4>/Zeitschritt'
                                         */
   real_T UnitDelay_InitialCondition_d; /* Expression: 0
                                         * Referenced by: '<S4>/Unit Delay'
@@ -108,16 +88,16 @@ struct P_Complementary_Filter_T_ {
   real_T gain_acc_to_ist_roll_Value;   /* Expression: 0.02
                                         * Referenced by: '<S4>/gain_acc_to_ist_roll'
                                         */
-  real_T DiscreteTimeIntegrator_gainva_i;/* Computed Parameter: DiscreteTimeIntegrator_gainva_i
-                                          * Referenced by: '<S2>/Discrete-Time Integrator'
-                                          */
-  real_T DiscreteTimeIntegrator_IC_k;  /* Expression: 0
+  real_T DiscreteTimeIntegrator_gainval;/* Computed Parameter: DiscreteTimeIntegrator_gainval
+                                         * Referenced by: '<S2>/Discrete-Time Integrator'
+                                         */
+  real_T DiscreteTimeIntegrator_IC;    /* Expression: 0
                                         * Referenced by: '<S2>/Discrete-Time Integrator'
                                         */
-  real_T DiscreteTimeIntegrator_UpperS_a;/* Expression: 0.5*10^18
+  real_T DiscreteTimeIntegrator_UpperSat;/* Expression: 0.5*10^18
                                           * Referenced by: '<S2>/Discrete-Time Integrator'
                                           */
-  real_T DiscreteTimeIntegrator_LowerS_p;/* Expression: -0.5*10^18
+  real_T DiscreteTimeIntegrator_LowerSat;/* Expression: -0.5*10^18
                                           * Referenced by: '<S2>/Discrete-Time Integrator'
                                           */
 };

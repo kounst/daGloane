@@ -3,9 +3,9 @@
  *
  * Code generation for model "PID_Controller".
  *
- * Model version              : 1.13
+ * Model version              : 1.20
  * Simulink Coder version : 8.4 (R2013a) 13-Feb-2013
- * C source code generated on : Mon Sep 16 14:26:31 2013
+ * C source code generated on : Thu Sep 19 13:48:34 2013
  *
  * Target selection: grt.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -42,11 +42,9 @@
 /* Block states (auto storage) for system '<Root>' */
 typedef struct {
   real_T DiscreteTimeIntegrator_DSTATE;/* '<S3>/Discrete-Time Integrator' */
-  real_T UD_DSTATE;                    /* '<S6>/UD' */
   real_T DiscreteTimeIntegrator_DSTATE_d;/* '<S4>/Discrete-Time Integrator' */
-  real_T UD_DSTATE_n;                  /* '<S7>/UD' */
   real_T DiscreteTimeIntegrator_DSTATE_g;/* '<S2>/Discrete-Time Integrator' */
-  real_T UD_DSTATE_a;                  /* '<S5>/UD' */
+  real_T UD_DSTATE;                    /* '<S5>/UD' */
 } DW_PID_Controller_T;
 
 /* External inputs (root inport signals with auto storage) */
@@ -57,6 +55,10 @@ typedef struct {
   real_T control_msgpitch;             /* '<Root>/control_msg.pitch' */
   real_T control_msgroll;              /* '<Root>/control_msg.roll' */
   real_T control_msgazimuth;           /* '<Root>/control_msg.azimuth' */
+  real_T control_msgpitch_d;           /* '<Root>/control_msg.pitch_d' */
+  real_T ist_pitch_d;                  /* '<Root>/ist_pitch_d' */
+  real_T control_msgroll_d;            /* '<Root>/control_msg.roll_d' */
+  real_T ist_roll_d;                   /* '<Root>/ist_roll_d' */
 } ExtU_PID_Controller_T;
 
 /* External outputs (root outports fed by signals with auto storage) */
@@ -89,12 +91,6 @@ struct P_PID_Controller_T_ {
   real_T D_Value;                      /* Expression: 1
                                         * Referenced by: '<S3>/D'
                                         */
-  real_T TSamp_WtEt;                   /* Computed Parameter: TSamp_WtEt
-                                        * Referenced by: '<S6>/TSamp'
-                                        */
-  real_T UD_InitialCondition;          /* Expression: ICPrevScaledInput
-                                        * Referenced by: '<S6>/UD'
-                                        */
   real_T P_Value_d;                    /* Expression: 1
                                         * Referenced by: '<S4>/P'
                                         */
@@ -116,13 +112,7 @@ struct P_PID_Controller_T_ {
   real_T D_Value_l;                    /* Expression: 1
                                         * Referenced by: '<S4>/D'
                                         */
-  real_T TSamp_WtEt_p;                 /* Computed Parameter: TSamp_WtEt_p
-                                        * Referenced by: '<S7>/TSamp'
-                                        */
-  real_T UD_InitialCondition_n;        /* Expression: ICPrevScaledInput
-                                        * Referenced by: '<S7>/UD'
-                                        */
-  real_T P_Value_j;                    /* Expression: 1
+  real_T P_Value_j;                    /* Expression: 0
                                         * Referenced by: '<S2>/P'
                                         */
   real_T DiscreteTimeIntegrator_gainv_jy;/* Computed Parameter: DiscreteTimeIntegrator_gainv_jy
@@ -137,16 +127,16 @@ struct P_PID_Controller_T_ {
   real_T DiscreteTimeIntegrator_LowerS_a;/* Expression: -0.5*10^18
                                           * Referenced by: '<S2>/Discrete-Time Integrator'
                                           */
-  real_T I_Value_a;                    /* Expression: 1
+  real_T I_Value_a;                    /* Expression: 0
                                         * Referenced by: '<S2>/I'
                                         */
-  real_T D_Value_b;                    /* Expression: 1
+  real_T D_Value_b;                    /* Expression: 0
                                         * Referenced by: '<S2>/D'
                                         */
-  real_T TSamp_WtEt_pt;                /* Computed Parameter: TSamp_WtEt_pt
+  real_T TSamp_WtEt;                   /* Computed Parameter: TSamp_WtEt
                                         * Referenced by: '<S5>/TSamp'
                                         */
-  real_T UD_InitialCondition_m;        /* Expression: ICPrevScaledInput
+  real_T UD_InitialCondition;          /* Expression: ICPrevScaledInput
                                         * Referenced by: '<S5>/UD'
                                         */
 };
@@ -199,7 +189,5 @@ extern RT_MODEL_PID_Controller_T *const PID_Controller_M;
  * '<S3>'   : 'complementary_controller/PID_Controller/PID_Pitch'
  * '<S4>'   : 'complementary_controller/PID_Controller/PID_Roll'
  * '<S5>'   : 'complementary_controller/PID_Controller/PID_Azimuth/Discrete Derivative'
- * '<S6>'   : 'complementary_controller/PID_Controller/PID_Pitch/Discrete Derivative'
- * '<S7>'   : 'complementary_controller/PID_Controller/PID_Roll/Discrete Derivative'
  */
 #endif                                 /* RTW_HEADER_PID_Controller_h_ */

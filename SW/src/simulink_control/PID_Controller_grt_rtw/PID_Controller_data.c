@@ -3,9 +3,9 @@
  *
  * Code generation for model "PID_Controller".
  *
- * Model version              : 1.13
+ * Model version              : 1.20
  * Simulink Coder version : 8.4 (R2013a) 13-Feb-2013
- * C source code generated on : Mon Sep 16 14:26:31 2013
+ * C source code generated on : Thu Sep 19 13:48:34 2013
  *
  * Target selection: grt.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -39,12 +39,6 @@ P_PID_Controller_T PID_Controller_P = {
   1.0,                                 /* Expression: 1
                                         * Referenced by: '<S3>/D'
                                         */
-  250.0,                               /* Computed Parameter: TSamp_WtEt
-                                        * Referenced by: '<S6>/TSamp'
-                                        */
-  0.0,                                 /* Expression: ICPrevScaledInput
-                                        * Referenced by: '<S6>/UD'
-                                        */
   1.0,                                 /* Expression: 1
                                         * Referenced by: '<S4>/P'
                                         */
@@ -66,13 +60,7 @@ P_PID_Controller_T PID_Controller_P = {
   1.0,                                 /* Expression: 1
                                         * Referenced by: '<S4>/D'
                                         */
-  250.0,                               /* Computed Parameter: TSamp_WtEt_p
-                                        * Referenced by: '<S7>/TSamp'
-                                        */
-  0.0,                                 /* Expression: ICPrevScaledInput
-                                        * Referenced by: '<S7>/UD'
-                                        */
-  1.0,                                 /* Expression: 1
+  0.0,                                 /* Expression: 0
                                         * Referenced by: '<S2>/P'
                                         */
   0.004,                               /* Computed Parameter: DiscreteTimeIntegrator_gainv_jy
@@ -87,13 +75,13 @@ P_PID_Controller_T PID_Controller_P = {
   -5.0E+17,                            /* Expression: -0.5*10^18
                                         * Referenced by: '<S2>/Discrete-Time Integrator'
                                         */
-  1.0,                                 /* Expression: 1
+  0.0,                                 /* Expression: 0
                                         * Referenced by: '<S2>/I'
                                         */
-  1.0,                                 /* Expression: 1
+  0.0,                                 /* Expression: 0
                                         * Referenced by: '<S2>/D'
                                         */
-  250.0,                               /* Computed Parameter: TSamp_WtEt_pt
+  250.0,                               /* Computed Parameter: TSamp_WtEt
                                         * Referenced by: '<S5>/TSamp'
                                         */
   0.0                                  /* Expression: ICPrevScaledInput
