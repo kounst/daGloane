@@ -3,15 +3,15 @@
  *
  * Code generation for model "GAS_for_Engines".
  *
- * Model version              : 1.13
+ * Model version              : 1.21
  * Simulink Coder version : 8.4 (R2013a) 13-Feb-2013
- * C source code generated on : Mon Sep 16 14:26:55 2013
+ * C source code generated on : Thu Sep 19 14:25:48 2013
  *
  * Target selection: grt.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
- * Embedded hardware selection: 32-bit Generic
+ * Embedded hardware selection: ARM Compatible->ARM Cortex
  * Code generation objective: Execution efficiency
- * Validation result: Not run
+ * Validation result: Passed (9), Warnings (2), Error (0)
  */
 #ifndef RTW_HEADER_GAS_for_Engines_h_
 #define RTW_HEADER_GAS_for_Engines_h_
@@ -55,89 +55,10 @@ typedef struct {
   real_T out_e4;                       /* '<Root>/out_e4' */
 } ExtY_GAS_for_Engines_T;
 
-/* Parameters (auto storage) */
-struct P_GAS_for_Engines_T_ {
-  real_T weight_pitch_e1_Value;        /* Expression: 1
-                                        * Referenced by: '<S3>/weight_pitch_e1'
-                                        */
-  real_T weight_roll_e1_Value;         /* Expression: 0
-                                        * Referenced by: '<S3>/weight_roll_e1'
-                                        */
-  real_T weight_azimuth_e1_Value;      /* Expression: 0.1
-                                        * Referenced by: '<S3>/weight_azimuth_e1'
-                                        */
-  real_T Saturation_e1_UpperSat;       /* Expression: 1000
-                                        * Referenced by: '<S3>/Saturation_e1'
-                                        */
-  real_T Saturation_e1_LowerSat;       /* Expression: 1
-                                        * Referenced by: '<S3>/Saturation_e1'
-                                        */
-  real_T offset_e1_Value;              /* Expression: 1000
-                                        * Referenced by: '<S3>/offset_e1'
-                                        */
-  real_T weight_pitch_e2_Value;        /* Expression: 0
-                                        * Referenced by: '<S4>/weight_pitch_e2'
-                                        */
-  real_T weight_roll_e2_Value;         /* Expression: 1
-                                        * Referenced by: '<S4>/weight_roll_e2'
-                                        */
-  real_T weight_azimuth_e2_Value;      /* Expression: -0.1
-                                        * Referenced by: '<S4>/weight_azimuth_e2'
-                                        */
-  real_T Saturation_e2_UpperSat;       /* Expression: 1000
-                                        * Referenced by: '<S4>/Saturation_e2'
-                                        */
-  real_T Saturation_e2_LowerSat;       /* Expression: 1
-                                        * Referenced by: '<S4>/Saturation_e2'
-                                        */
-  real_T offset_e2_Value;              /* Expression: 1000
-                                        * Referenced by: '<S4>/offset_e2'
-                                        */
-  real_T weight_pitch_e3_Value;        /* Expression: -1
-                                        * Referenced by: '<S5>/weight_pitch_e3'
-                                        */
-  real_T weight_roll_e3_Value;         /* Expression: 0
-                                        * Referenced by: '<S5>/weight_roll_e3'
-                                        */
-  real_T weight_azimuth_e3_Value;      /* Expression: 0.1
-                                        * Referenced by: '<S5>/weight_azimuth_e3'
-                                        */
-  real_T Saturation_e3_UpperSat;       /* Expression: 1000
-                                        * Referenced by: '<S5>/Saturation_e3'
-                                        */
-  real_T Saturation_e3_LowerSat;       /* Expression: 1
-                                        * Referenced by: '<S5>/Saturation_e3'
-                                        */
-  real_T offset_e3_Value;              /* Expression: 1000
-                                        * Referenced by: '<S5>/offset_e3'
-                                        */
-  real_T weight_pitch_e4_Value;        /* Expression: 0
-                                        * Referenced by: '<S2>/weight_pitch_e4'
-                                        */
-  real_T weight_roll_e4_Value;         /* Expression: -1
-                                        * Referenced by: '<S2>/weight_roll_e4'
-                                        */
-  real_T weight_azimuth_e4_Value;      /* Expression: -0.1
-                                        * Referenced by: '<S2>/weight_azimuth_e4'
-                                        */
-  real_T Saturation_e4_UpperSat;       /* Expression: 1000
-                                        * Referenced by: '<S2>/Saturation_e4'
-                                        */
-  real_T Saturation_e4_LowerSat;       /* Expression: 1
-                                        * Referenced by: '<S2>/Saturation_e4'
-                                        */
-  real_T offset_e4_Value;              /* Expression: 1000
-                                        * Referenced by: '<S2>/offset_e4'
-                                        */
-};
-
 /* Real-time Model Data Structure */
 struct tag_RTM_GAS_for_Engines_T {
   const char_T *errorStatus;
 };
-
-/* Block parameters (auto storage) */
-extern P_GAS_for_Engines_T GAS_for_Engines_P;
 
 /* External inputs (root inport signals with auto storage) */
 extern ExtU_GAS_for_Engines_T GAS_for_Engines_U;
@@ -172,9 +93,9 @@ extern RT_MODEL_GAS_for_Engines_T *const GAS_for_Engines_M;
  *
  * '<Root>' : 'complementary_controller'
  * '<S1>'   : 'complementary_controller/GAS_for_Engines'
- * '<S2>'   : 'complementary_controller/GAS_for_Engines/GAS_ E4'
- * '<S3>'   : 'complementary_controller/GAS_for_Engines/GAS_E1'
- * '<S4>'   : 'complementary_controller/GAS_for_Engines/GAS_E2'
- * '<S5>'   : 'complementary_controller/GAS_for_Engines/GAS_E3'
+ * '<S2>'   : 'complementary_controller/GAS_for_Engines/GAS_E1'
+ * '<S3>'   : 'complementary_controller/GAS_for_Engines/GAS_E2'
+ * '<S4>'   : 'complementary_controller/GAS_for_Engines/GAS_E3'
+ * '<S5>'   : 'complementary_controller/GAS_for_Engines/GAS_E4'
  */
 #endif                                 /* RTW_HEADER_GAS_for_Engines_h_ */

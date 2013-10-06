@@ -3,15 +3,15 @@
  *
  * Code generation for model "GAS_for_Engines".
  *
- * Model version              : 1.13
+ * Model version              : 1.21
  * Simulink Coder version : 8.4 (R2013a) 13-Feb-2013
- * C source code generated on : Mon Sep 16 14:26:55 2013
+ * C source code generated on : Thu Sep 19 14:25:48 2013
  *
  * Target selection: grt.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
- * Embedded hardware selection: 32-bit Generic
+ * Embedded hardware selection: ARM Compatible->ARM Cortex
  * Code generation objective: Execution efficiency
- * Validation result: Not run
+ * Validation result: Passed (9), Warnings (2), Error (0)
  */
 
 #ifndef __RTWTYPES_H__
