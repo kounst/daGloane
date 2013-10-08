@@ -163,8 +163,8 @@ void LED_update(uint8_t channel, uint16_t pulswidth)
 void SysTick_Configuration(void)
 {
 
-	/* Setup SysTick Timer for 1 msec interrupts  */
-	if (SysTick_Config(SystemCoreClock / 1000))
+	/* Setup SysTick Timer for 4 msec interrupts  */
+	if (SysTick_Config(SystemCoreClock / 250))
 	{
 		/* Capture error */
 		while (1);
