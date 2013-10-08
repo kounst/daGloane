@@ -149,7 +149,7 @@ void setpwm_cmd(int argc, char *argv[])
 
 void getpwm_cmd(int argc, char *argv[])
 {
-	uac_printf("CH1 = %i, CH2 = %i, CH3 = %i, CH4 = %i, CH5 = %i, CH6 = %i, CH7 = %i", control_msg.roll, control_msg.nick, control_msg.yaw, control_msg.throttle, 0,0,0);
+	uac_printf("Mot1 = %i, Mot2 = %i, Mot3 = %i, Mot4 = %i",0,0,0,0);
 }
 
 
