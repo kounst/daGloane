@@ -44,6 +44,7 @@
 
 
 uint16_t lipo_voltage = 2860; 	//3V
+extern uint8_t tick;			// main loop trigger
 
 
 
@@ -163,6 +164,8 @@ void SysTick_Handler(void)
 		lipo_voltage++;
 
 	TimingDelay_Decrement();  			//Decrement ms counter of Delay() function
+
+	tick=1;								// main loop trigger
 }
 
 /******************************************************************************/
