@@ -3,9 +3,9 @@
  *
  * Code generation for model "PID_Controller".
  *
- * Model version              : 1.21
+ * Model version              : 1.35
  * Simulink Coder version : 8.4 (R2013a) 13-Feb-2013
- * C source code generated on : Thu Sep 19 14:25:02 2013
+ * C source code generated on : Tue Oct 22 13:58:03 2013
  *
  * Target selection: grt.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -42,23 +42,21 @@
 /* Block states (auto storage) for system '<Root>' */
 typedef struct {
   real_T DiscreteTimeIntegrator_DSTATE;/* '<S3>/Discrete-Time Integrator' */
+  real_T UD_DSTATE;                    /* '<S6>/UD' */
   real_T DiscreteTimeIntegrator_DSTATE_d;/* '<S4>/Discrete-Time Integrator' */
+  real_T UD_DSTATE_g;                  /* '<S7>/UD' */
   real_T DiscreteTimeIntegrator_DSTATE_g;/* '<S2>/Discrete-Time Integrator' */
-  real_T UD_DSTATE;                    /* '<S5>/UD' */
+  real_T UD_DSTATE_a;                  /* '<S5>/UD' */
 } DW_PID_Controller_T;
 
 /* External inputs (root inport signals with auto storage) */
 typedef struct {
-  real_T ist_pitch;                    /* '<Root>/ist_pitch' */
-  real_T ist_roll;                     /* '<Root>/ist_roll' */
-  real_T ist_azimuth;                  /* '<Root>/ist_azimuth' */
+  real_T Pitch;                        /* '<Root>/ist_pitch' */
+  real_T Roll;                         /* '<Root>/ist_roll' */
+  real_T Yaw;                          /* '<Root>/ist_azimuth' */
   real_T control_msgpitch;             /* '<Root>/control_msg.pitch' */
   real_T control_msgroll;              /* '<Root>/control_msg.roll' */
   real_T control_msgazimuth;           /* '<Root>/control_msg.azimuth' */
-  real_T control_msgpitch_d;           /* '<Root>/control_msg.pitch_d' */
-  real_T ist_pitch_d;                  /* '<Root>/ist_pitch_d' */
-  real_T control_msgroll_d;            /* '<Root>/control_msg.roll_d' */
-  real_T ist_roll_d;                   /* '<Root>/ist_roll_d' */
 } ExtU_PID_Controller_T;
 
 /* External outputs (root outports fed by signals with auto storage) */
@@ -113,5 +111,7 @@ extern RT_MODEL_PID_Controller_T *const PID_Controller_M;
  * '<S3>'   : 'complementary_controller/PID_Controller/PID_Pitch'
  * '<S4>'   : 'complementary_controller/PID_Controller/PID_Roll'
  * '<S5>'   : 'complementary_controller/PID_Controller/PID_Azimuth/Discrete Derivative'
+ * '<S6>'   : 'complementary_controller/PID_Controller/PID_Pitch/Discrete Derivative'
+ * '<S7>'   : 'complementary_controller/PID_Controller/PID_Roll/Discrete Derivative'
  */
 #endif                                 /* RTW_HEADER_PID_Controller_h_ */
