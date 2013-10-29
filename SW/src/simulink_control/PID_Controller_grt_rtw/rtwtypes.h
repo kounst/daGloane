@@ -3,9 +3,9 @@
  *
  * Code generation for model "PID_Controller".
  *
- * Model version              : 1.35
+ * Model version              : 1.37
  * Simulink Coder version : 8.4 (R2013a) 13-Feb-2013
- * C source code generated on : Tue Oct 22 13:58:03 2013
+ * C source code generated on : Tue Oct 29 14:51:19 2013
  *
  * Target selection: grt.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
