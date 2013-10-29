@@ -3,9 +3,9 @@
  *
  * Code generation for model "PID_Controller".
  *
- * Model version              : 1.37
+ * Model version              : 1.38
  * Simulink Coder version : 8.4 (R2013a) 13-Feb-2013
- * C source code generated on : Tue Oct 29 14:51:19 2013
+ * C source code generated on : Tue Oct 29 15:07:43 2013
  *
  * Target selection: grt.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -57,6 +57,15 @@ typedef struct {
   real_T control_msgpitch;             /* '<Root>/control_msg.pitch' */
   real_T control_msgroll;              /* '<Root>/control_msg.roll' */
   real_T control_msgazimuth;           /* '<Root>/control_msg.azimuth' */
+  real_T ist_pitch1;                   /* '<Root>/ist_pitch1' */
+  real_T ist_pitch2;                   /* '<Root>/ist_pitch2' */
+  real_T ist_pitch3;                   /* '<Root>/ist_pitch3' */
+  real_T ist_pitch4;                   /* '<Root>/ist_pitch4' */
+  real_T ist_pitch5;                   /* '<Root>/ist_pitch5' */
+  real_T ist_pitch6;                   /* '<Root>/ist_pitch6' */
+  real_T ist_pitch7;                   /* '<Root>/ist_pitch7' */
+  real_T ist_pitch8;                   /* '<Root>/ist_pitch8' */
+  real_T ist_pitch9;                   /* '<Root>/ist_pitch9' */
 } ExtU_PID_Controller_T;
 
 /* External outputs (root outports fed by signals with auto storage) */

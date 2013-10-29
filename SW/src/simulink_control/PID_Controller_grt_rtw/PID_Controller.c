@@ -3,9 +3,9 @@
  *
  * Code generation for model "PID_Controller".
  *
- * Model version              : 1.37
+ * Model version              : 1.38
  * Simulink Coder version : 8.4 (R2013a) 13-Feb-2013
- * C source code generated on : Tue Oct 29 14:51:19 2013
+ * C source code generated on : Tue Oct 29 15:07:43 2013
  *
  * Target selection: grt.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -33,8 +33,11 @@ RT_MODEL_PID_Controller_T *const PID_Controller_M = &PID_Controller_M_;
 void PID_Controller_step(void)
 {
   real_T rtb_Sum;
+  real_T rtb_TSamp;
   real_T rtb_Sum_a;
+  real_T rtb_TSamp_a;
   real_T rtb_Sum_b;
+  real_T rtb_TSamp_b;
 
   /* Sum: '<S3>/Sum' incorporates:
    *  Inport: '<Root>/control_msg.pitch'
@@ -42,10 +45,29 @@ void PID_Controller_step(void)
    */
   rtb_Sum = PID_Controller_U.control_msgpitch - PID_Controller_U.Pitch;
 
-  /* Outport: '<Root>/ctrl_pitch' incorporates:
-   *  Product: '<S3>/Product2'
+  /* SampleTimeMath: '<S6>/TSamp'
+   *
+   * About '<S6>/TSamp':
+   *  y = u * K where K = 1 / ( w * Ts )
    */
-  PID_Controller_Y.ctrl_pitch = 0.0;
+  rtb_TSamp = rtb_Sum * 250.0;
+
+  /* Outport: '<Root>/ctrl_pitch' incorporates:
+   *  DiscreteIntegrator: '<S3>/Discrete-Time Integrator'
+   *  Inport: '<Root>/ist_pitch1'
+   *  Inport: '<Root>/ist_pitch2'
+   *  Inport: '<Root>/ist_pitch3'
+   *  Product: '<S3>/Product'
+   *  Product: '<S3>/Product1'
+   *  Product: '<S3>/Product2'
+   *  Sum: '<S3>/Sum1'
+   *  Sum: '<S6>/Diff'
+   *  UnitDelay: '<S6>/UD'
+   */
+  PID_Controller_Y.ctrl_pitch = (rtb_Sum * PID_Controller_U.ist_pitch1 +
+    PID_Controller_DW.DiscreteTimeIntegrator_DSTATE *
+    PID_Controller_U.ist_pitch2) + (rtb_TSamp - PID_Controller_DW.UD_DSTATE) *
+    PID_Controller_U.ist_pitch3;
 
   /* Sum: '<S4>/Sum' incorporates:
    *  Inport: '<Root>/control_msg.roll'
@@ -53,10 +75,29 @@ void PID_Controller_step(void)
    */
   rtb_Sum_a = PID_Controller_U.control_msgroll - PID_Controller_U.Roll;
 
-  /* Outport: '<Root>/ctrl_roll' incorporates:
-   *  Product: '<S4>/Product2'
+  /* SampleTimeMath: '<S7>/TSamp'
+   *
+   * About '<S7>/TSamp':
+   *  y = u * K where K = 1 / ( w * Ts )
    */
-  PID_Controller_Y.ctrl_roll = 0.0;
+  rtb_TSamp_a = rtb_Sum_a * 250.0;
+
+  /* Outport: '<Root>/ctrl_roll' incorporates:
+   *  DiscreteIntegrator: '<S4>/Discrete-Time Integrator'
+   *  Inport: '<Root>/ist_pitch4'
+   *  Inport: '<Root>/ist_pitch5'
+   *  Inport: '<Root>/ist_pitch6'
+   *  Product: '<S4>/Product'
+   *  Product: '<S4>/Product1'
+   *  Product: '<S4>/Product2'
+   *  Sum: '<S4>/Sum1'
+   *  Sum: '<S7>/Diff'
+   *  UnitDelay: '<S7>/UD'
+   */
+  PID_Controller_Y.ctrl_roll = (rtb_Sum_a * PID_Controller_U.ist_pitch4 +
+    PID_Controller_DW.DiscreteTimeIntegrator_DSTATE_d *
+    PID_Controller_U.ist_pitch5) + (rtb_TSamp_a - PID_Controller_DW.UD_DSTATE_g)
+    * PID_Controller_U.ist_pitch6;
 
   /* Sum: '<S2>/Sum' incorporates:
    *  Inport: '<Root>/control_msg.azimuth'
@@ -64,10 +105,29 @@ void PID_Controller_step(void)
    */
   rtb_Sum_b = PID_Controller_U.control_msgazimuth - PID_Controller_U.Yaw;
 
-  /* Outport: '<Root>/ctrl_azimuth' incorporates:
-   *  Product: '<S2>/Product2'
+  /* SampleTimeMath: '<S5>/TSamp'
+   *
+   * About '<S5>/TSamp':
+   *  y = u * K where K = 1 / ( w * Ts )
    */
-  PID_Controller_Y.ctrl_azimuth = 0.0;
+  rtb_TSamp_b = rtb_Sum_b * 250.0;
+
+  /* Outport: '<Root>/ctrl_azimuth' incorporates:
+   *  DiscreteIntegrator: '<S2>/Discrete-Time Integrator'
+   *  Inport: '<Root>/ist_pitch7'
+   *  Inport: '<Root>/ist_pitch8'
+   *  Inport: '<Root>/ist_pitch9'
+   *  Product: '<S2>/Product'
+   *  Product: '<S2>/Product1'
+   *  Product: '<S2>/Product2'
+   *  Sum: '<S2>/Sum1'
+   *  Sum: '<S5>/Diff'
+   *  UnitDelay: '<S5>/UD'
+   */
+  PID_Controller_Y.ctrl_azimuth = (rtb_Sum_b * PID_Controller_U.ist_pitch7 +
+    PID_Controller_DW.DiscreteTimeIntegrator_DSTATE_g *
+    PID_Controller_U.ist_pitch8) + (rtb_TSamp_b - PID_Controller_DW.UD_DSTATE_a)
+    * PID_Controller_U.ist_pitch9;
 
   /* Update for DiscreteIntegrator: '<S3>/Discrete-Time Integrator' */
   PID_Controller_DW.DiscreteTimeIntegrator_DSTATE += 0.004 * rtb_Sum;
@@ -81,13 +141,8 @@ void PID_Controller_step(void)
 
   /* End of Update for DiscreteIntegrator: '<S3>/Discrete-Time Integrator' */
 
-  /* Update for UnitDelay: '<S6>/UD' incorporates:
-   *  SampleTimeMath: '<S6>/TSamp'
-   *
-   * About '<S6>/TSamp':
-   *  y = u * K where K = 1 / ( w * Ts )
-   */
-  PID_Controller_DW.UD_DSTATE = rtb_Sum * 250.0;
+  /* Update for UnitDelay: '<S6>/UD' */
+  PID_Controller_DW.UD_DSTATE = rtb_TSamp;
 
   /* Update for DiscreteIntegrator: '<S4>/Discrete-Time Integrator' */
   PID_Controller_DW.DiscreteTimeIntegrator_DSTATE_d += 0.004 * rtb_Sum_a;
@@ -101,13 +156,8 @@ void PID_Controller_step(void)
 
   /* End of Update for DiscreteIntegrator: '<S4>/Discrete-Time Integrator' */
 
-  /* Update for UnitDelay: '<S7>/UD' incorporates:
-   *  SampleTimeMath: '<S7>/TSamp'
-   *
-   * About '<S7>/TSamp':
-   *  y = u * K where K = 1 / ( w * Ts )
-   */
-  PID_Controller_DW.UD_DSTATE_g = rtb_Sum_a * 250.0;
+  /* Update for UnitDelay: '<S7>/UD' */
+  PID_Controller_DW.UD_DSTATE_g = rtb_TSamp_a;
 
   /* Update for DiscreteIntegrator: '<S2>/Discrete-Time Integrator' */
   PID_Controller_DW.DiscreteTimeIntegrator_DSTATE_g += 0.004 * rtb_Sum_b;
@@ -121,13 +171,8 @@ void PID_Controller_step(void)
 
   /* End of Update for DiscreteIntegrator: '<S2>/Discrete-Time Integrator' */
 
-  /* Update for UnitDelay: '<S5>/UD' incorporates:
-   *  SampleTimeMath: '<S5>/TSamp'
-   *
-   * About '<S5>/TSamp':
-   *  y = u * K where K = 1 / ( w * Ts )
-   */
-  PID_Controller_DW.UD_DSTATE_a = rtb_Sum_b * 250.0;
+  /* Update for UnitDelay: '<S5>/UD' */
+  PID_Controller_DW.UD_DSTATE_a = rtb_TSamp_b;
 }
 
 /* Model initialize function */
