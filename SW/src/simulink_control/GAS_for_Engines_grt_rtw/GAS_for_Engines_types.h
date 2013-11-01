@@ -3,9 +3,9 @@
  *
  * Code generation for model "GAS_for_Engines".
  *
- * Model version              : 1.37
+ * Model version              : 1.39
  * Simulink Coder version : 8.4 (R2013a) 13-Feb-2013
- * C source code generated on : Tue Oct 29 14:53:29 2013
+ * C source code generated on : Fri Nov 01 23:36:52 2013
  *
  * Target selection: grt.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping

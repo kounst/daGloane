@@ -3,9 +3,9 @@
  *
  * Code generation for model "Complementary_Filter".
  *
- * Model version              : 1.37
+ * Model version              : 1.39
  * Simulink Coder version : 8.4 (R2013a) 13-Feb-2013
- * C source code generated on : Tue Oct 29 14:54:22 2013
+ * C source code generated on : Fri Nov 01 23:37:56 2013
  *
  * Target selection: grt.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
