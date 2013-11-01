@@ -3,15 +3,15 @@
  *
  * Code generation for model "PID_Controller".
  *
- * Model version              : 1.38
+ * Model version              : 1.39
  * Simulink Coder version : 8.4 (R2013a) 13-Feb-2013
- * C source code generated on : Tue Oct 29 15:15:56 2013
+ * C source code generated on : Fri Nov 01 23:33:38 2013
  *
  * Target selection: grt.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
  * Embedded hardware selection: ARM Compatible->ARM Cortex
  * Code generation objective: Execution efficiency
- * Validation result: Passed (8), Warnings (3), Error (0)
+ * Validation result: Not run
  */
 #ifndef RTW_HEADER_rtmodel_h_
 #define RTW_HEADER_rtmodel_h_
