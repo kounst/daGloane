@@ -5,7 +5,7 @@
  *
  * Model version              : 1.39
  * Simulink Coder version : 8.4 (R2013a) 13-Feb-2013
- * C source code generated on : Tue Nov 12 14:16:57 2013
+ * C source code generated on : Tue Nov 12 14:31:59 2013
  *
  * Target selection: grt.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -51,9 +51,9 @@ typedef struct {
 
 /* External inputs (root inport signals with auto storage) */
 typedef struct {
-  real_T Pitch;                        /* '<Root>/ist_pitch' */
-  real_T Roll;                         /* '<Root>/ist_roll' */
-  real_T Yaw;                          /* '<Root>/ist_azimuth' */
+  real_T ist_pitch;                    /* '<Root>/ist_pitch' */
+  real_T ist_roll;                     /* '<Root>/ist_roll' */
+  real_T ist_azimuth;                  /* '<Root>/ist_azimuth' */
   real_T control_msgpitch;             /* '<Root>/control_msg.pitch' */
   real_T control_msgroll;              /* '<Root>/control_msg.roll' */
   real_T control_msgazimuth;           /* '<Root>/control_msg.azimuth' */

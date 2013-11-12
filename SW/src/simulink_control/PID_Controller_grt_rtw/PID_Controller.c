@@ -5,7 +5,7 @@
  *
  * Model version              : 1.39
  * Simulink Coder version : 8.4 (R2013a) 13-Feb-2013
- * C source code generated on : Tue Nov 12 14:16:57 2013
+ * C source code generated on : Tue Nov 12 14:31:59 2013
  *
  * Target selection: grt.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -43,7 +43,7 @@ void PID_Controller_step(void)
    *  Inport: '<Root>/control_msg.pitch'
    *  Inport: '<Root>/ist_pitch'
    */
-  rtb_Sum = PID_Controller_U.control_msgpitch - PID_Controller_U.Pitch;
+  rtb_Sum = PID_Controller_U.control_msgpitch - PID_Controller_U.ist_pitch;
 
   /* SampleTimeMath: '<S6>/TSamp'
    *
@@ -72,7 +72,7 @@ void PID_Controller_step(void)
    *  Inport: '<Root>/control_msg.roll'
    *  Inport: '<Root>/ist_roll'
    */
-  rtb_Sum_a = PID_Controller_U.control_msgroll - PID_Controller_U.Roll;
+  rtb_Sum_a = PID_Controller_U.control_msgroll - PID_Controller_U.ist_roll;
 
   /* SampleTimeMath: '<S7>/TSamp'
    *
@@ -101,7 +101,7 @@ void PID_Controller_step(void)
    *  Inport: '<Root>/control_msg.azimuth'
    *  Inport: '<Root>/ist_azimuth'
    */
-  rtb_Sum_b = PID_Controller_U.control_msgazimuth - PID_Controller_U.Yaw;
+  rtb_Sum_b = PID_Controller_U.control_msgazimuth - PID_Controller_U.ist_azimuth;
 
   /* SampleTimeMath: '<S5>/TSamp'
    *
