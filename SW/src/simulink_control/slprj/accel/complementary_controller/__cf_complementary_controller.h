@@ -1,3 +1,0 @@
-#ifndef CF_complementary_controller_H__
-#define CF_complementary_controller_H__
-#endif

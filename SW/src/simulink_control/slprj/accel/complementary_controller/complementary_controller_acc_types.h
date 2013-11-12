@@ -1,4 +1,0 @@
-#include "__cf_complementary_controller.h"
-#ifndef RTW_HEADER_complementary_controller_acc_types_h_
-#define RTW_HEADER_complementary_controller_acc_types_h_
-#endif
