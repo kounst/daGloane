@@ -24,6 +24,7 @@ uint8_t write_pointer = 0;
 
 
 msg1 control_msg;
+msg2 config_msg;
 
 
 
@@ -149,6 +150,10 @@ void process_rx_msg(uint8_t rx_msg_length)
 				break;
 
 			case 2:
+				for(i= 0; i < decoded_length - 2; i++)
+				{
+					config_msg.bytes[i] = cobs_decoded_msg[i+2];
+				}
 				break;
 
 			default:

@@ -51,6 +51,7 @@ kalman_data pitch_data;
 kalman_data roll_data;
 
 extern msg1 control_msg;
+extern msg2 config_msg;
 volatile uint8_t tick = 0;
 
 
@@ -121,8 +122,8 @@ int main(void)
 	/* measure ACC channels while copter is stationary to obtain offsets. */
 	GetCalibrationData();
 
-	kalman_init(&pitch_data);
-	kalman_init(&roll_data);
+//	kalman_init(&pitch_data);
+//	kalman_init(&roll_data);
 
 	control_msg.throttle = 0;
 	control_msg.nick = 0;
@@ -141,6 +142,9 @@ int main(void)
 			LEDOn(LED1);
 
 			tick = 0 ;
+
+			setPIDvalues(&config_msg);
+
 			//read data from MPU-6000
 			MPU_read(&mpu);
 
@@ -167,8 +171,42 @@ int main(void)
 			Complementary_Filter_U.mpu_45gyro_z = (double)mpu_45.gyro_z / 7506;
 
 			Complementary_Filter_step();
-			PID_Controller_step();
-			GAS_for_Engines_step();
+
+			PID_Controller_U.control_msgazimuth = control_msg.yaw;
+			PID_Controller_U.control_msgpitch = control_msg.nick;
+			PID_Controller_U.control_msgroll = control_msg.roll;
+
+			PID_Controller_U.ist_azimuth = mpu_45.gyro_z;
+			PID_Controller_U.ist_pitch = mpu_45.gyro_y;
+			PID_Controller_U.ist_roll = mpu_45.gyro_x;
+
+
+			if(control_msg.control && 0x80)		//if armed
+				PID_Controller_step();
+			else
+				PID_Controller_initialize();
+
+			GAS_for_Engines_U.control_msgthrottle = control_msg.throttle;
+			GAS_for_Engines_U.ctrl_azimuth = PID_Controller_Y.ctrl_azimuth;
+			GAS_for_Engines_U.ctrl_pitch = PID_Controller_Y.ctrl_pitch;
+			GAS_for_Engines_U.ctrl_roll = PID_Controller_Y.ctrl_roll;
+
+			if(control_msg.control && 0x80)		//if armed
+			{
+				GAS_for_Engines_step();
+			}
+			else
+			{
+				PWM_update(1, 1000);
+				PWM_update(2, 1000);
+				PWM_update(3, 1000);
+				PWM_update(4, 1000);
+			}
+
+			PWM_update(1, GAS_for_Engines_Y.out_e1);
+			PWM_update(2, GAS_for_Engines_Y.out_e2);
+			PWM_update(3, GAS_for_Engines_Y.out_e3);
+			PWM_update(4, GAS_for_Engines_Y.out_e4);
 
 			LEDOff(LED1);
 			LEDToggle(LED2);
@@ -227,6 +265,23 @@ int main(void)
 			//uac_tx_task();
 		}
 	}
+}
+
+
+
+void setPIDvalues(msg2 *config_msg)
+{
+	PID_Controller_U.pitchp = config_msg->bytes[1];
+	PID_Controller_U.pitchi = config_msg->bytes[2];
+	PID_Controller_U.pitchd = config_msg->bytes[3];
+
+	PID_Controller_U.rollp = config_msg->bytes[4];
+	PID_Controller_U.rolli = config_msg->bytes[5];
+	PID_Controller_U.rolld = config_msg->bytes[6];
+
+	PID_Controller_U.azimuthp = config_msg->bytes[7];
+	PID_Controller_U.azimuthi = config_msg->bytes[8];
+	PID_Controller_U.azimuthd = config_msg->bytes[9];
 }
 
 

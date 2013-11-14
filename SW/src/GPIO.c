@@ -22,7 +22,8 @@ void GPIO_Configuration(void)
 
 	/* LED1 & LED2 */
 	GPIO_InitStructure.GPIO_Pin = LED1_PIN;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
+	//GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_Init(LED1_GPIO_PORT, &GPIO_InitStructure);
 
@@ -103,7 +104,7 @@ void GPIO_Configuration(void)
 
 void PWR_Buttom_handler()
 {
-	static uint16_t TurnOff_count = 1000;
+	static uint16_t TurnOff_count = 250;
 
 	if(debounce(GPIOA->IDR & 2))		//tactile switch input
 	{
@@ -124,7 +125,7 @@ void PWR_Buttom_handler()
 		}
 		else
 		{
-			TurnOff_count = 1000;		//reset TurnOff delay
+			TurnOff_count = 250;		//reset TurnOff delay
 		}
 	}
 }
