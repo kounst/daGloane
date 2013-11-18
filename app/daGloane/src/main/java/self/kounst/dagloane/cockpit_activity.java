@@ -4,28 +4,28 @@ import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
-import android.graphics.Rect;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.RectShape;
+import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.nio.ByteBuffer;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.UUID;
-//import android.widget.VerticalSeekBar;
 
 /**
  * Created by konstantin on 09.09.13.
  */
-public class cockpit_activity extends Activity {
+public class cockpit_activity extends Activity implements SensorEventListener{
 
     VerticalSeekBar verticalSeekBar=null;
     Button button_arm=null;
@@ -38,10 +38,16 @@ public class cockpit_activity extends Activity {
     BTmsg btmsg = new BTmsg(" ");
     byte[] BTmsgbytes = new byte[11];
 
+    SensorManager sensorManager;
+    Sensor accelerometer;
+    Sensor magnetometer;
+
+    float[] mGravity;
+    float[] mGeomagnetic;
+    float[] orientation = new float[3];
 
     Timer t = null;
 
-    TextView textView_test = null;
     private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
     public void onCreate(Bundle savedInstanceState) {
@@ -49,7 +55,13 @@ public class cockpit_activity extends Activity {
         setContentView(R.layout.activity_cockpit);
 
         verticalSeekBar=(VerticalSeekBar)findViewById(R.id.vertical_Seekbar);
+
         button_arm = (Button)findViewById(R.id.button_arm);
+        button_arm.setText("arm");
+
+        sensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
+        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        magnetometer = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
 
         BTmsgbytes[0] = 1;
         BTmsgbytes[1] = 13;
@@ -93,6 +105,8 @@ public class cockpit_activity extends Activity {
                 }
             }
 
+
+
             // Create a data stream so we can talk to server.
 
             try {
@@ -103,16 +117,7 @@ public class cockpit_activity extends Activity {
                 return;
             }
 
-/*            String message = "Hello message from client to server.";
-            msgBuffer = message.getBytes();
-            try {
-                outStream.write(msgBuffer);
-            } catch (IOException e) {
-                Log.e("daGloane", "button_connectToDev_ClickLister: Exception during write.", e);
-                Toast.makeText(getApplicationContext(),"Exception during write.", Toast.LENGTH_SHORT).show();
-                finish();
-                return;
-            }*/
+
         }
         else
         {
@@ -125,6 +130,7 @@ public class cockpit_activity extends Activity {
                 return;
             }
         }
+
 
         button_arm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,7 +150,6 @@ public class cockpit_activity extends Activity {
             }
         });
 
-        textView_test = (TextView) findViewById(R.id.textView_test);
 
         int time = 0;
 
@@ -163,14 +168,30 @@ public class cockpit_activity extends Activity {
                     @Override
                     public void run() {
                         time++;
-                        textView_test.setText(String.valueOf(time));
 
                         //String message = String.valueOf(time) + '\n';
                         //btmsg.setMsg(String.valueOf(time));
                         seekbar = verticalSeekBar.getProgress();
-                        BTmsgbytes[8] = IntToByte(seekbar)[0];
-                        BTmsgbytes[9] = IntToByte(seekbar)[1];
-
+                        if(button_arm.getText() == "arm")
+                        {
+                            BTmsgbytes[0] = 0;
+                            BTmsgbytes[1] = 0;
+                            BTmsgbytes[2] = 0;
+                            BTmsgbytes[3] = 0;
+                            BTmsgbytes[4] = 0;
+                            BTmsgbytes[5] = 0;
+                            BTmsgbytes[6] = 0;
+                            BTmsgbytes[7] = 0;
+                        }
+                        else
+                        {
+                            BTmsgbytes[8] = IntToByte(seekbar)[0];
+                            BTmsgbytes[9] = IntToByte(seekbar)[1];
+                            BTmsgbytes[4] = IntToByte((int)(orientation[1]*1000))[0];
+                            BTmsgbytes[5] = IntToByte((int)(orientation[1]*1000))[1];
+                            BTmsgbytes[2] = IntToByte((int)(orientation[2]*1000))[0];
+                            BTmsgbytes[3] = IntToByte((int)(orientation[2]*1000))[1];
+                        }
 
                         btmsg.setMsg(BTmsgbytes);
 
@@ -182,6 +203,11 @@ public class cockpit_activity extends Activity {
                             finish();
                             return;
                         }
+
+
+                        /*textview_pitch.setText(String.valueOf(orientation[0]));
+                        textview_roll.setText(String.valueOf(orientation[1]));
+                        textview_yaw.setText(String.valueOf(orientation[2]));*/
                     }
 
                 });
@@ -203,8 +229,47 @@ public class cockpit_activity extends Activity {
     }
 
     @Override
+    public void onAccuracyChanged(Sensor sensor, int i) {
+
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent sensorEvent) {
+        if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER)
+            mGravity = sensorEvent.values;
+        if (sensorEvent.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD)
+            mGeomagnetic = sensorEvent.values;
+        if (mGravity != null && mGeomagnetic != null) {
+            float R[] = new float[9];
+            //float I[] = new float[9];
+            boolean success = SensorManager.getRotationMatrix(R, null/*I*/, mGravity, mGeomagnetic);
+            if (success) {
+
+                SensorManager.getOrientation(R, orientation);
+                //azimut = orientation[0]; // orientation contains: azimut, pitch and roll
+            }
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_FASTEST);
+        sensorManager.registerListener(this, magnetometer, SensorManager.SENSOR_DELAY_FASTEST);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        sensorManager.unregisterListener(this);
+    }
+
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
+
+        sensorManager.unregisterListener(this);
         if(bluetooth_socket != null)
         {
             try {

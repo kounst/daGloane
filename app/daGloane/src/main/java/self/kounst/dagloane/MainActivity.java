@@ -29,6 +29,7 @@ public class MainActivity extends Activity {
     private static final int REQUEST_ENABLE_BT = 1;
 
     Button button_connectToDev;
+    Button button_settings;
     TextView textView_device;
     EditText editText_BTmsg;
     EditText editText_cobs;
@@ -50,10 +51,12 @@ public class MainActivity extends Activity {
         Intent enableBtIntent = null;
 
         button_connectToDev = (Button) findViewById(R.id.button_connectToDev);
+        button_settings = (Button) findViewById(R.id.button_settings);
         textView_device = (TextView) findViewById(R.id.textView_device);
         listview_btdev = (ListView) findViewById(R.id.listView_btdev);
 
         button_connectToDev.setEnabled(false);
+        button_settings.setEnabled(false);
 
         arrayListpaired = new ArrayList<String>();
         adapter= new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, arrayListpaired);
@@ -90,6 +93,7 @@ public class MainActivity extends Activity {
                 btMAC = textView_device.getText().toString().split("\n")[1];
 
                 button_connectToDev.setEnabled(true);
+                button_settings.setEnabled(true);
             }
         });
 
@@ -103,6 +107,17 @@ public class MainActivity extends Activity {
                 intent_cockpit.putExtra("bluetooth_mac", btMAC);
 
                 startActivity(intent_cockpit);
+            }
+        });
+
+        button_settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent_settings=new Intent(MainActivity.this,settings_activity.class );
+                intent_settings.putExtra("bluetooth_mac", btMAC);
+
+                startActivity(intent_settings);
             }
         });
     }

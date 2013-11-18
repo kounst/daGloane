@@ -2,7 +2,8 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:keepScreenOn="true">
 
     <Button
         android:layout_width="wrap_content"
@@ -11,20 +12,12 @@
         android:id="@+id/button_arm"
         android:layout_gravity="center" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:id="@+id/textView_test"
-        android:layout_gravity="center" />
-
     <self.kounst.dagloane.VerticalSeekBar
         android:id="@+id/vertical_Seekbar"
         android:layout_width="90dp"
         android:layout_height="396dp"
-        android:layout_gravity="center"
         android:maxHeight="200dip"
         android:max="4095"
-        />
+        android:layout_gravity="center" />
 
 </LinearLayout>

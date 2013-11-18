@@ -44,11 +44,10 @@
         android:id="@+id/listView_btdev"
         android:choiceMode="singleChoice"
         android:layout_alignParentBottom="true"
-        android:layout_below="@+id/button_connectToDev"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginBottom="15dp"
-        android:layout_marginTop="15dp" />
+        android:layout_below="@+id/button_settings" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -72,5 +71,13 @@
         android:id="@+id/textView_yaw"
         android:layout_alignLeft="@+id/textView_roll"
         android:layout_below="@+id/listView_btdev" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="settings"
+        android:id="@+id/button_settings"
+        android:layout_below="@+id/button_connectToDev"
+        android:layout_toLeftOf="@+id/textView_device" />
 
 </RelativeLayout>
