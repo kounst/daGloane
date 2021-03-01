@@ -23,7 +23,7 @@
 
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32f10x_it.h"
+#include "stm32f1xx_hal.h"
 #include "GPIO.h"
 #include "ADC.h"
 #include "UART.h"
@@ -43,9 +43,11 @@
 /* Private functions ---------------------------------------------------------*/
 
 
-uint16_t lipo_voltage = 2860; 	//3V
+uint16_t volatile lipo_voltage = 2860; 	//3V
 extern uint8_t tick;			// main loop trigger
-
+extern UART_HandleTypeDef huart1;
+extern UART_HandleTypeDef huart2;
+extern ADC_HandleTypeDef ADC_Handle;
 
 
 /******************************************************************************/
@@ -148,6 +150,10 @@ void PendSV_Handler(void)
  */
 void SysTick_Handler(void)
 {
+	static uint8_t i = 0;
+	static uint8_t j = 0;
+	HAL_IncTick();
+
 	/*	Checks whether the push-bottom is being held down and turns of the power if
 	 * 	it is released after more than 1 second
 	 */
@@ -158,14 +164,29 @@ void SysTick_Handler(void)
 	/*	This is sort of a low pass filter
 	 *  Its characteristic is not great but OK for this application
 	 */
-	if(lipo_voltage > ADC_GetConversionValue(ADC1))
+	if(lipo_voltage > HAL_ADC_GetValue(&ADC_Handle))
 		lipo_voltage--;
 	else
 		lipo_voltage++;
 
-	TimingDelay_Decrement();  			//Decrement ms counter of Delay() function
+	// TimingDelay_Decrement();  			//Decrement ms counter of Delay() function
 
-	tick=1;								// main loop trigger
+	i++;
+	if(i>0)
+	{ 
+		i = 0;
+		tick=1;								// main loop trigger
+	}
+	if(j == 0)
+	{
+		j++;
+		TIM2->CCR1 = 10000;
+	}
+	else
+	{
+		j = 0;
+		TIM2->CCR1 = 0;
+	}
 }
 
 /******************************************************************************/
@@ -182,25 +203,24 @@ void SysTick_Handler(void)
  */
 void USART1_IRQHandler(void)
 {
-	if(USART_GetITStatus(USART1, USART_IT_TXE) != RESET)	// if this is a transmit interrupt..
+	if(USART1->SR & USART_SR_TXE)	// if this is a transmit interrupt..
 	{
 		if(uac_txavailable())
 		{
-			USART_SendData(USART1, uac_tx());
+			huart1.Instance->DR = uac_tx();
 		}
 		else
 		{
-			USART_ITConfig(USART1, USART_IT_TXE, DISABLE);
+			__HAL_UART_DISABLE_IT(&huart1, USART_IT_TXE);
 		}
 	}
-
-	if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET)	// if this is a receive interrupt..
+	if(USART1->SR & USART_SR_RXNE)	// if this is a receive interrupt..
 	{
 		/* Hand over the char to uAC
 		 * We are using only 7 data bits
 		 * So we only keep bit 0..6
 		 */
-		uac_rx(0x7F & USART_ReceiveData(USART1));
+		uac_rx(0x7F & (uint8_t)(huart1.Instance->DR));
 	}
 }
 
@@ -213,22 +233,25 @@ void USART1_IRQHandler(void)
 void USART2_IRQHandler(void)
 {
 	char byte;
-	if(USART_GetITStatus(USART2, USART_IT_TXE) != RESET)	// if this is a transmit interrupt..
+	if(USART2->SR & USART_SR_TXE)	// if this is a transmit interrupt..
 	{
 		if(is_send_buffer_empty())
 		{
-			USART_ITConfig(USART2, USART_IT_TXE, DISABLE);
+			//USART_ITConfig(USART2, USART_IT_TXE, DISABLE);
+			__HAL_UART_DISABLE_IT(&huart2, USART_IT_TXE);
 		}
 		else
 		{
-			USART_SendData(USART2, get_buffer_byte());
+			//USART_SendData(USART2, get_buffer_byte());
+			huart2.Instance->DR = get_buffer_byte();
 		}
 	}
 
-	if(USART_GetITStatus(USART2, USART_IT_RXNE) != RESET)	// if this is a receive interrupt..
+	if(USART2->SR & USART_SR_RXNE)	// if this is a receive interrupt..
 	{
 		//uac_printf("BT: ");
-		byte = USART_ReceiveData(USART2);
+		//byte = USART_ReceiveData(USART2);
+		byte = (uint8_t)(huart2.Instance->DR);
 		//uac_printf("%i",byte);
 		//USART_SendData(USART1, byte);
 		store_received_byte(byte);

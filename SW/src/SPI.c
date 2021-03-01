@@ -7,43 +7,45 @@
 
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32f10x.h"
+#include "stm32f1xx_hal.h"
 #include "SPI.h"
 #include "TIM.h"
 #include "main.h"
 
-
+SPI_HandleTypeDef hspi1;
 
 
 void SPI1_Configuration()
 {
-	SPI_InitTypeDef   SPI_InitStructure;
-
-	SPI_InitStructure.SPI_Direction = SPI_Direction_2Lines_FullDuplex;
-	SPI_InitStructure.SPI_Mode = SPI_Mode_Master;
-	SPI_InitStructure.SPI_DataSize = SPI_DataSize_8b;
-	SPI_InitStructure.SPI_CPOL = SPI_CPOL_High;
-	SPI_InitStructure.SPI_CPHA = SPI_CPHA_2Edge;
-	SPI_InitStructure.SPI_NSS = SPI_NSS_Soft;
-	SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_128;
-	SPI_InitStructure.SPI_FirstBit = SPI_FirstBit_MSB;
-	//SPI_InitStructure.SPI_CRCPolynomial = 7;
-	SPI_Init(SPI1, &SPI_InitStructure);
+	hspi1.Instance = SPI1;
+	hspi1.Init.Direction = SPI_DIRECTION_2LINES;
+	hspi1.Init.Mode = SPI_MODE_MASTER;
+	hspi1.Init.DataSize = SPI_DATASIZE_8BIT;
+	hspi1.Init.CLKPolarity = SPI_POLARITY_HIGH;
+	hspi1.Init.CLKPhase = SPI_PHASE_2EDGE;
+	hspi1.Init.NSS = SPI_NSS_SOFT;
+	hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_128;
+	hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;
+	//hspi1.Init.SPI_CRCPolynomial = 7;
+	HAL_SPI_Init(&hspi1);
 
 	/* Enable SPI1 */
-	SPI_Cmd(SPI1, ENABLE);
+	//SPI_Cmd(SPI1, ENABLE);
+	__HAL_SPI_ENABLE(&hspi1);
 
-	Delay(100);		// wait for MPU-6000 to be ready to perform read/write operations
+	HAL_Delay(100);		// wait for MPU-6000 to be ready to perform read/write operations
 
 
 	SPI1_writebyte(PWR_MGMT_1, DEVICE_RESET);
 
-	Delay(100);
+	HAL_Delay(100);
 
 	SPI1_writebyte(USER_CTRL, I2C_IF_DIS);	//disable the MPU's I2C interface
 	SPI1_writebyte(PWR_MGMT_1, 0x03);		//use Z axis resonator as a clock source
+	SPI1_writebyte(ACCEL_CONFIG, FS_SEL_0);
+	SPI1_writebyte(GYRO_CONFIG, FS_SEL_3);
 
-	Delay(100);
+	HAL_Delay(100);
 
 }
 
@@ -54,20 +56,20 @@ uint8_t SPI1_readbyte(uint8_t address)
 
 	CS_LOW;
 
-	SPI_I2S_SendData(SPI1, 0x80 | address);
+	SPI1->DR = 0x80 | address;
 
-	while (SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_TXE) == RESET);
+	while( __HAL_SPI_GET_FLAG(&hspi1, SPI_FLAG_TXE) == RESET );
 
-	SPI_I2S_SendData(SPI1, 0x00);
+	SPI1->DR = 0x00;
 
-	while (SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_RXNE) == RESET);
+	while( __HAL_SPI_GET_FLAG(&hspi1, SPI_FLAG_RXNE) == RESET );
 
-	temp = SPI_I2S_ReceiveData(SPI1);
+	temp = SPI1->DR;
 
-	while (SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_TXE) == RESET);
-	while (SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_BSY) == SET);
+	while (__HAL_SPI_GET_FLAG(&hspi1, SPI_FLAG_TXE) == RESET);
+	while (__HAL_SPI_GET_FLAG(&hspi1, SPI_FLAG_BSY) == SET);
 
-	temp = SPI_I2S_ReceiveData(SPI1);
+	temp = SPI1->DR;
 
 	CS_HIGH;
 
@@ -87,31 +89,31 @@ void SPI1_read(uint8_t start_address, uint8_t *bytearray, uint8_t NofBytes)
 {
 	CS_LOW;
 
-	SPI_I2S_SendData(SPI1, 0x80 | start_address);
+	SPI1->DR = 0x80 | start_address;
 
-	while (SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_TXE) == RESET);
+	while (__HAL_SPI_GET_FLAG(&hspi1, SPI_FLAG_TXE) == RESET);
 
-	SPI_I2S_SendData(SPI1, 0x00);
+	SPI1->DR = 0x00;
 
-	while (SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_RXNE) == RESET);
+	while (__HAL_SPI_GET_FLAG(&hspi1, SPI_FLAG_RXNE) == RESET);
 
-	*bytearray = SPI_I2S_ReceiveData(SPI1);
+	*bytearray = SPI1->DR;
 
 	while(NofBytes - 1)
 	{
-		while (SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_TXE) == RESET);
-		SPI_I2S_SendData(SPI1, 0x00);
-		while (SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_RXNE) == RESET);
-		*bytearray = SPI_I2S_ReceiveData(SPI1);
+		while (__HAL_SPI_GET_FLAG(&hspi1, SPI_FLAG_TXE) == RESET);
+		SPI1->DR = 0x00;
+		while (__HAL_SPI_GET_FLAG(&hspi1, SPI_FLAG_RXNE) == RESET);
+		*bytearray = SPI1->DR;
 		bytearray++;
 
 		NofBytes--;
 	}
 
-	while (SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_TXE) == RESET);
-	while (SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_BSY) == SET);
+	while (__HAL_SPI_GET_FLAG(&hspi1, SPI_FLAG_TXE) == RESET);
+	while (__HAL_SPI_GET_FLAG(&hspi1, SPI_FLAG_BSY) == SET);
 
-	*bytearray = SPI_I2S_ReceiveData(SPI1);
+	*bytearray = SPI1->DR;
 
 	CS_HIGH;
 }
@@ -144,15 +146,15 @@ void SPI1_writebyte(uint8_t address, uint8_t byte)
 	CS_LOW;
 
 	/* Wait for SPI1 Tx buffer empty */
-	while (SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_TXE) == RESET);
+	while (__HAL_SPI_GET_FLAG(&hspi1, SPI_FLAG_TXE) == RESET);
 
-	SPI_I2S_SendData(SPI1, address);
+	SPI1->DR = address;
 
-	while (SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_TXE) == RESET);
+	while (__HAL_SPI_GET_FLAG(&hspi1, SPI_FLAG_TXE) == RESET);
 
-	SPI_I2S_SendData(SPI1, byte);
+	SPI1->DR = byte;
 
-	while (SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_BSY) == SET);
+	while (__HAL_SPI_GET_FLAG(&hspi1, SPI_FLAG_BSY) == SET);
 
 	CS_HIGH;
 }

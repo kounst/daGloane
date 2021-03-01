@@ -71,7 +71,7 @@ void _printf(char*, va_list, char /* 0-Ram, 1-Flash */);
 void _putchar ( char);
 
 //!Put a string to the outbuffer
-inline void _putstring (char *);
+void _putstring (char *);
 
 //!Put a uint to the outbuffer.
 void _putuint (unsigned int);
@@ -80,10 +80,10 @@ void _putuint (unsigned int);
 void _putuint_hex (unsigned int, unsigned char);
 
 //!Put a single number to the outbuffer
-inline void _putnumber (char number);
+void _putnumber (char number);
 
 //!Write the newline string.
-inline void _newline (void);
+void _newline (void);
 
 //!Clear the prompt line.
 void _prompt_clear (void);
@@ -401,7 +401,7 @@ void _putchar ( char C) {
 	}
 }
 
-inline void _putstring (char *s) {
+void _putstring (char *s) {
 	for (;*s!='\0';) _putchar(*(s++));
 }
 
@@ -436,12 +436,12 @@ void _putuint_hex (unsigned int ux, unsigned char Big) {
 }
 #endif /* uAC_Print_x_Type */
 
-inline void _putnumber (char number)
+void _putnumber (char number)
 {
 	_putchar(number+'0');
 }
 
-inline void _newline (void) {
+void _newline (void) {
 	_putstring(_uAC_NewLineString);
 }
 

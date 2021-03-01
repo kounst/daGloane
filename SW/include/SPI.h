@@ -38,9 +38,15 @@ typedef struct _mpudata mpudata;
 #define PWR_MGMT_1			0x6B	//Pwr_Mgmt Register 1
 	#define DEVICE_RESET	0x80		//Pwr_Mgmt DEVICE_RESET bit
 #define	PWR_MGMT_2			0x6C	//Pwr_Mgmt Register 2
+#define GYRO_CONFIG			0x1B	//GYRO_CONFIG Register
+#define ACCEL_CONFIG		0x1C	//ACCEL_CONFIG Register
+	#define FS_SEL_0		0x0
+	#define FS_SEL_1		(0x1<<3)
+	#define FS_SEL_2		(0x2<<3)
+	#define FS_SEL_3		(0x3<<3)
 
-#define CS_LOW				GPIOA->BRR = GPIO_Pin_4;
-#define CS_HIGH				GPIOA->BSRR = GPIO_Pin_4;
+#define CS_LOW				GPIOA->BRR = GPIO_PIN_4;
+#define CS_HIGH				GPIOA->BSRR = GPIO_PIN_4;
 
 
 void SPI1_Configuration(void);
