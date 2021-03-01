@@ -6,12 +6,12 @@
  */
 
 
-#include "stm32f10x.h"
+#include "stm32f1xx_hal.h"
 #include "com.h"
 #include "cobs.h"
 #include "alloca.h"
-#include "uac.h"
-#include "TIM.h";
+#include "uAC.h"
+#include "TIM.h"
 
 
 uint8_t send_buffer[256];
@@ -34,7 +34,7 @@ uint16_t crc_xmodem_update(uint16_t crc, uint8_t data);
 void process_rx_msg(uint8_t rx_msg_length);
 
 
-
+extern UART_HandleTypeDef huart2;
 
 void send_data(uint8_t type, uint8_t *bytearray, uint8_t length)
 {
@@ -79,7 +79,8 @@ void send_to_buffer(uint8_t *sendarray, uint8_t send_length, uint8_t add_zero)
 		write_pointer++;
 	}
 
-	USART_ITConfig(USART2, USART_IT_TXE, ENABLE);	//enable TXE interrupt to initiate UART transmission
+	//USART_ITConfig(USART2, USART_IT_TXE, ENABLE);	//enable TXE interrupt to initiate UART transmission
+	__HAL_UART_ENABLE_IT(&huart2, USART_IT_TXE);
 }
 
 uint8_t is_send_buffer_empty (void)
@@ -141,7 +142,7 @@ void process_rx_msg(uint8_t rx_msg_length)
 					control_msg.control = cobs_decoded_msg[10];
 
 					//uac_printf("testmsg: %i , %i , %i, %i , %i",control_msg.control, control_msg.nick, control_msg.roll, control_msg.throttle, control_msg.yaw);
-					PWM_update(3,(control_msg.throttle+4000)/4);
+					PWM_update(3,(control_msg.throttle)+6000);
 				}
 				else
 				{

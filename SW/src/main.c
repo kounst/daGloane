@@ -1,16 +1,8 @@
-/*
- * main.c
- *
- *  Created on: Oct 20, 2012
- *      Author: konstantin
- *
- */
 
-/* Includes ------------------------------------------------------------------*/
 #include <stddef.h>
 #include <math.h>
 #include <stdio.h>
-#include "stm32f10x.h"
+#include "stm32f1xx_hal.h"
 #include "main.h"
 #include "GPIO.h"
 #include "UART.h"
@@ -19,271 +11,96 @@
 #include "SPI.h"
 #include "uAC.h"
 #include "uAC_CMD.h"
-#include "kalman.h"
+// #include "kalman.h"
 #include "com.h"
 
-#include "Complementary_Filter.h"
-#include "PID_Controller.h"
-#include "GAS_for_Engines.h"
+// #include "Complementary_Filter.h"
+// #include "PID_Controller.h"
+// #include "GAS_for_Engines.h"
 
-/* External inputs (root inport signals with auto storage) */
-extern ExtU_Complementary_Filter_T Complementary_Filter_U;
-extern ExtU_PID_Controller_T  PID_Controller_U;
-extern ExtU_GAS_for_Engines_T GAS_for_Engines_U;
+void Error_Handler(void);
+void SystemClock_Config(void);
 
-/* External outputs (root outports fed by signals with auto storage) */
-extern ExtY_Complementary_Filter_T Complementary_Filter_Y;
-extern ExtY_PID_Controller_T  PID_Controller_Y;
-extern ExtY_GAS_for_Engines_T GAS_for_Engines_Y;
+extern UART_HandleTypeDef huart1;
 
-
-/* Global variables */
-extern uint16_t lipo_voltage;
-float acc_pitch, acc_roll;
-
-uint8_t msg2_bytearray[12];
+volatile uint8_t tick = 0;
 
 mpudata mpu;
 mpudata mpu_45;
 mpudata mpu_offset;
 
-kalman_data pitch_data;
-kalman_data roll_data;
-
-extern msg1 control_msg;
-extern msg2 config_msg;
-volatile uint8_t tick = 0;
+char telemetrybuf[200];
 
 
-
-DMA_InitTypeDef DMA_InitStructure;
-
-
-
-
-extern char uart_tx_buffer[255];
-
-/* Private functions */
-
-/**
- **===========================================================================
- **
- **  Abstract: main program
- **
- **===========================================================================
- */
 int main(void)
 {
+  HAL_Init();
 
-	/* System Clocks Configuration */
-	RCC_Configuration();
+  SystemClock_Config();
+  
+  NVIC_Configuration();
 
-	/* NVIC Configuration */
-	NVIC_Configuration();
+  GPIO_Configuration();
 
-	/* GPIO Configuration */
-	GPIO_Configuration();
+  ADC1_Configuration();
 
-	/* keep DC/DC form turning off again (set Power_ON_µC) */
-	GPIOB->BSRR = GPIO_Pin_2;
-
-	/* ADC Configuration */
-	ADC1_Configuration();
-
-	UART1_DMA_Configuration();
-
-	/* UART1 Configuration */
-	//UART1_Configuration();
-	UART1_Configuration2();
+  UART1_Configuration();
 
 	/* UART2 Configuration for bluetooth AT command mode */
-	UART2_Configuration_AT(115200);
+	UART2_Configuration_AT(115200);  
+
+	/* SPI1 Configuration */
+	SPI1_Configuration();  
 
 	/* Init the uAC */
-	//uac_init();
+	uac_init();
 
 	/* Attach uac commands */
-	//uAC_CMD_attach();
-
-	/* TIM3 Configuration */
-	TIM3_Configuration();
+	uAC_CMD_attach();  
 
 	/* TIM2 Configuration */
 	LED_Timer_Configuration();
 
-	/* Systick Configuration */
-	SysTick_Configuration();
+	/* TIM3 Configuration */
+	TIM3_Configuration();
 
-	/* SPI1 Configuration */
-	SPI1_Configuration();
+	/* keep DC/DC form turning off again (set Power_ON_ÂµC) */
+  GPIOB->BSRR = GPIO_PIN_2;
 
-	//uac_printf("\nHello, my name is daGloane\n");
+  HAL_Delay(100);
 
-	/* measure ACC channels while copter is stationary to obtain offsets. */
+  /* Change PwrOff Pin config to input for reading tactile switch state */
+  PwrOff_Pin_Reconfig();
+
+  /* measure ACC channels while copter is stationary to obtain offsets. */
 	GetCalibrationData();
 
-//	kalman_init(&pitch_data);
-//	kalman_init(&roll_data);
-
-	control_msg.throttle = 0;
-	control_msg.nick = 0;
-	control_msg.roll = 0;
-	control_msg.yaw = 0;
-
-	Complementary_Filter_initialize();
-	PID_Controller_initialize();
-	GAS_for_Engines_initialize();
-
-	/* Infinite loop */
-	while (1)
-	{
+  while (1)
+  {
 		if (tick == 1)
 		{
-			LEDOn(LED1);
-
-			tick = 0 ;
-
-			setPIDvalues(&config_msg);
+      tick = 0;
 
 			//read data from MPU-6000
-			MPU_read(&mpu);
+			MPU_read(&mpu);      
+      //uac_printf("%i,%i,%i,%i,%i,%i\r\n", mpu.acc_x, mpu.acc_y, mpu.acc_z, mpu.gyro_x, mpu.gyro_y, mpu.gyro_z);
+      //uac_printf("Hello");
+      snprintf(telemetrybuf, sizeof(telemetrybuf), "%i,%i,%i,%i,%i,%i\r\n", mpu.acc_x, mpu.acc_y, mpu.acc_z, mpu.gyro_x, mpu.gyro_y, mpu.gyro_z);
+      
+      //HAL_Delay(100);
 
-			//remove offsets from ACC data
-			mpu.acc_x -= mpu_offset.acc_x;
-			mpu.acc_y -= mpu_offset.acc_y;
-			mpu.gyro_x -= mpu_offset.gyro_x;
-			mpu.gyro_y -= mpu_offset.gyro_y;
-			mpu.gyro_z -= mpu_offset.gyro_z;
+      HAL_UART_Transmit(&huart1, telemetrybuf, strlen(telemetrybuf), 100);
 
-
-			//rotate gyro coordinate system to rotor coordinate system
-			mpu_45.acc_x = sin_45deg * mpu.acc_x + sin_45deg * mpu.acc_y;
-			mpu_45.acc_y = sin_45deg * mpu.acc_y - sin_45deg * mpu.acc_x;
-			mpu_45.acc_z = mpu.acc_z;
-			mpu_45.gyro_x = sin_45deg * mpu.gyro_x + sin_45deg * mpu.gyro_y;
-			mpu_45.gyro_y = sin_45deg * mpu.gyro_y - sin_45deg * mpu.gyro_x;
-			mpu_45.gyro_z = mpu.gyro_z;
-
-			Complementary_Filter_U.acc_pitch = atan2(mpu_45.acc_y, mpu_45.acc_z);
-			Complementary_Filter_U.acc_roll = atan2(mpu_45.acc_x, mpu_45.acc_z);
-			Complementary_Filter_U.mpu_45gyro_x = (double)mpu_45.gyro_x / 7506;	// 131 LSB/°/s; 1rad/s = 0.017°/s --> 131/0.017 = 7506
-			Complementary_Filter_U.mpu_45gyro_y = (double)mpu_45.gyro_y / 7506;
-			Complementary_Filter_U.mpu_45gyro_z = (double)mpu_45.gyro_z / 7506;
-
-			Complementary_Filter_step();
-
-			PID_Controller_U.control_msgazimuth = control_msg.yaw;
-			PID_Controller_U.control_msgpitch = control_msg.nick;
-			PID_Controller_U.control_msgroll = control_msg.roll;
-
-			PID_Controller_U.ist_azimuth = mpu_45.gyro_z;
-			PID_Controller_U.ist_pitch = mpu_45.gyro_y;
-			PID_Controller_U.ist_roll = mpu_45.gyro_x;
+      // if( ((i/10)%2) == 0)
+      //   uac_printf("Hello %i", i);
+      uac_task();
 
 
-			if(control_msg.control && 0x80)		//if armed
-				PID_Controller_step();
-			else
-				PID_Controller_initialize();
-
-			GAS_for_Engines_U.control_msgthrottle = control_msg.throttle;
-			GAS_for_Engines_U.ctrl_azimuth = PID_Controller_Y.ctrl_azimuth;
-			GAS_for_Engines_U.ctrl_pitch = PID_Controller_Y.ctrl_pitch;
-			GAS_for_Engines_U.ctrl_roll = PID_Controller_Y.ctrl_roll;
-
-			if(control_msg.control && 0x80)		//if armed
-			{
-				GAS_for_Engines_step();
-			}
-			else
-			{
-				PWM_update(1, 1000);
-				PWM_update(2, 1000);
-				PWM_update(3, 1000);
-				PWM_update(4, 1000);
-			}
-
-			PWM_update(1, GAS_for_Engines_Y.out_e1);
-			PWM_update(2, GAS_for_Engines_Y.out_e2);
-			PWM_update(3, GAS_for_Engines_Y.out_e3);
-			PWM_update(4, GAS_for_Engines_Y.out_e4);
-
-			LEDOff(LED1);
-			LEDToggle(LED2);
-
-			/*f2b._float = Complementary_Filter_U.acc_pitch;
-			uart_tx_buffer[0] = f2b.bytes[0];
-			uart_tx_buffer[1] = f2b.bytes[1];
-			uart_tx_buffer[2] = f2b.bytes[2];
-			uart_tx_buffer[3] = f2b.bytes[3];
-			uart_tx_buffer[4] = '\0';*/
-
-			//sprintf(uart_tx_buffer, "accx:%d, accy:%d, accz:%d\n", mpu_45.acc_x, mpu_45.acc_y, mpu_45.acc_z);
-			sprintf(uart_tx_buffer, "accR:%f, accP:%f,gyroR:%f, gyroP:%f, gyroY:%f, cfroll:%f, cfpitch:%f\n", Complementary_Filter_U.acc_roll, Complementary_Filter_U.acc_pitch, Complementary_Filter_U.mpu_45gyro_x, Complementary_Filter_U.mpu_45gyro_y, Complementary_Filter_U.mpu_45gyro_z, Complementary_Filter_Y.ist_roll, Complementary_Filter_Y.ist_pitch);
-
-
-
-			/* Disable and re-enable DMA to start new transfer */
-			DMA1_Channel4->CCR &= ~DMA_CCR4_EN;				//disable DMA
-			DMA1_Channel4->CMAR = (unsigned)uart_tx_buffer;	//memory base address for DMA transfer
-			DMA1_Channel4->CNDTR = strlen(uart_tx_buffer);	//number of bytes to transfer
-			DMA1_Channel4->CCR |= DMA_CCR4_EN;				//enable DMA
-
-
-			/*
-			 The new kalman estimate is now stored in pitch_data.x1, pitch_data.x2, pitch_data.x3
-			 * 	   									    roll_data.x1,  roll_data.x2,  roll_data.x3
-
-			msg2_bytearray[0] = ((uint32_t)pitch_data.x1 >> 24);
-			msg2_bytearray[1] = ((uint32_t)pitch_data.x1 >> 16);
-			msg2_bytearray[2] = ((uint32_t)pitch_data.x1 >> 8);
-			msg2_bytearray[3] = ((uint32_t)pitch_data.x1);
-			msg2_bytearray[4] = ((uint32_t)pitch_data.x2 >> 24);
-			msg2_bytearray[5] = ((uint32_t)pitch_data.x2 >> 16);
-			msg2_bytearray[6] = ((uint32_t)pitch_data.x2 >> 8);
-			msg2_bytearray[7] = ((uint32_t)pitch_data.x2);
-			msg2_bytearray[8] = ((uint32_t)pitch_data.x3 >> 24);
-			msg2_bytearray[9] = ((uint32_t)pitch_data.x3 >> 16);
-			msg2_bytearray[10] = ((uint32_t)pitch_data.x3 >> 8);
-			msg2_bytearray[11] = ((uint32_t)pitch_data.x3);
-			 */
-
-
-			//		uac_printf("Pitch,Roll,GyroX,GyroY,AccPitch,AccRoll = ( %f , %f , %f , %f , %f , %f)\n",Complementary_Filter_Y.ist_pitch,Complementary_Filter_Y.ist_roll,Complementary_Filter_U.mpu_45gyro_x,Complementary_Filter_U.mpu_45gyro_y),Complementary_Filter_U.acc_pitch,Complementary_Filter_U.acc_roll;
-			//uac_printf("test123");
-			//LEDToggle(LED1);
-			//LEDToggle(LED2);
-			/* The uAC_Task() must be called periodically
-			 * It checks whether a command has been received and
-			 * calls the corresponding uAC_CMD function
-			 */
-			//Delay(25);		//100ms
-
-			//uac_task();
-
-			//If there are outgoing chars, send them
-			//uac_tx_task();
-		}
-	}
+      //If there are outgoing chars, send them
+      uac_tx_task();
+    }
+  }
 }
-
-
-
-void setPIDvalues(msg2 *config_msg)
-{
-	PID_Controller_U.pitchp = config_msg->bytes[1];
-	PID_Controller_U.pitchi = config_msg->bytes[2];
-	PID_Controller_U.pitchd = config_msg->bytes[3];
-
-	PID_Controller_U.rollp = config_msg->bytes[4];
-	PID_Controller_U.rolli = config_msg->bytes[5];
-	PID_Controller_U.rolld = config_msg->bytes[6];
-
-	PID_Controller_U.azimuthp = config_msg->bytes[7];
-	PID_Controller_U.azimuthi = config_msg->bytes[8];
-	PID_Controller_U.azimuthd = config_msg->bytes[9];
-}
-
 
 
 void GetCalibrationData()
@@ -291,7 +108,7 @@ void GetCalibrationData()
 	int i;
 	int neutralX = 0;
 	int neutralY = 0;
-	//int neutralZ = 0;
+	int neutralZ = 0;
 	int neutralPi = 0;
 	int neutralRo = 0;
 	int neutralYa = 0;
@@ -302,59 +119,79 @@ void GetCalibrationData()
 		MPU_read(&mpu);
 		neutralX += mpu.acc_x;
 		neutralY += mpu.acc_y;
-		//neutralZ += mpu.acc_z;
+		neutralZ += mpu.acc_z;
 		neutralPi += mpu.gyro_x;
 		neutralRo += mpu.gyro_y;
 		neutralYa += mpu.gyro_z;
-		Delay(3);
+		HAL_Delay(10);
 	}
 
 	mpu_offset.acc_x = neutralX / 128;
 	mpu_offset.acc_y = neutralY / 128;
-	//mpu_offset.acc_z = neutralZ / 128;
+	mpu_offset.acc_z = (neutralZ / 128)  - 16384;
 	mpu_offset.gyro_x = neutralPi / 128;
 	mpu_offset.gyro_y = neutralRo / 128;
 	mpu_offset.gyro_z = neutralYa / 128;
 }
 
-
-
-
-
-void RCC_Configuration(void)
+/**
+  * @brief System Clock Configuration
+  * @retval None
+  */
+void SystemClock_Config(void)
 {
-	/* Setup the microcontroller system. Initialize the Embedded Flash Interface,
-     initialize the PLL and update the SystemFrequency variable. */
-	SystemInit();
+  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
+  RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+  RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
 
-	/* PCLK1 = HCLK/2 */
-	RCC_PCLK1Config(RCC_HCLK_Div2);
+  /** Initializes the RCC Oscillators according to the specified parameters
+  * in the RCC_OscInitTypeDef structure.
+  */
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
+  RCC_OscInitStruct.HSEState = RCC_HSE_ON;
+  RCC_OscInitStruct.HSEPredivValue = RCC_HSE_PREDIV_DIV1;
+  RCC_OscInitStruct.HSIState = RCC_HSI_ON;
+  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
+  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
+  RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL6;
+  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /** Initializes the CPU, AHB and APB buses clocks
+  */
+  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
+                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
+  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
+  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
+  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
 
-	RCC_ADCCLKConfig(RCC_PCLK2_Div4);
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_ADC;
+  PeriphClkInit.AdcClockSelection = RCC_ADCPCLK2_DIV6;
+  
+  if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
+  {
+    Error_Handler();
+  }
 
-	/* GPIOA, GPIOB and AFIO clocks enable */
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA |  RCC_APB2Periph_GPIOB | RCC_APB2Periph_AFIO, ENABLE);
+  __HAL_RCC_USART1_CLK_ENABLE();
+  __HAL_RCC_USART2_CLK_ENABLE();
 
-	/* USART1 clock enable */
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1, ENABLE);
+  __HAL_RCC_GPIOA_CLK_ENABLE();
+  __HAL_RCC_GPIOB_CLK_ENABLE();
+  __HAL_RCC_AFIO_CLK_ENABLE();
 
-	/* USART2 clock enable */
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, ENABLE);
+  __HAL_RCC_ADC1_CLK_ENABLE();
 
-	/* DMA1 clock enable */
-	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1, ENABLE);
+  __HAL_RCC_TIM2_CLK_ENABLE();
+  __HAL_RCC_TIM3_CLK_ENABLE();  
 
-	/* TIM3 clock enable */
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE);
-
-	/* TIM2 clock enable */
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
-
-	/* ADC1 clock enable */
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE);
-
-	/* SPI1 clock enable */
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_SPI1, ENABLE);
+  __HAL_RCC_SPI1_CLK_ENABLE();
 }
 
 /**
@@ -364,7 +201,7 @@ void RCC_Configuration(void)
  */
 void NVIC_Configuration(void)
 {
-	NVIC_InitTypeDef NVIC_InitStructure;
+	//NVIC_InitTypeDef NVIC_InitStructure;
 
 	//  /* Enable the TIM3 gloabal interrupt */
 	//  NVIC_InitStructure.NVIC_IRQChannel = TIM3_IRQn;
@@ -374,45 +211,91 @@ void NVIC_Configuration(void)
 	//  NVIC_Init(&NVIC_InitStructure);
 	//
 	//
-	NVIC_InitStructure.NVIC_IRQChannel = USART1_IRQn;
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 4;
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;
-	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-	NVIC_Init(&NVIC_InitStructure);
+	// NVIC_InitStructure.NVIC_IRQChannel = USART1_IRQn;
+	// NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 4;
+	// NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;
+	// NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+	// NVIC_Init(&NVIC_InitStructure);
+  HAL_NVIC_SetPriority(USART1_IRQn, 4, 2);
+  HAL_NVIC_EnableIRQ(USART1_IRQn);
 
-	NVIC_InitStructure.NVIC_IRQChannel = SPI1_IRQn;
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 3;
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;
-	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-	NVIC_Init(&NVIC_InitStructure);
+	// NVIC_InitStructure.NVIC_IRQChannel = SPI1_IRQn;
+	// NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 3;
+	// NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;
+	// NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+	// NVIC_Init(&NVIC_InitStructure);
+  HAL_NVIC_SetPriority(SPI1_IRQn, 3, 2);
+  //HAL_NVIC_EnableIRQ(SPI1_IRQn);  
 
 	/* Enable the USART2 Interrupt */
-	NVIC_InitStructure.NVIC_IRQChannel = USART2_IRQn;
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 4;
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;
-	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-	NVIC_Init(&NVIC_InitStructure);
+	// NVIC_InitStructure.NVIC_IRQChannel = USART2_IRQn;
+	// NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 4;
+	// NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;
+	// NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+	// NVIC_Init(&NVIC_InitStructure);
+  HAL_NVIC_SetPriority(USART2_IRQn, 4, 3);
+  HAL_NVIC_EnableIRQ(USART2_IRQn);  
 
 
 	/* SysTick Priority */
 	NVIC_SetPriority(SysTick_IRQn, 2);
 }
 
-
-/*
- * Minimal __assert_func used by the assert() macro
- * */
-void __assert_func(const char *file, int line, const char *func, const char *failedexpr)
+/**
+  * @brief  This function is executed in case of error occurrence.
+  * @retval None
+  */
+void Error_Handler(void)
 {
-	while(1)
-	{}
+  /* USER CODE BEGIN Error_Handler_Debug */
+  /* User can add his own implementation to report the HAL error return state */
+  __disable_irq();
+  while (1)
+  {
+  }
+  /* USER CODE END Error_Handler_Debug */
+}
+/*
+void SysTick_Handler(void)
+{
+  HAL_IncTick();
 }
 
-/*
- * Minimal __assert() uses __assert__func()
- * */
-void __assert(const char *file, int line, const char *failedexpr)
+void NMI_Handler(void)
 {
-	__assert_func (file, line, NULL, failedexpr);
 }
 
+void HardFault_Handler(void)
+{
+  while (1) {}
+}
+
+
+void MemManage_Handler(void)
+{
+  while (1) {}
+}
+
+void BusFault_Handler(void)
+{
+  while (1) {}
+}
+
+void UsageFault_Handler(void)
+{
+  while (1) {}
+}
+
+void SVC_Handler(void)
+{
+}
+
+
+void DebugMon_Handler(void)
+{
+}
+
+void PendSV_Handler(void)
+{
+}
+*/

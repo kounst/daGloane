@@ -7,104 +7,134 @@
 
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32f10x.h"
+#include "stm32f1xx_hal.h"
 #include "GPIO.h"
-#include "uAC.h"
+//#include "uAC.h"
 
 
 void GPIO_Configuration(void)
 {
 	GPIO_InitTypeDef GPIO_InitStructure;
 
-	GPIO_PinRemapConfig(GPIO_Remap_SWJ_JTAGDisable, ENABLE);
-	GPIO_PinRemapConfig(GPIO_PartialRemap_TIM3, ENABLE);
-	GPIO_PinRemapConfig(GPIO_PartialRemap1_TIM2, ENABLE);
+	__HAL_AFIO_REMAP_SWJ_NOJTAG();
+	__HAL_AFIO_REMAP_TIM3_PARTIAL();
+	__HAL_AFIO_REMAP_TIM2_PARTIAL_1();
+	// GPIO_PinRemapConfig(GPIO_Remap_SWJ_JTAGDisable, ENABLE);
+	// GPIO_PinRemapConfig(GPIO_PartialRemap_TIM3, ENABLE);
+	// GPIO_PinRemapConfig(GPIO_PartialRemap1_TIM2, ENABLE);
+
+//   GPIO_InitTypeDef GPIO_InitStruct;
+  
+//   GPIO_InitStruct.Pin = GPIO_PIN_15;
+//   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+//   GPIO_InitStruct.Pull = GPIO_PULLUP;
+//   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+//   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct); 
+
+//   GPIO_InitStruct.Pin = GPIO_PIN_3;
+//   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct); 
+
+//   GPIO_InitStruct.Pin = GPIO_PIN_2;
+//   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);   
+
 
 	/* LED1 & LED2 */
-	GPIO_InitStructure.GPIO_Pin = LED1_PIN;
-	//GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_Init(LED1_GPIO_PORT, &GPIO_InitStructure);
+	GPIO_InitStructure.Pin = LED1_PIN;
+	GPIO_InitStructure.Mode = GPIO_MODE_AF_PP;
+	//GPIO_InitStructure.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_HIGH;
+	HAL_GPIO_Init(LED1_GPIO_PORT, &GPIO_InitStructure);
 
-	GPIO_InitStructure.GPIO_Pin = LED2_PIN;
-	GPIO_Init(LED2_GPIO_PORT, &GPIO_InitStructure);
+	GPIO_InitStructure.Pin = LED2_PIN;
+	HAL_GPIO_Init(LED2_GPIO_PORT, &GPIO_InitStructure);
 
 //	LEDOff(LED1);
 //	LEDOff(LED2);
 
-	/* Power_ON_µC */
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2;
-	GPIO_Init(GPIOB, &GPIO_InitStructure);
+	/* Power_ON_uC */
+	GPIO_InitStructure.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStructure.Pin = GPIO_PIN_2;
+	HAL_GPIO_Init(GPIOB, &GPIO_InitStructure);
 
 	/* Power_OFF */
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
-	GPIO_Init(GPIOA, &GPIO_InitStructure);
+	GPIO_InitStructure.Pin = GPIO_PIN_1;
+	//GPIO_InitStructure.Mode = GPIO_MODE_INPUT;
+	GPIO_InitStructure.Mode = GPIO_MODE_OUTPUT_PP;
+	HAL_GPIO_Init(GPIOA, &GPIO_InitStructure);
 
 	/* MotorPWM 1..4 */
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0;
-	GPIO_Init(GPIOB, &GPIO_InitStructure);
+	GPIO_InitStructure.Mode = GPIO_MODE_AF_PP;
+	GPIO_InitStructure.Pin = GPIO_PIN_0;
+	HAL_GPIO_Init(GPIOB, &GPIO_InitStructure);
 
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1;
-	GPIO_Init(GPIOB, &GPIO_InitStructure);
+	GPIO_InitStructure.Pin = GPIO_PIN_1;
+	HAL_GPIO_Init(GPIOB, &GPIO_InitStructure);
 
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4;
-	GPIO_Init(GPIOB, &GPIO_InitStructure);
+	GPIO_InitStructure.Pin = GPIO_PIN_4;
+	HAL_GPIO_Init(GPIOB, &GPIO_InitStructure);
 
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5;
-	GPIO_Init(GPIOB, &GPIO_InitStructure);
+	GPIO_InitStructure.Pin = GPIO_PIN_5;
+	HAL_GPIO_Init(GPIOB, &GPIO_InitStructure);
 
 	/* SPI Pin Configuration */
 	/* SPI_CLK, SPI_MOSI and MISO */
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5 | GPIO_Pin_7;
-	GPIO_Init(GPIOA, &GPIO_InitStructure);
+	GPIO_InitStructure.Mode = GPIO_MODE_AF_PP;
+	GPIO_InitStructure.Pin = GPIO_PIN_5 | GPIO_PIN_7;
+	HAL_GPIO_Init(GPIOA, &GPIO_InitStructure);
 	/* SPI_CS */
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4;
-	GPIO_Init(GPIOA, &GPIO_InitStructure);
+	GPIO_InitStructure.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStructure.Pin = GPIO_PIN_4;
+	HAL_GPIO_Init(GPIOA, &GPIO_InitStructure);
 
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD;
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6;
-	GPIO_Init(GPIOA, &GPIO_InitStructure);
+	GPIO_InitStructure.Mode = GPIO_MODE_INPUT;
+	GPIO_InitStructure.Pull = GPIO_PULLDOWN;
+	GPIO_InitStructure.Pin = GPIO_PIN_6;
+	HAL_GPIO_Init(GPIOA, &GPIO_InitStructure);
 
 	/* Voltage pin PA0 */
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_Init(GPIOA, &GPIO_InitStructure);
+	GPIO_InitStructure.Pin = GPIO_PIN_0;
+	GPIO_InitStructure.Mode = GPIO_MODE_ANALOG;
+	GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_HIGH;
+	HAL_GPIO_Init(GPIOA, &GPIO_InitStructure);
 
 	/* Configure USART1 Tx (PA9) as alternate function push-pull */
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_9;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_2MHz;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
-	GPIO_Init(GPIOA, &GPIO_InitStructure);
+	GPIO_InitStructure.Pin = GPIO_PIN_9;
+	GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_LOW;
+	GPIO_InitStructure.Mode = GPIO_MODE_AF_PP;
+	HAL_GPIO_Init(GPIOA, &GPIO_InitStructure);
 
 	/* Configure USART1 Rx (PA10) as input floating */
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
-	GPIO_Init(GPIOA, &GPIO_InitStructure);
+	GPIO_InitStructure.Pin = GPIO_PIN_10;
+	GPIO_InitStructure.Pull = GPIO_NOPULL;
+	GPIO_InitStructure.Mode = GPIO_MODE_INPUT;
+	HAL_GPIO_Init(GPIOA, &GPIO_InitStructure);
 
 	/* Configure USART2 Tx (PA2) as alternate function push-pull */
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_2MHz;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
-	GPIO_Init(GPIOA, &GPIO_InitStructure);
+	GPIO_InitStructure.Pin = GPIO_PIN_2;
+	GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_LOW;
+	GPIO_InitStructure.Mode = GPIO_MODE_AF_PP;
+	HAL_GPIO_Init(GPIOA, &GPIO_InitStructure);
 
 	/* Configure USART2 Rx (PA3) as input floating */
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
-	GPIO_Init(GPIOA, &GPIO_InitStructure);
+	GPIO_InitStructure.Pin = GPIO_PIN_3;
+	GPIO_InitStructure.Pull = GPIO_NOPULL;
+	GPIO_InitStructure.Mode = GPIO_MODE_INPUT;
+	HAL_GPIO_Init(GPIOA, &GPIO_InitStructure);
+}
 
+void PwrOff_Pin_Reconfig()
+{
+	GPIO_InitTypeDef GPIO_InitStructure;
+	/* Power_OFF */
+	GPIO_InitStructure.Pin = GPIO_PIN_1;
+	GPIO_InitStructure.Mode = GPIO_MODE_INPUT;
+	HAL_GPIO_Init(GPIOA, &GPIO_InitStructure);	
 }
 
 
 void PWR_Buttom_handler()
 {
-	static uint16_t TurnOff_count = 250;
+	static uint16_t TurnOff_count = 1000;
 
 	if(debounce(GPIOA->IDR & 2))		//tactile switch input
 	{
@@ -121,11 +151,11 @@ void PWR_Buttom_handler()
 	{
 		if(!TurnOff_count)
 		{
-			GPIOB->BRR = GPIO_Pin_2;	//turn off DCDC
+			GPIOB->BRR = GPIO_PIN_2;	//turn off DCDC
 		}
 		else
 		{
-			TurnOff_count = 250;		//reset TurnOff delay
+			TurnOff_count = 1000;		//reset TurnOff delay
 		}
 	}
 }
@@ -162,22 +192,34 @@ uint8_t debounce(uint16_t IOstate)
  */
 void HeartBeat(void)
 {
-	static uint16_t heart_count = 0;
+	static int16_t heart_count = 0;
 	static uint8_t fade_dir = 1;
 
-	if(fade_dir)
-		heart_count++;
-	else
-		heart_count--;
+	uint8_t fade_multiplier;
 
-	if(heart_count == 1000)
+	if(debounce(GPIOA->IDR & 2) > 0)
+	{
+		fade_multiplier = 4;
+	}
+	else
+	{
+		fade_multiplier = 1;
+	}
+
+	if(fade_dir)
+		heart_count += fade_multiplier;
+	else
+		heart_count -= fade_multiplier;
+
+	if(heart_count >= 1000)
 	{
 		fade_dir = 0;
 	}
-	if(heart_count == 0)
+	if(heart_count <= 0)
 		fade_dir = 1;
 
-	TIM_SetCompare2(TIM2, heart_count*32);
+	//TIM_SetCompare2(TIM2, heart_count*32);
+	TIM2->CCR2 = heart_count*32;
 
 }
 

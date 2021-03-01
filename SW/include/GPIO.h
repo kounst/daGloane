@@ -7,8 +7,8 @@
 
 
 /* Private define ------------------------------------------------------------*/
-#define LED1_PIN                GPIO_Pin_3
-#define LED2_PIN		        GPIO_Pin_15
+#define LED1_PIN                GPIO_PIN_3
+#define LED2_PIN		        GPIO_PIN_15
 #define LED1_GPIO_PORT			GPIOB
 #define LED2_GPIO_PORT			GPIOA
 
