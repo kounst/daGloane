@@ -27,7 +27,8 @@ msg1 control_msg;
 msg2 config_msg;
 
 
-
+extern volatile uint8_t enable_telemetry;
+extern volatile uint8_t enable_CompFlt;
 
 // private function prototypes
 uint16_t crc_xmodem_update(uint16_t crc, uint8_t data);
@@ -154,7 +155,10 @@ void process_rx_msg(uint8_t rx_msg_length)
 				for(i= 0; i < decoded_length - 2; i++)
 				{
 					config_msg.bytes[i] = cobs_decoded_msg[i+2];
+					
 				}
+				enable_telemetry = (config_msg.bytes[0] & 0x01);
+				enable_CompFlt = (config_msg.bytes[0] & 0x02);
 				break;
 
 			default:

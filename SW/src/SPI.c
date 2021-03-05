@@ -14,6 +14,9 @@
 
 SPI_HandleTypeDef hspi1;
 
+extern UART_HandleTypeDef huart2;
+
+
 
 void SPI1_Configuration()
 {

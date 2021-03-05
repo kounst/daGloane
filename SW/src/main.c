@@ -14,7 +14,7 @@
 // #include "kalman.h"
 #include "com.h"
 
-// #include "Complementary_Filter.h"
+#include "Complementary_Filter.h"
 // #include "PID_Controller.h"
 // #include "GAS_for_Engines.h"
 
@@ -24,12 +24,18 @@ void SystemClock_Config(void);
 extern UART_HandleTypeDef huart1;
 
 volatile uint8_t tick = 0;
+volatile uint8_t enable_telemetry = 1;
+volatile uint8_t enable_CompFlt = 0;
 
 mpudata mpu;
 mpudata mpu_45;
 mpudata mpu_offset;
 
 char telemetrybuf[200];
+
+int32_t angle_est_x = 0;
+int32_t angle_est_y = 0;
+int32_t angle_est_z = 0;
 
 
 int main(void)
@@ -67,7 +73,7 @@ int main(void)
 	/* keep DC/DC form turning off again (set Power_ON_µC) */
   GPIOB->BSRR = GPIO_PIN_2;
 
-  HAL_Delay(100);
+  HAL_Delay(2000);
 
   /* Change PwrOff Pin config to input for reading tactile switch state */
   PwrOff_Pin_Reconfig();
@@ -82,14 +88,24 @@ int main(void)
       tick = 0;
 
 			//read data from MPU-6000
-			MPU_read(&mpu);      
+			MPU_read(&mpu); 
+      applyCalibration(&mpu, &mpu_offset);  
+      if(enable_CompFlt)
+      {
+        CompFlt_step(&mpu);
+      }
+
       //uac_printf("%i,%i,%i,%i,%i,%i\r\n", mpu.acc_x, mpu.acc_y, mpu.acc_z, mpu.gyro_x, mpu.gyro_y, mpu.gyro_z);
       //uac_printf("Hello");
-      snprintf(telemetrybuf, sizeof(telemetrybuf), "%i,%i,%i,%i,%i,%i\r\n", mpu.acc_x, mpu.acc_y, mpu.acc_z, mpu.gyro_x, mpu.gyro_y, mpu.gyro_z);
-      
+
+      if(enable_telemetry)
+      {
+        snprintf(telemetrybuf, sizeof(telemetrybuf), "%i,%i,%i,%i,%i,%i,%i,%i,%i\r\n", mpu.acc_x, mpu.acc_y, mpu.acc_z, mpu.gyro_x, mpu.gyro_y, mpu.gyro_z, angle_est_x, angle_est_y, angle_est_z);
+        HAL_UART_Transmit(&huart1, telemetrybuf, strlen(telemetrybuf), 100);
+      }
+
       //HAL_Delay(100);
 
-      HAL_UART_Transmit(&huart1, telemetrybuf, strlen(telemetrybuf), 100);
 
       // if( ((i/10)%2) == 0)
       //   uac_printf("Hello %i", i);
@@ -105,15 +121,15 @@ int main(void)
 
 void GetCalibrationData()
 {
-	int i;
-	int neutralX = 0;
-	int neutralY = 0;
-	int neutralZ = 0;
-	int neutralPi = 0;
-	int neutralRo = 0;
-	int neutralYa = 0;
+	uint16_t i;
+	int32_t neutralX = 0;
+	int32_t neutralY = 0;
+	int32_t neutralZ = 0;
+	int32_t neutralPi = 0;
+	int32_t neutralRo = 0;
+	int32_t neutralYa = 0;
 
-	for(i = 0; i < 128; i++)
+	for(i = 0; i < 512; i++)
 	{
 		//SPI1_read(ACCEL_XOUT_H ,mpu.bytes,14);
 		MPU_read(&mpu);
@@ -126,12 +142,22 @@ void GetCalibrationData()
 		HAL_Delay(10);
 	}
 
-	mpu_offset.acc_x = neutralX / 128;
-	mpu_offset.acc_y = neutralY / 128;
-	mpu_offset.acc_z = (neutralZ / 128)  - 16384;
-	mpu_offset.gyro_x = neutralPi / 128;
-	mpu_offset.gyro_y = neutralRo / 128;
-	mpu_offset.gyro_z = neutralYa / 128;
+	mpu_offset.acc_x = neutralX / 512;
+	mpu_offset.acc_y = neutralY / 512;
+	mpu_offset.acc_z = (neutralZ / 512)  - 16384;
+	mpu_offset.gyro_x = neutralPi / 512;
+	mpu_offset.gyro_y = neutralRo / 512;
+	mpu_offset.gyro_z = neutralYa / 512;
+}
+
+void applyCalibration(mpudata *mpu, mpudata *mpu_offset)
+{
+  mpu->acc_x -= mpu_offset->acc_x;
+  mpu->acc_y -= mpu_offset->acc_y;
+  mpu->acc_z -= mpu_offset->acc_z;
+  mpu->gyro_x -= mpu_offset->gyro_x;
+  mpu->gyro_y -= mpu_offset->gyro_y;
+  mpu->gyro_z -= mpu_offset->gyro_z;
 }
 
 /**

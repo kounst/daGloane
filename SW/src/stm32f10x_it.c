@@ -48,6 +48,7 @@ extern uint8_t tick;			// main loop trigger
 extern UART_HandleTypeDef huart1;
 extern UART_HandleTypeDef huart2;
 extern ADC_HandleTypeDef ADC_Handle;
+extern SPI_HandleTypeDef hspi1;
 
 
 /******************************************************************************/
@@ -266,7 +267,7 @@ void USART2_IRQHandler(void)
  */
 void SPI_IRQHandler(void)
 {
-
+  //HAL_SPI_IRQHandler(&hspi1);
 }
 
 

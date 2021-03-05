@@ -29,6 +29,12 @@ extern volatile uint16_t lipo_voltage;
 // extern kalman_data pitch_data;
 // extern kalman_data roll_data;
 extern msg1 control_msg;
+extern msg2 config_msg;
+
+extern volatile uint8_t enable_telemetry;
+extern volatile uint8_t enable_CompFlt;
+
+extern uint8_t receive_buffer[256];
 
 
 void uAC_CMD_attach(void)
@@ -48,6 +54,50 @@ void uAC_CMD_attach(void)
 	//uac_attach("btconf", bluetooth_config);
 	//uac_attach("btmsg", bluetooth_msg);
 	uac_attach("getpwm", getpwm_cmd);
+	uac_attach("telemetry", startTelemetry_cmd);
+	uac_attach("stop", stopTelemetry_cmd);
+	uac_attach("compflt", CompFlt_cmd);
+	uac_attach("getConfData", getConfData_cmd);
+	uac_attach("readCOMbuf", readCOMbuf_cmd);
+}
+
+
+void readCOMbuf_cmd(int argc, char *argv[])
+{
+	uac_printf("COM buffer: %x %x %x %x %x %x %x %x %x %x %x %x %x %x", receive_buffer[0],  receive_buffer[1], receive_buffer[2], receive_buffer[3], receive_buffer[4], receive_buffer[5], receive_buffer[6], receive_buffer[7], receive_buffer[8], receive_buffer[9], receive_buffer[10], receive_buffer[11], receive_buffer[12], receive_buffer[13], receive_buffer[14]);
+}
+
+
+void getConfData_cmd(int argc, char *argv[])
+{
+	uac_printf("Config msg: %x %x %x %x %x %x %x %x %x", config_msg.bytes[0], config_msg.bytes[1], config_msg.bytes[2], config_msg.bytes[3], config_msg.bytes[4], config_msg.bytes[5], config_msg.bytes[6], config_msg.bytes[7], config_msg.bytes[8]);
+	
+}
+
+void startTelemetry_cmd(int argc, char *argv[])
+{
+	enable_telemetry = 1;
+}
+
+
+void stopTelemetry_cmd(int argc, char *argv[])
+{
+	enable_telemetry = 0;
+}
+
+void CompFlt_cmd(int argc, char *argv[])
+{
+	if(argc > 0)
+	{
+		if(*argv[0] == '1')
+		{
+			enable_CompFlt = 1;
+		}
+		else
+		{
+			enable_CompFlt = 0;
+		}
+	}
 }
 
 

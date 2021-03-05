@@ -55,6 +55,8 @@ uint8_t SPI1_readbyte(uint8_t);
 void SPI1_read(uint8_t, uint8_t *, uint8_t);
 void SPI1_writebyte(uint8_t, uint8_t);
 void MPU_read(mpudata *mpu);
+void MPU_read2(mpudata *mpu);
+void MX_SPI1_Init(void);
 
 
 
