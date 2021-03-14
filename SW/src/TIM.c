@@ -11,7 +11,7 @@
 #include "stm32f1xx_hal.h"
 #include "TIM.h"
 
-
+TIM_HandleTypeDef htim2;
 
 static __IO uint32_t TimingDelay;
 
@@ -28,7 +28,7 @@ void TIM3_Configuration(void)
 	/* Time base configuration */
 	htim3.Instance = TIM3;
 	htim3.Init.Period = 20000;
-	htim3.Init.Prescaler = 7;
+	htim3.Init.Prescaler = 11;
 	htim3.Init.ClockDivision = 0;
 	htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
 	htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
@@ -78,7 +78,7 @@ void TIM3_Configuration(void)
 
 void LED_Timer_Configuration(void)
 {
-	TIM_HandleTypeDef htim2;
+	
   	TIM_OC_InitTypeDef sConfigOC = {0};	
 	// TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;
 	// TIM_OCInitTypeDef  TIM_OCInitStructure;
@@ -86,12 +86,13 @@ void LED_Timer_Configuration(void)
 
 	// /* Time base configuration */
 	htim2.Instance = TIM2;
-	htim2.Init.Period = 32000;
-	htim2.Init.Prescaler = 0;
+	htim2.Init.Period = 10000;	// 10ms
+	htim2.Init.Prescaler = 71;	// prescaler of 72 -> 1MHz
 	htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
 	htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
 	htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
 	HAL_TIM_Base_Init(&htim2);
+
 	// TIM_TimeBaseStructure.TIM_Period = 32000;
 	// TIM_TimeBaseStructure.TIM_Prescaler = 0;//(uint16_t) (SystemCoreClock / 24000000) - 1;
 	// TIM_TimeBaseStructure.TIM_ClockDivision = 0;
@@ -137,6 +138,16 @@ void LED_Timer_Configuration(void)
 	HAL_TIM_OC_Start(&htim2, TIM_CHANNEL_2);
 }
 
+void enable_spi_timer()
+{
+	__HAL_TIM_ENABLE_IT(&htim2, TIM_IT_UPDATE);
+}
+
+void disable_spi_timer()
+{
+	__HAL_TIM_DISABLE_IT(&htim2, TIM_IT_UPDATE);
+}
+
 
 
 void PWM_update(uint8_t channel, uint16_t pulswidth)
@@ -178,22 +189,17 @@ void PWM_update(uint8_t channel, uint16_t pulswidth)
 
 void LED_update(uint8_t channel, uint16_t pulswidth)
 {
-	pulswidth *= 32;
 	switch(channel)
 	{
 	case 0:
 		TIM2->CCR1 = pulswidth;
 		TIM2->CCR2 = pulswidth;
-		//TIM_SetCompare1(TIM2, pulswidth);
-		//TIM_SetCompare2(TIM2, pulswidth);
 		break;
 	case 1:
 		TIM2->CCR1 = pulswidth;
-		//TIM_SetCompare1(TIM2, pulswidth);
 		break;
 	case 2:
 		TIM2->CCR2 = pulswidth;
-		//TIM_SetCompare2(TIM2, pulswidth);
 		break;
 	default:
 		break;

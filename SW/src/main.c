@@ -18,6 +18,8 @@
 // #include "PID_Controller.h"
 // #include "GAS_for_Engines.h"
 
+#define DIV_ROUND_CLOSEST(n, d) ((((n) < 0) ^ ((d) < 0)) ? (((n) - (d)/2)/(d)) : (((n) + (d)/2)/(d)))
+
 void Error_Handler(void);
 void SystemClock_Config(void);
 
@@ -30,6 +32,7 @@ volatile uint8_t enable_CompFlt = 0;
 mpudata mpu;
 mpudata mpu_45;
 mpudata mpu_offset;
+volatile mpudata mpu_raw;
 
 char telemetrybuf[200];
 
@@ -65,7 +68,7 @@ int main(void)
 	uAC_CMD_attach();  
 
 	/* TIM2 Configuration */
-	LED_Timer_Configuration();
+	LED_Timer_Configuration();  
 
 	/* TIM3 Configuration */
 	TIM3_Configuration();
@@ -73,7 +76,7 @@ int main(void)
 	/* keep DC/DC form turning off again (set Power_ON_µC) */
   GPIOB->BSRR = GPIO_PIN_2;
 
-  HAL_Delay(2000);
+  HAL_Delay(5000);
 
   /* Change PwrOff Pin config to input for reading tactile switch state */
   PwrOff_Pin_Reconfig();
@@ -81,15 +84,18 @@ int main(void)
   /* measure ACC channels while copter is stationary to obtain offsets. */
 	GetCalibrationData();
 
+  enable_spi_timer();   
+
   while (1)
   {
 		if (tick == 1)
 		{
       tick = 0;
-
+      LEDToggle(LED2);
+      //LEDOn(LED2);
 			//read data from MPU-6000
-			MPU_read(&mpu); 
-      applyCalibration(&mpu, &mpu_offset);  
+			//MPU_read_IT(); 
+      applyCalibration(&mpu, &mpu_raw, &mpu_offset);  
       if(enable_CompFlt)
       {
         CompFlt_step(&mpu);
@@ -101,6 +107,7 @@ int main(void)
       if(enable_telemetry)
       {
         snprintf(telemetrybuf, sizeof(telemetrybuf), "%i,%i,%i,%i,%i,%i,%i,%i,%i\r\n", mpu.acc_x, mpu.acc_y, mpu.acc_z, mpu.gyro_x, mpu.gyro_y, mpu.gyro_z, angle_est_x, angle_est_y, angle_est_z);
+        //snprintf(telemetrybuf, sizeof(telemetrybuf), "%i,%i,%i,%i,%i,%i,%i,%i,%i\r\n", mpu_raw.acc_x, mpu_raw.acc_y, mpu_raw.acc_z, mpu_raw.gyro_x, mpu_raw.gyro_y, mpu_raw.gyro_z, angle_est_x, angle_est_y, angle_est_z);
         HAL_UART_Transmit(&huart1, telemetrybuf, strlen(telemetrybuf), 100);
       }
 
@@ -114,6 +121,8 @@ int main(void)
 
       //If there are outgoing chars, send them
       uac_tx_task();
+
+      //LEDOff(LED2);
     }
   }
 }
@@ -132,32 +141,32 @@ void GetCalibrationData()
 	for(i = 0; i < 512; i++)
 	{
 		//SPI1_read(ACCEL_XOUT_H ,mpu.bytes,14);
-		MPU_read(&mpu);
-		neutralX += mpu.acc_x;
-		neutralY += mpu.acc_y;
-		neutralZ += mpu.acc_z;
-		neutralPi += mpu.gyro_x;
-		neutralRo += mpu.gyro_y;
-		neutralYa += mpu.gyro_z;
+		MPU_read(&mpu_raw);
+		neutralX += mpu_raw.acc_x;
+		neutralY += mpu_raw.acc_y;
+		neutralZ += mpu_raw.acc_z;
+		neutralPi += mpu_raw.gyro_x;
+		neutralRo += mpu_raw.gyro_y;
+		neutralYa += mpu_raw.gyro_z;
 		HAL_Delay(10);
 	}
 
-	mpu_offset.acc_x = neutralX / 512;
-	mpu_offset.acc_y = neutralY / 512;
-	mpu_offset.acc_z = (neutralZ / 512)  - 16384;
-	mpu_offset.gyro_x = neutralPi / 512;
-	mpu_offset.gyro_y = neutralRo / 512;
-	mpu_offset.gyro_z = neutralYa / 512;
+  mpu_offset.acc_x = DIV_ROUND_CLOSEST(neutralX, 512);
+  mpu_offset.acc_y = DIV_ROUND_CLOSEST(neutralY, 512);
+  mpu_offset.acc_z = DIV_ROUND_CLOSEST(neutralZ, 512)  - 16384;
+  mpu_offset.gyro_x = DIV_ROUND_CLOSEST(neutralPi, 512);
+  mpu_offset.gyro_y = DIV_ROUND_CLOSEST(neutralRo, 512);
+  mpu_offset.gyro_z = DIV_ROUND_CLOSEST(neutralYa, 512);
 }
 
-void applyCalibration(mpudata *mpu, mpudata *mpu_offset)
+void applyCalibration(mpudata *mpu, mpudata *mpu_raw, mpudata *mpu_offset)
 {
-  mpu->acc_x -= mpu_offset->acc_x;
-  mpu->acc_y -= mpu_offset->acc_y;
-  mpu->acc_z -= mpu_offset->acc_z;
-  mpu->gyro_x -= mpu_offset->gyro_x;
-  mpu->gyro_y -= mpu_offset->gyro_y;
-  mpu->gyro_z -= mpu_offset->gyro_z;
+  mpu->acc_x  = mpu_raw->acc_x  - mpu_offset->acc_x;
+  mpu->acc_y  = mpu_raw->acc_y  - mpu_offset->acc_y;
+  mpu->acc_z  = mpu_raw->acc_z  - mpu_offset->acc_z;
+  mpu->gyro_x = mpu_raw->gyro_x - mpu_offset->gyro_x;
+  mpu->gyro_y = mpu_raw->gyro_y - mpu_offset->gyro_y;
+  mpu->gyro_z = mpu_raw->gyro_z - mpu_offset->gyro_z;
 }
 
 /**
@@ -179,7 +188,7 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
-  RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL6;
+  RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL9;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
     Error_Handler();
@@ -235,6 +244,15 @@ void NVIC_Configuration(void)
 	//  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
 	//  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
 	//  NVIC_Init(&NVIC_InitStructure);
+
+	//  /* Enable the TIM2 gloabal interrupt */
+	//  NVIC_InitStructure.NVIC_IRQChannel = TIM2_IRQn;
+	//  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 4;
+	//  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
+	//  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+	//  NVIC_Init(&NVIC_InitStructure);  
+  HAL_NVIC_SetPriority(TIM2_IRQn, 3, 3);
+  HAL_NVIC_EnableIRQ(TIM2_IRQn);
 	//
 	//
 	// NVIC_InitStructure.NVIC_IRQChannel = USART1_IRQn;
@@ -251,7 +269,7 @@ void NVIC_Configuration(void)
 	// NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
 	// NVIC_Init(&NVIC_InitStructure);
   HAL_NVIC_SetPriority(SPI1_IRQn, 3, 2);
-  //HAL_NVIC_EnableIRQ(SPI1_IRQn);  
+  HAL_NVIC_EnableIRQ(SPI1_IRQn);  
 
 	/* Enable the USART2 Interrupt */
 	// NVIC_InitStructure.NVIC_IRQChannel = USART2_IRQn;

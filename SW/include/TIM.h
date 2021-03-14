@@ -14,3 +14,5 @@ void TimingDelay_Decrement(void);
 void LED_Timer_Configuration(void);
 void LED_update(uint8_t channel, uint16_t pulswidth);
 void PWM_update(uint8_t channel, uint16_t pulswidth);
+void enable_spi_timer(void);
+void disable_spi_timer(void);

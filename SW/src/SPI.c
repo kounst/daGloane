@@ -15,8 +15,12 @@
 SPI_HandleTypeDef hspi1;
 
 extern UART_HandleTypeDef huart2;
+extern volatile mpudata mpu_raw;
 
+extern uint8_t tick;			// main loop trigger
 
+uint8_t bytes[15];
+uint8_t txbytes[14]={0};
 
 void SPI1_Configuration()
 {
@@ -50,6 +54,23 @@ void SPI1_Configuration()
 
 	HAL_Delay(100);
 
+}
+
+void mpu_read_cmplt()
+{
+	CS_HIGH;
+
+	mpu_raw.acc_x = (bytes[1] << 8) | bytes[2];
+	mpu_raw.acc_y = (bytes[3] << 8) | bytes[4];
+	mpu_raw.acc_z = (bytes[5] << 8) | bytes[6];
+	mpu_raw.temp =  (bytes[7] << 8) | bytes[8];
+	mpu_raw.temp /= 340;
+	mpu_raw.temp += 36.53;
+	mpu_raw.gyro_x = (bytes[9] << 8) | bytes[10];
+	mpu_raw.gyro_y = (bytes[11] << 8) | bytes[12];
+	mpu_raw.gyro_z = (bytes[13] << 8) | bytes[14];
+
+	tick = 1;
 }
 
 
@@ -121,6 +142,56 @@ void SPI1_read(uint8_t start_address, uint8_t *bytearray, uint8_t NofBytes)
 	CS_HIGH;
 }
 
+/**
+ * @brief  Reads the specified number of bytes starting form a specified address
+ * @param  uint8_t start_address: address to start reading form slave device
+ * @param  uint8_t *bytearray: startaddress of an array to hold the read data
+ * @param  uint8_t NofBytes: Number of bytes to read
+
+ * @retval none
+ */
+void SPI1_read_IT(uint8_t start_address, uint8_t *bytearray, uint8_t NofBytes)
+{
+	CS_LOW;
+
+	__HAL_SPI_ENABLE_IT(&hspi1, SPI_IT_TXE);
+
+	SPI1->DR = 0x80 | start_address;
+
+	// while (__HAL_SPI_GET_FLAG(&hspi1, SPI_FLAG_TXE) == RESET);
+
+	// SPI1->DR = 0x00;
+
+	// while (__HAL_SPI_GET_FLAG(&hspi1, SPI_FLAG_RXNE) == RESET);
+
+	// *bytearray = SPI1->DR;
+
+	// while(NofBytes - 1)
+	// {
+	// 	while (__HAL_SPI_GET_FLAG(&hspi1, SPI_FLAG_TXE) == RESET);
+	// 	SPI1->DR = 0x00;
+	// 	while (__HAL_SPI_GET_FLAG(&hspi1, SPI_FLAG_RXNE) == RESET);
+	// 	*bytearray = SPI1->DR;
+	// 	bytearray++;
+
+	// 	NofBytes--;
+	// }
+
+	// while (__HAL_SPI_GET_FLAG(&hspi1, SPI_FLAG_TXE) == RESET);
+	// while (__HAL_SPI_GET_FLAG(&hspi1, SPI_FLAG_BSY) == SET);
+
+	// *bytearray = SPI1->DR;
+
+	// CS_HIGH;
+}
+
+void SPI1_read_IRQ_handler()
+{
+	SPI1->DR = 0x00;
+
+	__HAL_SPI_ENABLE_IT(&hspi1, SPI_FLAG_RXNE);
+}
+
 void MPU_read(mpudata *mpu)
 {
 	uint8_t bytes[14];
@@ -135,6 +206,14 @@ void MPU_read(mpudata *mpu)
 	mpu->gyro_x = (bytes[8] << 8) | bytes[9];
 	mpu->gyro_y = (bytes[10] << 8) | bytes[11];
 	mpu->gyro_z = (bytes[12] << 8) | bytes[13];
+}
+
+void MPU_read_IT()
+{
+	CS_LOW;
+	HAL_SPI_RegisterCallback(&hspi1, HAL_SPI_TX_RX_COMPLETE_CB_ID, mpu_read_cmplt);
+	txbytes[0] = 0x80 | ACCEL_XOUT_H;
+	HAL_SPI_TransmitReceive_IT(&hspi1, txbytes, bytes, 15);
 }
 
 

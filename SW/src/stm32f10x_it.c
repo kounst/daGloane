@@ -49,6 +49,7 @@ extern UART_HandleTypeDef huart1;
 extern UART_HandleTypeDef huart2;
 extern ADC_HandleTypeDef ADC_Handle;
 extern SPI_HandleTypeDef hspi1;
+extern TIM_HandleTypeDef htim2;
 
 
 /******************************************************************************/
@@ -152,7 +153,7 @@ void PendSV_Handler(void)
 void SysTick_Handler(void)
 {
 	static uint8_t i = 0;
-	static uint8_t j = 0;
+	//static uint8_t j = 0;
 	HAL_IncTick();
 
 	/*	Checks whether the push-bottom is being held down and turns of the power if
@@ -172,22 +173,14 @@ void SysTick_Handler(void)
 
 	// TimingDelay_Decrement();  			//Decrement ms counter of Delay() function
 
-	i++;
-	if(i>0)
-	{ 
-		i = 0;
-		tick=1;								// main loop trigger
-	}
-	if(j == 0)
-	{
-		j++;
-		TIM2->CCR1 = 10000;
-	}
-	else
-	{
-		j = 0;
-		TIM2->CCR1 = 0;
-	}
+	// i++;
+	// if(i>0)
+	// { 
+	// 	i = 0;
+	// 	tick=1;								// main loop trigger
+	// }
+
+	//LEDToggle(LED2);
 }
 
 /******************************************************************************/
@@ -265,11 +258,20 @@ void USART2_IRQHandler(void)
  * @param  None
  * @retval None
  */
-void SPI_IRQHandler(void)
+void SPI1_IRQHandler(void)
 {
-  //HAL_SPI_IRQHandler(&hspi1);
+  HAL_SPI_IRQHandler(&hspi1);
+  //SPI1_read_IRQ_handler();
 }
 
+
+void TIM2_IRQHandler(void)
+{
+	HAL_TIM_IRQHandler(&htim2);
+
+	MPU_read_IT();
+	//LEDToggle(LED2);
+}
 
 
 /**

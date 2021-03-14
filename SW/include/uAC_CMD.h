@@ -30,5 +30,6 @@ void stopTelemetry_cmd(int argc, char *argv[]);
 void CompFlt_cmd(int argc, char *argv[]);
 void getConfData_cmd(int argc, char *argv[]);
 void readCOMbuf_cmd(int argc, char *argv[]);
+void mpuread_cmd(int argc, char *argv[]);
 
 #endif /* UAC_CMD_H_ */

@@ -46,10 +46,11 @@ void GPIO_Configuration(void)
 	HAL_GPIO_Init(LED1_GPIO_PORT, &GPIO_InitStructure);
 
 	GPIO_InitStructure.Pin = LED2_PIN;
+	GPIO_InitStructure.Mode = GPIO_MODE_OUTPUT_PP;
 	HAL_GPIO_Init(LED2_GPIO_PORT, &GPIO_InitStructure);
 
 //	LEDOff(LED1);
-//	LEDOff(LED2);
+	LEDOff(LED2);
 
 	/* Power_ON_uC */
 	GPIO_InitStructure.Mode = GPIO_MODE_OUTPUT_PP;
@@ -219,7 +220,7 @@ void HeartBeat(void)
 		fade_dir = 1;
 
 	//TIM_SetCompare2(TIM2, heart_count*32);
-	TIM2->CCR2 = heart_count*32;
+	TIM2->CCR2 = heart_count;
 
 }
 

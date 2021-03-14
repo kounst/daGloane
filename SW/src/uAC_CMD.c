@@ -59,8 +59,24 @@ void uAC_CMD_attach(void)
 	uac_attach("compflt", CompFlt_cmd);
 	uac_attach("getConfData", getConfData_cmd);
 	uac_attach("readCOMbuf", readCOMbuf_cmd);
+	uac_attach("mpuread", mpuread_cmd);
 }
 
+void mpuread_cmd(int argc, char *argv[])
+{
+	
+	if(argc > 0)
+	{
+		if(*argv[0] == '1')
+		{
+			MPU_read_IT(&mpu);
+		}
+		else
+		{
+			MPU_read(&mpu);
+		}
+	}	
+}
 
 void readCOMbuf_cmd(int argc, char *argv[])
 {
